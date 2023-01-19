@@ -1,0 +1,88 @@
+.SortContainer {
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+  padding: 5px;
+  background-color: #e6f7ff;
+}
+
+.uploadWrap {
+  :global {
+    .uploadImg_sort {
+      z-index: 1001;
+    }
+
+    .ant-image-img {
+      object-fit: contain;
+    }
+  }
+}
+
+
+@duration: 200ms;
+
+.videoPreviewMask {
+  animation-name: fadeIn;
+  animation-duration: @duration;
+  animation-timing-function: linear;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.videoPreviewMaskHide {
+  animation-name: fadeOut;
+  animation-duration: @duration;
+  animation-timing-function: linear;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.videoPreviewWrap {
+  animation-name: scaleIn;
+  animation-duration: @duration;
+  animation-timing-function: ease-out;
+}
+
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+.videoPreviewWrapHide {
+  animation-name: scaleOut;
+  animation-duration: @duration;
+  animation-timing-function: ease-out;
+}
+
+@keyframes scaleOut {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(0);
+  }
+}

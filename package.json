@@ -1,0 +1,27 @@
+{
+  "name": "ant-design-pro",
+  "version": "6.0.0",
+  "private": true,
+  "description": "基于antdpro6、umi4、antd5的源昇科技后台管理系统demo",
+  "scripts": {
+    "analyze": "cross-env ANALYZE=1 umi build",
+    "build": "max build",
+    "start": "max dev"
+  },
+  "dependencies": {
+    "@ant-design/pro-components": "^2.3.52",
+    "@umijs/max": "^4.0.47",
+    "antd": "^5.1.5",
+    "antd-img-crop": "^4.5.2",
+    "braft-editor": "^2.3.9",
+    "braft-extensions": "^0.1.1",
+    "braft-utils": "^3.0.12",
+    "crypto-js": "^4.1.1",
+    "lodash": "^4.17.21",
+    "md5": "^2.3.0",
+    "qs": "^6.11.0"
+  },
+  "devDependencies": {
+    "mockjs": "^1.1.0"
+  }
+}
