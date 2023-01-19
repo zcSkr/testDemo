@@ -1,6 +1,6 @@
 # Ant Design Pro
 此项目依赖于 antd-pro v6版本
-[Ant Design Pro v5](https://pro.ant.design).
+[Ant Design Pro v6](https://pro.ant.design).
 [ProComponent组件文档](https://procomponents.ant.design/)
  
 # Ant Design
