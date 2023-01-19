@@ -1,3 +1,7 @@
+# 依赖安装
+1. 首选yarn，由于yarn的扁平化处理，有“幽灵依赖”，不在package.json里列出
+2. 如果选择npm/pnpm ，由于没有扁平化处理，不在package.json列出的包不会安装，导致用到的包会提示找不到。此类情况按提示安装即可。
+
 # Ant Design Pro
 此项目依赖于 antd-pro v6版本
 [Ant Design Pro v6](https://pro.ant.design).
