@@ -6,7 +6,7 @@ export default {
     list: [],
     pagination: {
       current: 1,
-      pagSize: 10,
+      pageSize: 10,
       total: 0
     },
   },

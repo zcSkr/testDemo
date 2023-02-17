@@ -2,7 +2,6 @@ import { DownCircleTwoTone } from '@ant-design/icons';
 import {
   Button,
   message,
-  Empty,
   Select,
   Input,
   Form,
@@ -16,7 +15,6 @@ import GlobalUpload from '@/components/GlobalUpload';
 import dayjs from 'dayjs'
 
 
-const TimeItem = Timeline.Item;
 const { Option } = Select;
 const FormItem = Form.Item;
 const { TextArea } = Input
@@ -156,20 +154,19 @@ const UploadApp = ({
             key: item.key,
             label: item.title,
             children: (<>
-              <Timeline>
-                {
-                  list.length > 0 ?
-                    list.map((item, index) => (
-                      <TimeItem key={item.id}>
-                        {dayjs(item.createTime).format("YYYY/MM/DD")}
-                        <span style={{ margin: 20 }}>{item.updateLog} </span>
-                        Size:{item.targetSize}
-                        <br />
-                        版本号:{item.newVersion}
-                      </TimeItem>
-                    )) : <Empty />
-                }
-              </Timeline>
+              <Timeline
+                items={list.map((item, index) => ({
+                  children: (
+                    <>
+                      {dayjs(item.createTime).format("YYYY/MM/DD")}
+                      <span style={{ margin: 20 }}>{item.updateLog} </span>
+                      Size:{item.targetSize}
+                      <br />
+                      版本号:{item.newVersion}
+                    </>
+                  )
+                }))}
+              />
               {current * pageSize < total && (
                 <DownCircleTwoTone
                   onClick={() => dispatch({ type: 'uploadApp/query', payload: { updatePort: activeKey, pageNum: current + 1 } })}
