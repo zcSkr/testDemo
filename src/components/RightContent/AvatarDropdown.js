@@ -8,7 +8,7 @@ import UpdatePsd from '@/components/UpdatePsd'
 
 import * as service_manager from '@/services/sys/manager';
 
-const AvatarDropdown = () => {
+const AvatarDropdown = ({ children }) => {
   const dispatch = useDispatch()
   const [updateModalVisible, handleUpdateModalVisible] = useState(false);
   const { initialState: { getUnionuser }, setInitialState } = useModel('@@initialState');
@@ -59,7 +59,7 @@ const AvatarDropdown = () => {
       }}
       placement="topLeft"
       >
-        <SettingOutlined />
+        {children}
       </HeaderDropdown>
       <GlobalModal
         open={updateModalVisible}

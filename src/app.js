@@ -137,12 +137,9 @@ export const layout = ({ initialState, setInitialState }) => {
       src: <UserOutlined style={{ color: '#1677ff' }} />,
       size: 'small',
       title: initialState.getUnionuser()?.nickname || initialState.getUnionuser()?.acount,
+      render: (props, dom) => <RightContent children={dom} />
     },
-    actionsRender: (props) => {
-      // console.log(props)
-      if (props.isMobile) return [];
-      return [<RightContent />];
-    },
+    actionsRender: (props) => [],
     //  rightContentRender: () => <RightContent />,
     rightContentRender: false,
     onPageChange: () => {
