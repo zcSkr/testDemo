@@ -139,7 +139,7 @@ export const layout = ({ initialState, setInitialState }) => {
       title: initialState.getUnionuser()?.nickname || initialState.getUnionuser()?.acount,
       render: (props, dom) => <RightContent children={dom} />
     },
-    actionsRender: (props) => [],
+    actionsRender: (props) => [], //if不写这行，layout仅在top模式下没有显示avatarProps
     //  rightContentRender: () => <RightContent />,
     rightContentRender: false,
     onPageChange: () => {
