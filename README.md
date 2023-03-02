@@ -63,3 +63,18 @@
 16. GlobalExport: 公共导出组件（常见于表格导出）特别注意：service层需要responseType: 'blob', getResponse: true。
 17. GlobalImport: 公共导入组件（常见于表格导入excel）
 18. GlobalSearchSelect: 下拉框输入异步请求的组件，搜索之后查询接口展示select（常见于表单select数据量很大时用此组件替代）
+
+# 常用的代码提交默认前缀标签规则
+1. feat: 新功能（feature）
+2. fix: 修补bug
+3. docs: 文档（documentation）
+4. style: 格式（不影响代码运行的变动）
+5. refactor: 重构（即不是新增功能，也不是修改bug的代码变动）
+6. chore: 构建过程或辅助工具的变动
+7. revert: 撤销，版本回退
+8. perf: 性能优化
+9. test：测试
+10. improvement: 改进
+11. build: 打包
+12. ci: 持续集成
+13. update:更新
