@@ -6,11 +6,12 @@
   "scripts": {
     "analyze": "cross-env ANALYZE=1 umi build",
     "build": "max build",
-    "start": "max dev"
+    "start": "max dev",
+    "deadcode": "max deadcode"
   },
   "dependencies": {
-    "@ant-design/pro-components": "^2.3.57",
-    "@umijs/max": "^4.0.52",
+    "@ant-design/pro-components": "^2.3.58",
+    "@umijs/max": "^4.0.54",
     "antd": "^5.2.2",
     "antd-img-crop": "^4.5.2",
     "braft-editor": "^2.3.9",
