@@ -153,19 +153,13 @@ export const layout = ({ initialState, setInitialState }) => {
     breadcrumbRender: (routers = []) => [{ path: '/', breadcrumbName: '首页' }, ...routers],
     // 自定义渲染面包屑
     itemRender: (route, params, routes, paths) => {
-      const first = routes.indexOf(route) === 0;
-      return first ? <Link to='/'>{route.breadcrumbName}</Link> : <span>{route.breadcrumbName}</span>;
+      routes.forEach(item => {
+        const first = routes.indexOf(item) === 0;
+        if (!first) delete item.path
+        return item
+      })
+      return route.breadcrumbName
     },
-    // breadcrumbProps: {
-    //   itemRender: (route, params, routes, paths) => {
-    //     routes.forEach(item => {
-    //       const first = routes.indexOf(item) === 0;
-    //       if (!first) delete item.path
-    //       return item
-    //     })
-    //     return route.breadcrumbName
-    //   },
-    // },
     menu: {
       locale: false,
       // 权限路由
