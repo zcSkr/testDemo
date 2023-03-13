@@ -10,7 +10,7 @@ import {
 } from 'antd';
 import { ProForm, PageContainer, ProCard } from '@ant-design/pro-components';
 import React, { useState, useEffect } from 'react';
-import { connect } from 'umi';
+import { connect } from '@umijs/max';
 import GlobalUpload from '@/components/GlobalUpload';
 import dayjs from 'dayjs'
 

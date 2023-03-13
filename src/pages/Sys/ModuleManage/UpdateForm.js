@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Input, InputNumber, Select } from 'antd';
 import { ProForm } from '@ant-design/pro-components';
-import { useDispatch, useSelector } from 'umi';
+import { useDispatch, useSelector } from '@umijs/max';
 
 import * as service_module from '@/services/sys/module';
 

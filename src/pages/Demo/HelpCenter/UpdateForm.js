@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Input, InputNumber, Select, Cascader, Image } from 'antd';
 import { ProForm } from '@ant-design/pro-components';
-import { useSelector } from 'umi';
+import { useSelector } from '@umijs/max';
 
 const FormItem = Form.Item;
 const { Option } = Select;

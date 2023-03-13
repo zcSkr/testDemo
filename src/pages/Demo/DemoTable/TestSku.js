@@ -4,7 +4,7 @@ import { ProForm } from '@ant-design/pro-components';
 
 import Sku from '@/components/Sku';
 
-import { useSelector } from 'umi';
+import { useSelector } from '@umijs/max';
 
 const FormItem = Form.Item;
 const formLayout = {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Upload, message, Button, Image, Space } from 'antd';
-import { useModel } from 'umi';
+import { useModel } from '@umijs/max';
 import { PlusOutlined, UploadOutlined, CloseOutlined } from '@ant-design/icons'
 import ImgCrop from 'antd-img-crop';
 import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';

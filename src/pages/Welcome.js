@@ -1,7 +1,7 @@
 import React from 'react';
 import { Result } from 'antd';
 import { SmileTwoTone } from '@ant-design/icons';
-import { useModel } from 'umi';
+import { useModel } from '@umijs/max';
 
 
 const Welcome = () => {

@@ -5,7 +5,7 @@ import BraftEditor from '@/components/BraftEditor';
 import GlobalUpload from '@/components/GlobalUpload';
 import EditTag from '@/components/EditTag';
 import QQMap from '@/components/QQMap';
-import { useSelector } from 'umi';
+import { useSelector } from '@umijs/max';
 
 const FormItem = Form.Item;
 const { Option } = Select

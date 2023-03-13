@@ -3,7 +3,7 @@ import { Form, Button, Input } from 'antd';
 import { ProForm } from '@ant-design/pro-components';
 import BraftEditor from '@/components/BraftEditor';
 import GlobalUpload from '@/components/GlobalUpload';
-import { useSelector } from 'umi';
+import { useSelector } from '@umijs/max';
 
 const FormItem = Form.Item;
 const { TextArea } = Input

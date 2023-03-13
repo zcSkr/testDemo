@@ -1,4 +1,4 @@
-import { request } from 'umi';
+import { request } from '@umijs/max';
 
 export async function query(params) {
   return request('/v2/app/update', { params });

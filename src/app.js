@@ -1,4 +1,4 @@
-import { history, Link } from 'umi';
+import { history, Link } from '@umijs/max';
 import { notification } from 'antd';
 import md5 from 'md5'
 import defaultSettings from '../config/defaultSettings';

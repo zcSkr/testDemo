@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Upload, message, Button } from 'antd';
 import { ImportOutlined } from '@ant-design/icons'
-import { useModel } from 'umi';
+import { useModel } from '@umijs/max';
 import md5 from 'md5'
 
 const GlobalImport = ({

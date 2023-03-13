@@ -2,7 +2,7 @@
 import { CloseOutlined } from '@ant-design/icons';
 import React, { useState, useEffect } from 'react';
 import { Image } from 'antd';
-import { useModel } from 'umi'
+import { useModel } from '@umijs/max'
 import styles from './index.less'
 
 const VideoPreview = ({

@@ -6,7 +6,7 @@ import { ContentUtils } from 'braft-utils'
 import { Upload, message, Spin } from 'antd'
 import { PictureFilled, PlaySquareFilled } from '@ant-design/icons'
 import { imageControls, excludeControls, controls, tableOptions } from './config'
-import { useModel } from 'umi';
+import { useModel } from '@umijs/max';
 import Table from 'braft-extensions/dist/table'
 import { getOSSData, getSuffix, randomString } from '../_utils';
 const BraftEditorComponentOSS = ({

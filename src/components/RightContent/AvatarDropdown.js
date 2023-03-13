@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Spin, message } from 'antd';
-import { useModel, history, useDispatch } from 'umi';
+import { useModel, history, useDispatch } from '@umijs/max';
 import HeaderDropdown from '../HeaderDropdown';
 import GlobalModal from '@/components/GlobalModal'
 import UpdatePsd from '@/components/UpdatePsd'

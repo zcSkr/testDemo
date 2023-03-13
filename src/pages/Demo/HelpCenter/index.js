@@ -15,7 +15,7 @@ import {
   Col
 } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
-import { useDispatch } from 'umi';
+import { useDispatch } from '@umijs/max';
 import { PageContainer, ProCard, ProList } from '@ant-design/pro-components';
 import StandardTable from '@/components/StandardTable';
 import GlobalModal from '@/components/GlobalModal';

@@ -5,7 +5,7 @@ import {
   Upload,
   message,
 } from 'antd';
-import { useModel } from 'umi';
+import { useModel } from '@umijs/max';
 import StandardTable from '@/components/StandardTable';
 import { UploadOutlined } from '@ant-design/icons';
 import { getOSSData, getSuffix, randomString } from '../_utils';

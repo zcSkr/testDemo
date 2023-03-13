@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'umi';
+import { connect } from '@umijs/max';
 import { PageContainer, ProCard, ProList } from '@ant-design/pro-components';
 import { PlusOutlined } from '@ant-design/icons';
 import {

@@ -2,7 +2,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Alert, Tabs } from 'antd';
 import React, { useState } from 'react';
 import { ProFormText, LoginForm } from '@ant-design/pro-components';
-import { useModel, history } from 'umi';
+import { useModel, history } from '@umijs/max';
 import styles from './index.less';
 import * as services_login from '@/services/login';
 

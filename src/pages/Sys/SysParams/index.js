@@ -1,7 +1,7 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Space, message, Popconfirm, Switch } from 'antd';
 import React, { useState, useRef } from 'react';
-import { useDispatch } from 'umi';
+import { useDispatch } from '@umijs/max';
 import { PageContainer } from '@ant-design/pro-components';
 import StandardTable from '@/components/StandardTable';
 import GlobalModal from '@/components/GlobalModal'

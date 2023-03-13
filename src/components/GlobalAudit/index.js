@@ -1,7 +1,7 @@
 import React from 'react';
 import { Space, Form, Input, Row, Col, Button } from 'antd';
 import { ProForm } from '@ant-design/pro-components';
-import { useSelector } from 'umi'
+import { useSelector } from '@umijs/max'
 const FormItem = Form.Item;
 const { TextArea } = Input
 

@@ -1,4 +1,4 @@
-import { request } from 'umi';
+import { request } from '@umijs/max';
 
 // 获取STS认证信息
 export async function getSTSInfo(params) {

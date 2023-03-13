@@ -1,4 +1,4 @@
-import { request } from 'umi';
+import { request } from '@umijs/max';
 
 export async function login(data) {
   return request('/mock/login', { method: 'POST', data });

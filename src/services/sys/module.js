@@ -1,4 +1,4 @@
-import { request } from 'umi';
+import { request } from '@umijs/max';
 
 //获取登录人菜单
 export async function queryLoginModules(params) {
