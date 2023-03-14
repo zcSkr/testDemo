@@ -36,6 +36,7 @@ const Login = () => {
           logo={<img alt="logo" src={settings.logo} />}
           title={`${settings.title}后台管理系统`}
           onFinish={handleSubmit}
+          onValuesChange={() => setStatus()}
         >
           <Tabs centered activeKey='account' items={[{label: "账号密码登录", key: 'account'}]} />
           {status === 'error' && <LoginMessage content={errorMsg || "账号或密码错误"} />}
