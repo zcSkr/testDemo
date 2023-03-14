@@ -156,7 +156,6 @@ export const layout = ({ initialState, setInitialState }) => {
       routes.forEach(item => {
         const first = routes.indexOf(item) === 0;
         if (!first) delete item.path
-        return item
       })
       return route.breadcrumbName
     },
