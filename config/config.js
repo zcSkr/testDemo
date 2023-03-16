@@ -28,7 +28,7 @@ export default defineConfig({
   routes: pageRoutes,
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: {
-    'primary-color': defaultSettings.primaryColor,
+    'primary-color': defaultSettings.colorPrimary,
   },
   headScripts: [ //需要头部引入的三方script配置
     'https://map.qq.com/api/js?v=2.exp&key=TUJBZ-GMTR4-FE7UG-XIRYO-IQM2F-TCF4X', //腾讯地图script

@@ -1,7 +1,8 @@
 const proSettings = {
-  primaryColor: '#1677ff', //antd5 因为是cssinjs用不上这个变量，仅有少量样式用到
+  // navTheme: 'realDark', //暗黑模式
+  colorPrimary: '#1677ff', //主题色
   layout: 'side',
-  splitMenus: false, //为true时搭配mix模式
+  splitMenus: false, //为true时搭配layout mix模式
   contentWidth: 'Fluid',
   fixedHeader: true,
   fixSiderbar: true,
