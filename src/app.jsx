@@ -137,7 +137,7 @@ export const layout = ({ initialState, setInitialState }) => {
       src: <UserOutlined style={{ color: '#1677ff' }} />,
       size: 'small',
       title: initialState.getUnionuser()?.nickname || initialState.getUnionuser()?.acount,
-      render: (props, dom) => <RightContent children={dom} />
+      render: (props, dom) => <RightContent>{dom}</RightContent>
     },
     actionsRender: (props) => [], //if不写这行，layout仅在top模式下没有显示avatarProps
     //  rightContentRender: () => <RightContent />,
@@ -171,19 +171,15 @@ export const layout = ({ initialState, setInitialState }) => {
       //   return loopMenuItem(menuRes)
       // }
     },
-    // links: process.env.NODE_ENV === 'development' ? [
-    //   <a href="http://192.168.2.74:9010/admin/swagger-ui.html" target="_blank">
-    //     <LinkOutlined />
-    //     <span>本地接口文档</span>
-    //   </a>,
-    //   <a href="https://xx.xxx.com/xxx/swagger-ui.html" target="_blank">
-    //     <LinkOutlined />
-    //     <span>线上接口文档</span>
-    //   </a>,
-    // ] : [],
     links: process.env.NODE_ENV === 'development' ? [
-      React.createElement('a', { href: 'http://192.168.2.74:9010/admin/swagger-ui.html', target: '_blank' }, <LinkOutlined />, React.createElement('span', null, '本地接口文档')),
-      React.createElement('a', { href: 'https://xx.xxx.com/xxx/swagger-ui.html', target: '_blank' }, <LinkOutlined />, React.createElement('span', null, '线上接口文档'))
+      <a href="http://192.168.2.74:9010/admin/swagger-ui.html" target="_blank">
+        <LinkOutlined />
+        <span>本地接口文档</span>
+      </a>,
+      <a href="https://xx.xxx.com/xxx/swagger-ui.html" target="_blank">
+        <LinkOutlined />
+        <span>线上接口文档</span>
+      </a>,
     ] : [],
     // 自定义 403 页面
     unAccessible: <Exception403 />,
