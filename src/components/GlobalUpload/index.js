@@ -172,7 +172,7 @@ const GlobalUploadOss = ({
       {
         !!crop ?
           <>
-            <ImgCrop rotate grid>
+            <ImgCrop rotationSlider showGrid>
               {uploadComponent}
             </ImgCrop>
             {supportSort && value?.length > 1 ? <SortableComponent /> : null}
