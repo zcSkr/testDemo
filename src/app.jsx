@@ -164,9 +164,8 @@ export const layout = ({ initialState, setInitialState }) => {
     actionsRender: (props) => [], //if不写这行，layout仅在top模式下没有显示avatarProps
     //  rightContentRender: () => <RightContent />,
     rightContentRender: false,
-    onPageChange: () => {
-      const { location: { pathname } } = history; // 如果没有登录，重定向到 login
-      if (!initialState.getUnionuser() && pathname !== '/user/login') {
+    onPageChange: ({ pathname }) => {
+      if (!initialState.getUnionuser() && pathname !== '/user/login') {// 如果没有登录，重定向到 login
         history.replace('/user/login');
       }
     },

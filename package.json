@@ -11,9 +11,9 @@
   },
   "dependencies": {
     "@ant-design/pro-components": "^2.4.4",
-    "@umijs/max": "^4.0.63",
+    "@umijs/max": "^4.0.64",
     "antd": "^5.3.3",
-    "antd-img-crop": "^4.11.0",
+    "antd-img-crop": "^4.11.1",
     "braft-editor": "^2.3.9",
     "braft-extensions": "^0.1.1",
     "braft-utils": "^3.0.12",
