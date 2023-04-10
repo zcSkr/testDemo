@@ -158,7 +158,7 @@ export const layout = ({ initialState, setInitialState }) => {
     avatarProps: {
       src: <UserOutlined style={{ color: '#1677ff' }} />,
       size: 'small',
-      title: initialState.getUnionuser()?.nickname || initialState.getUnionuser()?.acount,
+      title: initialState.getUnionuser()?.nickname || initialState.getUnionuser()?.account,
       render: (props, dom) => <RightContent>{dom}</RightContent>
     },
     actionsRender: (props) => [], //if不写这行，layout仅在top模式下没有显示avatarProps
