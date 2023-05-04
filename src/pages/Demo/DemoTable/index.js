@@ -217,12 +217,6 @@ const DemoTable = () => {
           // console.log(params)//查询参数，pageNum用current特殊处理
           return service_demoTable.query({ ...params, pageNum: current })
         }}
-        beforeSearchSubmit={params => {
-          params.startTime = params.createTime?.[0].startOf('day').format('YYYY-MM-DD HH:mm:ss')
-          params.endTime = params.createTime?.[1].endOf('day').format('YYYY-MM-DD HH:mm:ss')
-          delete params.createTime
-          return params
-        }}
         postData={data => data.list}
         columns={columns}
       />

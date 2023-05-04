@@ -116,11 +116,18 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
       search={{ labelWidth: 100 }}
       dateFormatter={false}
       {...props}
-      request={request ? async (params,sort,filter) => {
-        const res = await request(params,sort,filter)
+      request={request ? async (params, sort, filter) => {
+        const res = await request(params, sort, filter)
         setPagination({ current: res.data.pageNum, pageSize: res.data.pageSize, total: res.data.total })
         return res
       } : undefined}
+      beforeSearchSubmit={params => {
+        params.startTime = params.createTime?.[0].startOf('day').format('YYYY-MM-DD HH:mm:ss')
+        params.endTime = params.createTime?.[1].endOf('day').format('YYYY-MM-DD HH:mm:ss')
+        delete params.createTime
+        const propsParams = props.beforeSearchSubmit?.(params) //外部透传拓展
+        return { ...params, ...propsParams }
+      }}
       components={components}
       columns={columns}
       rowClassName={() => 'editable-row'}

@@ -70,13 +70,7 @@ const HelpCenter = () => {
       title: '创建时间',
       hideInSearch: true,
       dataIndex: 'createTime',
-      valueType: 'dateRange',
-      render: (val, record) => record.createTime,
-      fieldProps: (form) => ({
-        disabledDate: current => current > dayjs().endOf('day'),
-        defaultPickerValue: [dayjs().subtract(1, 'month'), dayjs()],
-        placeholder: ['开始时间', '结束时间'],
-      }),
+      ellipsis: true,
     },
     {
       title: '操作',
