@@ -54,6 +54,9 @@ const errorHandler = (error) => {
 const headerInterceptor = (url, options) => {
   const timestamp = new Date().getTime()
   const rand = Math.floor(Math.random() * 100) //0-100随机整数
+  if (url.substr(0, 4) != 'http') {
+    url = (process.env.NODE_ENV === 'development' ? '/api' : requestUrl) + url;
+  }
   return {
     url,
     options: {
