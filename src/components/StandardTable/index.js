@@ -113,7 +113,7 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
   return (
     <ProTable
       rowKey={record => record.key || record.id}
-      search={{ labelWidth: 100 }}
+      search={{ labelWidth: 'auto' }}
       dateFormatter={false}
       {...props}
       request={request ? async (params, sort, filter) => {
