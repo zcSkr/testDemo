@@ -84,7 +84,8 @@ const DemoTable = () => {
       title: '图片示例',
       dataIndex: 'img',
       hideInSearch: true,
-      render: (text, record) => <Image width={20} height={20} src={text} />
+      valueType: 'image',
+      fieldProps: (form) => ({ width: 20, height: 20 }),
     },
     {
       title: '单元格编辑',
