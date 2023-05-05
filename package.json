@@ -10,7 +10,7 @@
     "deadcode": "max deadcode"
   },
   "dependencies": {
-    "@ant-design/pro-components": "^2.4.4",
+    "@ant-design/pro-components": "^2.4.12",
     "@umijs/max": "^4.0.64",
     "antd": "^5.3.3",
     "antd-img-crop": "^4.11.1",
