@@ -3,7 +3,6 @@ import { Form, Button, Input, InputNumber, Select, Cascader, Image, Space } from
 import { ProForm } from '@ant-design/pro-components';
 import { useSelector } from '@umijs/max';
 const FormItem = Form.Item;
-const { Option } = Select
 const { TextArea } = Input
 const formLayout = {
   labelCol: { span: 4 },
@@ -56,11 +55,8 @@ const UpdateForm = ({
           placeholder="请选择"
           style={{ width: '100%' }}
           getPopupContainer={triggerNode => triggerNode.parentElement}
-        >
-          <Option value="phone">电话</Option>
-          <Option value="wechat">微信</Option>
-          <Option value="qq">QQ</Option>
-        </Select>
+          options={[{label: '电话',value: 'phone'},{label: '微信',value: 'wechat'},{label: 'QQ',value: 'qq'}]}
+        />
       </FormItem>
       <FormItem
         name="number"

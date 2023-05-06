@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from '@umijs/max';
 import * as service_module from '@/services/sys/module';
 
 const FormItem = Form.Item;
-const { Option } = Select
 const { TextArea } = Input
 const formLayout = {
   labelCol: { span: 4 },
@@ -81,10 +80,8 @@ const UpdateForm = ({
           placeholder="请选择"
           style={{ width: '100%' }}
           getPopupContainer={triggerNode => triggerNode.parentElement}
-        >
-          <Option value="0">顶级模块</Option>
-          {moduleList.map(item => <Option key={item.id} value={item.id}>{item.name}</Option>)}
-        </Select>
+          options={[{label: '顶级模块',value: '0'}].concat(moduleList.map(item => ({ label: item.name, value: item.id })))}
+        />
       </FormItem>
       <FormItem
         name="name"

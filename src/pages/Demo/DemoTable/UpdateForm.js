@@ -8,7 +8,6 @@ import QQMap from '@/components/QQMap';
 import { useSelector } from '@umijs/max';
 
 const FormItem = Form.Item;
-const { Option } = Select
 const { TextArea } = Input
 const formLayout = {
   labelCol: { span: 4 },
@@ -138,12 +137,8 @@ const UpdateForm = ({
           placeholder="请选择"
           style={{ width: '100%' }}
           getPopupContainer={triggerNode => triggerNode.parentElement}
-        >
-          <Option value="0">0</Option>
-          <Option value="1">1</Option>
-          <Option value="2">2</Option>
-          <Option value="3">我擦</Option>
-        </Select>
+          options={[{label: '0', value: '0'},{label: '1', value: '1'},{label: '2', value: '3'},{label: '我擦', value: '3'}]}
+        />
       </FormItem>
       <FormItem noStyle shouldUpdate={(prevValues, curValues) => prevValues.select !== curValues.select || prevValues.cascader !== curValues.cascader}>
         {() => (

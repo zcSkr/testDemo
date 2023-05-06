@@ -15,7 +15,6 @@ import GlobalUpload from '@/components/GlobalUpload';
 import dayjs from 'dayjs'
 
 
-const { Option } = Select;
 const FormItem = Form.Item;
 const { TextArea } = Input
 const formLayout = {
@@ -99,11 +98,8 @@ const UploadApp = ({
               placeholder="请选择"
               style={{ width: '100%' }}
               getPopupContainer={(triggerNode) => triggerNode.parentElement}
-            >
-              <Option value="member">用户端</Option>
-              {/* <Option value="shop">商家端</Option> */}
-              {/* <Option value="server">服务端</Option> */}
-            </Select>
+              options={[{label: '用户端',value: 'member'}]}
+            />
           </FormItem>
           <FormItem noStyle shouldUpdate={(prevValues, curValues) => prevValues.updatePort !== curValues.updatePort}>
             {() => (
