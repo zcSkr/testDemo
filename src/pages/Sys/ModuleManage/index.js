@@ -1,7 +1,7 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, message, Popconfirm, Space } from 'antd';
 import React, { useState, useRef } from 'react';
-import { useDispatch } from '@umijs/max';
+import { useDispatch, useAppData } from '@umijs/max';
 import { PageContainer } from '@ant-design/pro-components';
 import StandardTable from '@/components/StandardTable';
 import GlobalModal from '@/components/GlobalModal'
@@ -14,6 +14,8 @@ const ModuleManage = () => {
   const [updateModalVisible, handleUpdateModalVisible] = useState(false);
   const [stepFormValues, setStepFormValues] = useState({});
   const actionRef = useRef();
+  const routes = useAppData().routes
+
   let columns = [
     {
       dataIndex: 'sort',
@@ -49,6 +51,45 @@ const ModuleManage = () => {
       ),
     },
   ];
+
+  const handlePatchMoudle = async () => {
+    console.log(routes)
+    const hide = message.loading({ content: '操作中', key: 'loading' });
+    const module = await handleMoudleGroup(routes, { type: 0 })
+
+    const res = await service_module.patch_add({ jsonArray: JSON.stringify(module) })
+    hide()
+    if (res.code != 200) return message.error(res.msg)
+    actionRef.current.reload()
+
+  }
+
+  const handleMoudleGroup = async (routes, payload = {}) => {
+    console.log(routes)
+    const keys = Object.keys(routes)
+    //icon不能存入服务器,回显在app.jsx 139行可配置成本地
+    const router = keys.map(item => routes[item]).filter(item => item.access == 'accessRoute').map(item => ({ ...item, icon: undefined }))
+    console.log(JSON.stringify(router))
+
+    //parentId为NaN的为父级,umi不变的话 判断不变
+    let parent = router.filter(item => isNaN(Number(item.parentId)))
+    //添加children字段
+    parent.forEach(item => item.children = [])
+    let children = router.filter(item => parent.some(parent => parent.id == item.parentId))
+
+    //相同父级组装到children里面
+    children.forEach(child => {
+      parent.find(par => child.parentId == par.id).children.push({
+        pid: child.parentId, name: child.name, path: child.path, icon: child.icon, ...payload,
+      })
+    })
+
+    //组装最后结果并返回
+    const result = parent.map(item => ({ pid: 0, name: item.name, path: item.path, icon: item.icon, children: item.children, ...payload, }))
+    console.log(JSON.stringify(result))
+
+    return result
+  }
 
   const handleUpdate = async fields => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
@@ -102,6 +143,9 @@ const ModuleManage = () => {
         actionRef={actionRef}
         search={false}
         toolBarRender={() => [
+          <Button key='add' type="primary" onClick={handlePatchMoudle}>
+            <PlusOutlined /> 一键生成模块
+          </Button>,
           <Button key='add' type="primary" onClick={() => { setStepFormValues({}); handleUpdateModalVisible(true) }}>
             <PlusOutlined /> 新增
           </Button>,

@@ -10,9 +10,9 @@
     "deadcode": "max deadcode"
   },
   "dependencies": {
-    "@ant-design/pro-components": "^2.4.12",
-    "@umijs/max": "^4.0.64",
-    "antd": "^5.3.3",
+    "@ant-design/pro-components": "^2.4.15",
+    "@umijs/max": "^4.0.68",
+    "antd": "^5.5.0",
     "antd-img-crop": "^4.11.1",
     "braft-editor": "^2.3.9",
     "braft-extensions": "^0.1.1",
@@ -20,7 +20,7 @@
     "crypto-js": "^4.1.1",
     "lodash": "^4.17.21",
     "md5": "^2.3.0",
-    "qs": "^6.11.1"
+    "qs": "^6.11.2"
   },
   "devDependencies": {
     "mockjs": "^1.1.0"
