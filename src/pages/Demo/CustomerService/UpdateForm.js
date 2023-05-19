@@ -51,7 +51,7 @@ const UpdateForm = ({
         <Select
           allowClear
           showSearch
-          optionFilterProp="children"
+          optionFilterProp="label"
           placeholder="请选择"
           style={{ width: '100%' }}
           getPopupContainer={triggerNode => triggerNode.parentElement}

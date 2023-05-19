@@ -68,7 +68,7 @@ const ModuleManage = () => {
     console.log(routes)
     const keys = Object.keys(routes)
     //icon不能存入服务器,回显在app.jsx 139行可配置成本地
-    const router = keys.map(item => routes[item]).filter(item => item.access == 'accessRoute').map(item => ({ ...item, icon: undefined }))
+    const router = keys.map(item => routes[item]).filter(item => item.access != 'accessDev').map(item => ({ ...item, icon: undefined }))
     console.log(JSON.stringify(router))
 
     //parentId为NaN的为父级,umi不变的话 判断不变
