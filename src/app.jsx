@@ -124,6 +124,21 @@ console.log([
   "         佛祖保佑       永无BUG"
 ].join('\n'));
 
+
+export const antd = (memo) => {
+  // console.log(memo)
+  // memo.theme ??= {};
+  // // memo.theme.algorithm = [theme.compactAlgorithm]; // 配置 antd5 的预设 dark 算法
+  // memo.appConfig = {
+  //   message: {
+  //     // 配置 message 最大显示数，超过限制时，最早的消息会被自动关闭
+  //     maxCount: 1,
+  //   }
+  // }
+  // console.log(memo)
+  return memo;
+};
+
 export const layout = ({ initialState, setInitialState }) => {
   const loopMenuItem = (menus) =>
     menus?.map(({ children, ...item }) => ({
