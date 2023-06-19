@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Radio, Switch, Space, InputNumber, Image } from 'antd';
-import { ProDescriptions } from '@ant-design/pro-components';
+import { ProDescriptions, ProField } from '@ant-design/pro-components';
 import dayjs from 'dayjs';
-import Field from '@ant-design/pro-field';
 
 const Info = ({
   values
@@ -16,7 +15,7 @@ const Info = ({
       bordered
     >
       <ProDescriptions.Item label="空字符串">
-        <Field text="" />
+        <ProField text="" />
       </ProDescriptions.Item>
       <ProDescriptions.Item label="图片">
         <Image.PreviewGroup>
@@ -26,16 +25,16 @@ const Info = ({
         </Image.PreviewGroup>
       </ProDescriptions.Item>
       <ProDescriptions.Item label="文本">
-        <Field text="这是一段文本" />
+        <ProField text="这是一段文本" />
       </ProDescriptions.Item>
       <ProDescriptions.Item label="金额">
-        <Field text="100" valueType="money" />
+        <ProField text="100" valueType="money" />
       </ProDescriptions.Item>
       <ProDescriptions.Item label="数字">
-        <Field text="19897979797979" />
+        <ProField text="19897979797979" />
       </ProDescriptions.Item>
       <ProDescriptions.Item label="枚举">
-        <Field
+        <ProField
           text="open"
           valueEnum={{
             all: {
@@ -58,10 +57,10 @@ const Info = ({
         />
       </ProDescriptions.Item>
       <ProDescriptions.Item label="日期时间">
-        <Field text={dayjs('2019-11-16 12:50:26').valueOf()} valueType="dateTime"/>
+        <ProField text={dayjs('2019-11-16 12:50:26').valueOf()} valueType="dateTime"/>
       </ProDescriptions.Item>
       <ProDescriptions.Item label="日期">
-        <Field text={dayjs('2019-11-16 12:50:26').valueOf()} valueType="date" />
+        <ProField text={dayjs('2019-11-16 12:50:26').valueOf()} valueType="date" />
       </ProDescriptions.Item>
     </ProDescriptions>
   );
