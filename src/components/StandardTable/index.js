@@ -20,7 +20,6 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
   const EditableCell = ({
     title,
     editable,
-    renderEditCell,
     children,
     dataIndex,
     record,
@@ -58,20 +57,13 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
     if (editable) {
       childNode = editing ? (
         <FormItem
-          style={{
-            margin: 0,
-          }}
+          style={{ margin: 0}}
           name={dataIndex}
-          rules={[
-            {
-              required: true,
-              message: `${title}是必填项！`,
-            },
-          ]}
+          rules={[{required: editable.required ?? true, message: `${title}是必填项！`}]}
         >
           {
-            renderEditCell ?
-              renderEditCell(inputRef, save) :
+            editable.renderEditCell ?
+            editable.renderEditCell(inputRef, save) :
               <Input ref={inputRef} onPressEnter={save} onBlur={save} placeholder="请输入" size="small" style={{ width: '100%' }} />
           }
         </FormItem>

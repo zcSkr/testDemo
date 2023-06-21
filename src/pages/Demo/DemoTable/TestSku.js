@@ -31,7 +31,7 @@ const TestSku = ({
   
   const renderFooter = () => {
     return (
-      <FormItem wrapperCol={24}>
+      <FormItem wrapperCol={24} noStyle>
         <div style={{ textAlign: 'center' }}>
           <Button type="primary" loading={submiting} htmlType="submit">
             提交

@@ -7,7 +7,7 @@ export default defineConfig({
   publicPath: '/',
   favicons: ['/favicon.ico'],
   hash: true,
-  history: { type: 'hash' },
+  history: { type: 'hash' }, // 默认hash 可选browser
   antd: {
     // configProvider
     configProvider: {},

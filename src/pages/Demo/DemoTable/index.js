@@ -91,8 +91,10 @@ const DemoTable = () => {
       title: '单元格编辑',
       dataIndex: 'name',
       hideInSearch: true,
-      editable: true,
-      renderEditCell: (ref, save) => <Input size='small' maxLength={50} ref={ref} onPressEnter={save} onBlur={save} /> //传了会覆盖可编辑单元格的默认Input,比如传入一个InputNumber
+      editable: {
+        required: true, // 默认为true，false为不是表单校验
+        renderEditCell: (ref, save) => <Input size='small' maxLength={50} ref={ref} onPressEnter={save} onBlur={save} /> //传了会覆盖可编辑单元格的默认Input,比如传入一个InputNumber
+      },
     },
     {
       title: '链接',
