@@ -65,7 +65,7 @@ const headerInterceptor = (url, options) => {
       headers: {
         'Content-Type': options.requestType == 'form' ? 'application/x-www-form-urlencoded;charset=UTF-8' : 'application/json;charset=UTF-8',
         'api-version': 1,
-        token: localStorage.token,
+        token: sessionStorage.token,
         apiSecret: md5(md5(timestamp + "ccys" + rand)),
         timestamp,
         rand
