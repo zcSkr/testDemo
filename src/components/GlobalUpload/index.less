@@ -8,6 +8,19 @@
 
 .uploadWrap {
   :global {
+    .ant-image-preview-wrap {
+      position: fixed;
+      top: 0;
+      inset-inline-end: 0;
+      bottom: 0;
+      inset-inline-start: 0;
+      overflow: auto;
+      outline: 0;
+      z-index: 1080;
+      -webkit-overflow-scrolling: touch;
+      background-color: rgba(0, 0, 0, 0.45);
+    }
+
     .uploadImg_sort {
       z-index: 1001;
     }

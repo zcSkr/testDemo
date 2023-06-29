@@ -24,7 +24,7 @@ const VideoPreview = ({
   }, [classNameVisible]);
 
   return (
-    <>
+    <div className={styles.videoPreviewWrap}>
       <Image
         width={width}
         height={height}
@@ -38,20 +38,22 @@ const VideoPreview = ({
       />
       {
         visible &&
-        <div className={"ant-image-preview-mask " + (classNameVisible ? styles.videoPreviewMask : styles.videoPreviewMaskHide)} >
-          <div className={"ant-image-preview-wrap " + (classNameVisible ? styles.videoPreviewWrap : styles.videoPreviewWrapHide)}>
-            <ul className="ant-image-preview-operations">
-              <li className="ant-image-preview-operations-operation">
-                <CloseOutlined onClick={() => setClassNameVisible(false)} style={{ fontSize: 18, cursor: 'pointer' }} />
-              </li>
-            </ul>
-            <div className="ant-image-preview-img-wrapper" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => setClassNameVisible(false)}>
-              <video className="ant-image-preview-img" autoPlay controls poster={src + ossSuffix} src={src} onClick={e => e.stopPropagation()} />
+        <div className={"ant-image-preview-root " + (classNameVisible ? styles.videoPreviewMask : styles.videoPreviewMaskHide)} >
+          <div className={"ant-image-preview-mask " + (classNameVisible ? styles.videoPreviewMask : styles.videoPreviewMaskHide)} >
+            <div className={"ant-image-preview-wrap " + (classNameVisible ? styles.videoPreviewWrap : styles.videoPreviewWrapHide)}>
+              <ul className="ant-image-preview-operations">
+                <li className="ant-image-preview-operations-operation">
+                  <CloseOutlined onClick={() => setClassNameVisible(false)} style={{ fontSize: 18, cursor: 'pointer' }} />
+                </li>
+              </ul>
+              <div className="ant-image-preview-img-wrapper" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 'calc(100vh - 46px)' }} onClick={() => setClassNameVisible(false)}>
+                <video className="ant-image-preview-img" style={{ maxHeight: '100%', maxWidth: '100%' }} autoPlay controls poster={videoSrc + ossSuffix} src={videoSrc} onClick={e => e.stopPropagation()} />
+              </div>
             </div>
           </div>
         </div>
       }
-    </>
+    </div>
   );
 };
 

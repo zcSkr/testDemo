@@ -77,7 +77,7 @@ const headerInterceptor = (url, options) => {
 //打包时接口请求路径
 const requestUrl = 'https://www.fastmock.site/mock/19502d36f214e49aeb0b29a39556846e/mock'
 export const request = {
-  errorHandler,
+  errorConfig: { errorHandler },
   requestType: 'form',//post 请求时数据类型，默认form，需要json时services层改变传值
   requestInterceptors: [headerInterceptor],
 };
