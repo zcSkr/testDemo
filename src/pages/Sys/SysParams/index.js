@@ -26,7 +26,7 @@ const SysParams = () => {
     {
       title: '值',
       dataIndex: 'codeValue',
-      search: false,
+      hideInSearch: true,
       // ellipsis: true,
       render: (value, record) => record.valueType == 'imgText' ? <a onClick={() => { handleUpdateModalVisible(true); setStepFormValues(record); }}>【请点击查看】</a> : value
     },
@@ -34,7 +34,6 @@ const SysParams = () => {
       title: '描述',
       dataIndex: 'description',
       ellipsis: true,
-      search: false,
     },
     {
       title: '操作',
