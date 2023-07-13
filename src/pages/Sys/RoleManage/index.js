@@ -85,7 +85,7 @@ const RoleManage = () => {
         id: fields.id,
         roleName: fields.roleName,
         description: fields.description,
-        moduleIds: Array.from(new Set(moduleIds)).join(',')
+        moduleIds: moduleIds.join(','),
       }
     })
     hide();

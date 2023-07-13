@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, message, Popconfirm, DatePicker, Switch, Select, Image, Input, Space } from 'antd';
+import { Button, message, Popconfirm, DatePicker, Switch, Select, Image, Input, Space, Tooltip } from 'antd';
 import React, { useState, useRef } from 'react';
 import { useDispatch } from '@umijs/max';
 import { PageContainer } from '@ant-design/pro-components';
@@ -106,7 +106,8 @@ const DemoTable = () => {
       title: '创建时间',
       dataIndex: 'createTime',
       valueType: 'dateRange',
-      render: (val, record) => record.createTime,
+      ellipsis: true,
+      render: (val,record) => <Tooltip title={record.createTime}>{record.createTime}</Tooltip>,
       fieldProps: (form) => ({
         disabledDate: current => current > dayjs().endOf('day'),
         defaultPickerValue: [dayjs().subtract(1, 'month'), dayjs()],
