@@ -62,8 +62,8 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
           rules={[{required: editable.required ?? true, message: `${title}是必填项！`}]}
         >
           {
-            editable.renderEditCell ?
-            editable.renderEditCell(inputRef, save) :
+            editable.rendereditcell ?
+            editable.rendereditcell(inputRef, save) :
               <Input ref={inputRef} onPressEnter={save} onBlur={save} placeholder="请输入" size="small" style={{ width: '100%' }} />
           }
         </FormItem>
@@ -94,7 +94,7 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
       onCell: record => ({
         record,
         editable: col.editable,
-        renderEditCell: col.renderEditCell,
+        rendereditcell: col.rendereditcell,
         dataIndex: col.dataIndex,
         title: col.title,
         handleSave: handleSave,
