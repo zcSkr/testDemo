@@ -69,13 +69,14 @@ const RoleManage = () => {
   ];
 
   const handleUpdate = async fields => {
-    const moduleIds = fields.moduleIds.map(arr => {
+    let moduleIds = fields.moduleIds.map(arr => {
       if (arr.length == 1) { //只选中一级的，要把所有子级带上
         const children = moduleTreeList.find(item => item.id == arr[0]).children
         return arr.concat(children.map(item => item.id))
       }
       return arr
     }).reduce((prev, next) => prev.concat(next), [])
+    moduleIds = moduleIds.filter((item,index) => moduleIds.indexOf(item) == index) // 因为indexOf 只能查找到第一个，利用它去重
     // console.log(moduleIds)
     const hide = message.loading({ content: '操作中', key: 'loading' });
     const res = await dispatch({
