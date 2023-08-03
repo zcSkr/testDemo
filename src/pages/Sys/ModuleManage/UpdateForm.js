@@ -107,7 +107,6 @@ const UpdateForm = ({
       <FormItem
         name="description"
         label="描述"
-        rules={[{ required: true, message: '请输入！' }]}
       >
         <TextArea placeholder="请输入" autoSize={{ minRows: 2, maxRows: 6 }} maxLength={500} allowClear showCount />
       </FormItem>

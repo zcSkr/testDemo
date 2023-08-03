@@ -85,7 +85,7 @@ const ModuleManage = () => {
     })
 
     //组装最后结果并返回
-    const result = parent.map(item => ({ pid: 0, name: item.name, path: item.path, icon: item.icon, children: item.children, description: item.path, ...payload, }))
+    const result = parent.map(item => ({ pid: 0, name: item.name, path: item.path, icon: item.icon, children: item.children, ...payload, }))
     console.log(JSON.stringify(result))
 
     return result
