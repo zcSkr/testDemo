@@ -44,9 +44,13 @@ const GlobalUploadOss = ({
     })()
   }, [])
 
+  const renameFile = (file) => {
+    file.uid = accept == '.apk' ? `${type}${getSuffix(file.name)}` : `${type}/${randomString(10)}${getSuffix(file.name)}`
+  }
+
   const beforeUpload = async (file, fileList) => {
-    //上传前文件重命名
-    file.ossName = accept == '.apk' ? `${type}${getSuffix(file.name)}` : `${type}/${randomString(10)}${getSuffix(file.name)}`
+    //上传前文件重命名,裁剪的在beforeCrop阶段命名
+    !crop && renameFile(file)
     return file
   }
 
@@ -54,7 +58,7 @@ const GlobalUploadOss = ({
     // console.log(file,fileList)
     if (file.status === 'done') {
       message.success(`${file.name} 上传成功`);
-      file.url = ossHost + '/' + file.ossName;
+      file.url = ossHost + '/' + file.uid;
       if (/video/.test(accept)) {
         file.thumbUrl = file.url + ossSuffix;
       }
@@ -172,7 +176,12 @@ const GlobalUploadOss = ({
       {
         !!crop ?
           <>
-            <ImgCrop rotationSlider showGrid modalTitle="裁剪图片">
+            <ImgCrop rotationSlider showGrid modalTitle="裁剪图片"
+              beforeCrop={(file, fileList) => {
+                renameFile(file)
+                return true
+              }}
+            >
               {uploadComponent}
             </ImgCrop>
             {supportSort && value?.length > 1 ? <SortableComponent /> : null}
