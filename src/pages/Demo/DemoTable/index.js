@@ -51,7 +51,7 @@ const DemoTable = () => {
     {
       title: '状态',
       dataIndex: 'state',
-      render: (text, record) => <Switch checked={Boolean(record.state)} onChange={() => handleSwitchChange(record)} checkedChildren="启用" unCheckedChildren="冻结" />,
+      render: (text, record,index,action,props) => <Switch checked={Boolean(record[props.dataIndex])} onChange={() => handleSwitchChange(record)} checkedChildren="启用" unCheckedChildren="冻结" />,
       valueEnum: {
         0: '冻结',
         1: '启用',
@@ -93,7 +93,7 @@ const DemoTable = () => {
       hideInSearch: true,
       editable: {
         required: true, // 默认为true，false为不是表单校验
-        rendereditcell: (ref, save) => <Input size='small' maxLength={50} ref={ref} onPressEnter={save} onBlur={save} /> //传了会覆盖可编辑单元格的默认Input,比如传入一个InputNumber
+        renderEditCell: (ref, save) => <Input size='small' maxLength={50} ref={ref} onPressEnter={save} onBlur={save} /> //传了会覆盖可编辑单元格的默认Input,比如传入一个InputNumber
       },
     },
     {

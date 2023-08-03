@@ -51,7 +51,7 @@ const ChildManage = () => {
       title: '状态',
       dataIndex: 'state',
       hideInSearch: true,
-      render: (text, record) => <Switch checked={Boolean(record.state)} onChange={() => handleSwitchChange(record)} checkedChildren="启用" unCheckedChildren="冻结" />,
+      render: (text, record,index,action,props) => <Switch checked={Boolean(record[props.dataIndex])} onChange={() => handleSwitchChange(record)} checkedChildren="启用" unCheckedChildren="冻结" />,
       valueEnum: {
         0: '冻结',
         1: '启用',

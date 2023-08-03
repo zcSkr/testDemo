@@ -1,4 +1,4 @@
-import { Form, Input } from 'antd';
+import { Form, Input, message } from 'antd';
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { ProTable } from '@ant-design/pro-components';
 import './index.less'
@@ -62,8 +62,8 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
           rules={[{required: editable.required ?? true, message: `${title}是必填项！`}]}
         >
           {
-            editable.rendereditcell ?
-            editable.rendereditcell(inputRef, save) :
+            editable.renderEditCell ?
+            editable.renderEditCell(inputRef, save) :
               <Input ref={inputRef} onPressEnter={save} onBlur={save} placeholder="请输入" size="small" style={{ width: '100%' }} />
           }
         </FormItem>
@@ -94,7 +94,6 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
       onCell: record => ({
         record,
         editable: col.editable,
-        rendereditcell: col.rendereditcell,
         dataIndex: col.dataIndex,
         title: col.title,
         handleSave: handleSave,
@@ -110,7 +109,11 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
       {...props}
       request={request ? async (params, sort, filter) => {
         const res = await request(params, sort, filter)
-        setPagination({ current: res.data.pageNum, pageSize: res.data.pageSize, total: res.data.total })
+        if(res.code == 200) {
+          setPagination({ current: res.data.pageNum, pageSize: res.data.pageSize, total: res.data.total })
+        } else {
+          message.error({ content: res.msg, key: 'error' });
+        }
         return res
       } : undefined}
       beforeSearchSubmit={params => {

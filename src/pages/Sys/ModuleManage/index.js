@@ -55,7 +55,7 @@ const ModuleManage = () => {
   const handlePatchMoudle = async () => {
     console.log(routes)
     const hide = message.loading({ content: '操作中', key: 'loading' });
-    const module = await handleMoudleGroup(routes, { type: 0 })
+    const module = await handleMoudleGroup(routes, {})
 
     const res = await service_module.patch_add({ jsonArray: JSON.stringify(module) })
     hide()
@@ -68,7 +68,7 @@ const ModuleManage = () => {
     console.log(routes)
     const keys = Object.keys(routes)
     //icon不能存入服务器,回显在app.jsx 139行可配置成本地
-    const router = keys.map(item => routes[item]).filter(item => item.access != 'accessDev').map(item => ({ ...item, icon: undefined }))
+    const router = keys.map(item => routes[item]).filter(item => item.access && item.access != 'accessDev').map(item => ({ ...item, icon: undefined }))
     console.log(JSON.stringify(router))
 
     //parentId为NaN的为父级,umi不变的话 判断不变
@@ -85,7 +85,7 @@ const ModuleManage = () => {
     })
 
     //组装最后结果并返回
-    const result = parent.map(item => ({ pid: 0, name: item.name, path: item.path, icon: item.icon, children: item.children, ...payload, }))
+    const result = parent.map(item => ({ pid: 0, name: item.name, path: item.path, icon: item.icon, children: item.children, description: item.path, ...payload, }))
     console.log(JSON.stringify(result))
 
     return result
