@@ -113,7 +113,7 @@ const GlobalUploadOss = ({
       maxCount={maxCount}
       accept={accept}
       data={file => ({
-        key: file.ossName,
+        key: file.uid,
         ...ossSTSInfo,
         'success_action_status': '200' //让服务端返回200,不然，默认会返回204
       })}
