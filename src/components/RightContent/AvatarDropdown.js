@@ -11,7 +11,7 @@ import * as service_manager from '@/services/sys/manager';
 const AvatarDropdown = ({ children }) => {
   const dispatch = useDispatch()
   const [updateModalVisible, handleUpdateModalVisible] = useState(false);
-  const { initialState: { getUnionuser }, setInitialState } = useModel('@@initialState');
+  const { initialState: { getUnionuser }, setInitialState, refresh } = useModel('@@initialState');
   const onMenuClick = useCallback(
     ({ key }) => {
       // console.log(key)
@@ -19,6 +19,7 @@ const AvatarDropdown = ({ children }) => {
         sessionStorage.removeItem('unionuser')
         sessionStorage.removeItem('token')
         history.replace('/user/login')
+        refresh()
       } else if (key === 'changePsd') {
         handleUpdateModalVisible(true)
       }
