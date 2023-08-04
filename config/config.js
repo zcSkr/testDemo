@@ -8,13 +8,7 @@ export default defineConfig({
   favicons: ['/favicon.ico'],
   hash: true,
   history: { type: 'hash' }, // 默认hash 可选browser
-  antd: {
-    // configProvider
-    configProvider: {},
-    // themes
-    dark: false, // 开启暗色主题
-    compact: false, // 开启紧凑主题
-  },
+  antd: {},
   dva: {},
   layout: {},
   locale: {
@@ -46,7 +40,10 @@ export default defineConfig({
       },
     },
   },
-  moment2dayjs: {},
+  moment2dayjs: {
+    preset: 'antd',
+    plugins: ['duration'],
+  },
   fastRefresh: true,
   devtool: process.env.NODE_ENV === 'development' ? 'eval' : false,
   model: {},
@@ -58,4 +55,5 @@ export default defineConfig({
     exclude: ['src/pages/document.ejs'],  //排除检测的范围
   },
   helmet: false, //不会集成 react-helmet-async同时构建产物也会减少相应的尺寸
+  ignoreMomentLocale: false, //如果对国际化没有要求，打开之后能减少js的包大小
 });
