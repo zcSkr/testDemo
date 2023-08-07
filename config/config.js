@@ -42,7 +42,7 @@ export default defineConfig({
   },
   moment2dayjs: {
     preset: 'antd',
-    plugins: ['duration'],
+    plugins: [],
   },
   fastRefresh: true,
   devtool: process.env.NODE_ENV === 'development' ? 'eval' : false,
@@ -55,5 +55,4 @@ export default defineConfig({
     exclude: ['src/pages/document.ejs'],  //排除检测的范围
   },
   helmet: false, //不会集成 react-helmet-async同时构建产物也会减少相应的尺寸
-  ignoreMomentLocale: false, //如果对国际化没有要求，打开之后能减少js的包大小
 });
