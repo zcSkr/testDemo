@@ -164,15 +164,14 @@ export const layout = ({ initialState, setInitialState }) => {
       }
     },
     onMenuHeaderClick: () => history.push('/'),
-    // 面包屑
-    breadcrumbRender: (routers = []) => [{ path: '/', breadcrumbName: '首页' }, ...routers],
     // 自定义渲染面包屑
-    itemRender: (route, params, routes, paths) => {
+    breadcrumbRender: (routers = [],b) => {
+      const routes = [{ linkPath: '/', breadcrumbName: '首页' }, ...routers]
       routes.forEach(item => {
         const first = routes.indexOf(item) === 0;
-        if (!first) delete item.path
+        if (!first) delete item.linkPath
       })
-      return route.breadcrumbName
+      return routes
     },
     menu: {
       locale: false,
