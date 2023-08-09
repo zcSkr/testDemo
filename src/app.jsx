@@ -53,7 +53,7 @@ const errorHandler = (error) => {
 
 const headerInterceptor = (url, options) => {
   const timestamp = new Date().getTime()
-  const rand = Math.floor(Math.random() * 99999) //0-100随机整数
+  const rand = Math.floor(Math.random() * 99999) //0-99999随机整数
   if (url.substr(0, 4) != 'http') {
     url = (process.env.NODE_ENV === 'development' ? '/api' : requestUrl) + url;
   }
@@ -123,32 +123,6 @@ export const layout = ({ initialState, setInitialState }) => {
       routes: children && loopMenuItem(children),
     }));
   return {
-    token: {
-      // colorBgAppListIconHover: 'rgba(0,0,0,0.06)',
-      // colorTextAppListIconHover: 'rgba(255,255,255,0.95)',
-      // colorTextAppListIcon: 'rgba(255,255,255,0.85)',
-      // colorBgPageContainerFixed: '#000',
-      // colorBgPageContainer: '#000',
-      pageContainer: {
-        // marginBlockPageContainerContent: 0,
-        // marginInlinePageContainerContent: 24,
-      },
-      sider: {
-        // colorBgCollapsedButton: '#fff',
-        // colorTextCollapsedButtonHover: 'rgba(0,0,0,0.65)',
-        // colorTextCollapsedButton: 'rgba(0,0,0,0.45)',
-        // colorMenuBackground: '#004FD9',
-        // colorMenuItemDivider: 'rgba(255,255,255,0.15)',
-        // colorBgMenuItemHover: 'rgba(0,0,0,0.06)',
-        // colorBgMenuItemSelected: 'rgba(0,0,0,0.15)',
-        // colorTextMenuSelected: '#fff',
-        // colorTextMenu: 'rgba(255,255,255,0.75)',
-        // colorTextMenuSecondary: 'rgba(255,255,255,0.65)',
-        // colorTextMenuTitle: 'rgba(255,255,255,0.95)',
-        // colorTextMenuActive: 'rgba(255,255,255,0.95)',
-        // colorTextSubMenuSelected: '#fff',
-      },
-    },
     avatarProps: {
       src: <UserOutlined style={{ color: '#1677ff' }} />,
       size: 'small',
