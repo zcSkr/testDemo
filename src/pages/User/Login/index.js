@@ -1,9 +1,9 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Alert, Tabs } from 'antd';
 import React, { useState } from 'react';
+import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { ProFormText, LoginForm } from '@ant-design/pro-components';
 import { useModel, history } from '@umijs/max';
-import styles from './index.less';
 import * as services_login from '@/services/login';
 
 const LoginMessage = ({ content }) => (
@@ -14,6 +14,18 @@ const Login = () => {
   const [status, setStatus] = useState();
   const [errorMsg, setErrorMsg] = useState();
   const { initialState: { settings, setToken, setUnionuser }, refresh } = useModel('@@initialState');
+
+  const containerClassName = useEmotionCss(() => {
+    return {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100vh',
+      overflow: 'auto',
+      backgroundImage:
+        "url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr')",
+      backgroundSize: '100% 100%',
+    };
+  });
 
   const handleSubmit = async (values) => {
     const response = await services_login.login(values);
@@ -30,9 +42,10 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
+    <div className={containerClassName}>
+      <div style={{ flex: 1, padding: '32px 0' }}>
         <LoginForm
+          contentStyle={{ minWidth: 280, maxWidth: '75vw' }}
           logo={<img alt="logo" src={settings.logo} />}
           title={`${settings.title}后台管理系统`}
           onFinish={handleSubmit}

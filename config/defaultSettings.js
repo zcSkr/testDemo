@@ -1,6 +1,5 @@
 const proSettings = {
   // navTheme: 'realDark', //暗黑模式
-  colorPrimary: '#1677ff', //主题色
   layout: 'side',
   splitMenus: false, //为true时搭配layout mix模式
   contentWidth: 'Fluid',

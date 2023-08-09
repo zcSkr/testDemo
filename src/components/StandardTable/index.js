@@ -1,7 +1,7 @@
 import { Form, Input, message } from 'antd';
 import React, { useState, useRef, useEffect, useContext } from 'react';
+import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { ProTable } from '@ant-design/pro-components';
-import './index.less'
 
 const FormItem = Form.Item
 const StandardTable = ({ columns, handleSave, request, ...props }) => {
@@ -52,6 +52,18 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
       }
     };
 
+    const editableCellValueWrapClassName = useEmotionCss(({ token }) => {
+      return {
+        border: '1px solid transparent',
+        cursor: 'pointer',
+        ':hover': {
+          borderColor: token.colorPrimaryHover,
+          borderRadius: token.borderRadiusSM,
+          padding: `0 ${token.paddingXXS}px`,
+        },
+      };
+    });
+
     let childNode = children;
 
     if (editable) {
@@ -68,7 +80,7 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
           }
         </FormItem>
       ) : (
-        <div className="editable-cell-value-wrap" onClick={toggleEdit}>
+        <div className={editableCellValueWrapClassName} onClick={toggleEdit}>
           {children}
         </div>
       );
@@ -125,7 +137,6 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
       }}
       components={components}
       columns={columns}
-      rowClassName={() => 'editable-row'}
       pagination={
         typeof props.pagination == 'boolean' ? props.pagination :
           {
