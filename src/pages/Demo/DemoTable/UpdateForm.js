@@ -59,28 +59,28 @@ const UpdateForm = ({
       <FormItem
         name="sort"
         label="排序权重"
-        rules={[{ required: true, message: '请输入排序权重！' }]}
+        rules={[{ required: true, message: '请输入！' }]}
       >
         <InputNumber style={{ width: '100%' }} min={1} precision={0} placeholder="请输入" />
       </FormItem>
       <FormItem
         name="name"
         label="文本"
-        rules={[{ required: true, message: '请输入文本！' }]}
+        rules={[{ required: true, message: '请输入！' }]}
       >
         <Input placeholder="请输入" maxLength={50} allowClear />
       </FormItem>
       <FormItem
         name="textArea"
         label="文本域"
-        rules={[{ required: true, message: '请输入文本！' }]}
+        rules={[{ required: true, message: '请输入！' }]}
       >
         <TextArea placeholder="请输入" autoSize={{ minRows: 2, maxRows: 6 }} maxLength={500} allowClear showCount />
       </FormItem>
       <FormItem
         name="cascader"
         label="Cascader示例"
-        rules={[{ required: true, message: '请选择xx！' }]}
+        rules={[{ required: true, message: '请选择！' }]}
       >
         <Cascader
           allowClear
@@ -128,7 +128,7 @@ const UpdateForm = ({
       <FormItem
         name="select"
         label="select示例"
-        rules={[{ required: true, message: '请选择xx！' }]}
+        rules={[{ required: true, message: '请选择！' }]}
       >
         <Select
           allowClear
@@ -146,7 +146,7 @@ const UpdateForm = ({
           <FormItem
             name="url"
             label="链接"
-            rules={[{ required: true, message: '请输入链接！' }]}
+            rules={[{ required: true, message: '请输入！' }]}
           >
             <Input placeholder="请输入" maxLength={50} allowClear />
           </FormItem>
@@ -158,7 +158,7 @@ const UpdateForm = ({
           <FormItem
             name="url"
             label="链接"
-            rules={[{ required: true, message: '请输入链接！' }]}
+            rules={[{ required: true, message: '请输入！' }]}
           >
             <Input placeholder="请输入" maxLength={50} allowClear />
           </FormItem>
@@ -175,14 +175,14 @@ const UpdateForm = ({
       <FormItem
         name="logo1"
         label="oss上传示例"
-        rules={[{ required: true, message: '请上传图片！' }]}
+        rules={[{ required: true, message: '请上传！' }]}
       >
         <GlobalUpload data={{ type: 'test' }} maxCount={2} />
       </FormItem>
       <FormItem
         name="address"
         label="腾讯地图示例"
-        rules={[{ required: true, message: '请选择定位！' }]}
+        rules={[{ required: true, message: '请选择！' }]}
       >
         <QQMap />
       </FormItem>
@@ -198,7 +198,7 @@ const UpdateForm = ({
       <FormItem
         name="content1"
         label="oss富文本示例"
-        rules={[{ required: true, message: '请输入内容！' }]}
+        rules={[{ required: true, message: '请输入！' }]}
       >
         <BraftEditor />
       </FormItem>

@@ -32,9 +32,7 @@ const UpdateForm = ({
   // console.log(moduleIds,'moduleIds')
 
   const [formVals, setFormVals] = useState({
-    id: values.id,
-    roleName: values.roleName,
-    description: values.description,
+    ...values,
     moduleIds,
   });
 

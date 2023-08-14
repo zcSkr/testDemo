@@ -17,10 +17,7 @@ const UpdateForm = ({
 }) => {
   const submiting = useSelector(state => state.loading).effects['global/service']
   const [formVals, setFormVals] = useState({
-    id: values.id,
-    nickname: values.nickname,
-    account: values.account,
-    roleIds: values.roleIds
+    ...values
   });
 
   const [form] = Form.useForm();
