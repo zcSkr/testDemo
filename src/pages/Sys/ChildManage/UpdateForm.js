@@ -5,7 +5,6 @@ import { ProForm } from '@ant-design/pro-components';
 import { useSelector } from '@umijs/max';
 
 const FormItem = Form.Item;
-const { TextArea } = Input
 const formLayout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 18 },

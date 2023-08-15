@@ -1,5 +1,5 @@
 import { history } from '@umijs/max';
-import { notification } from 'antd';
+import { notification, theme } from 'antd';
 import md5 from 'md5'
 import defaultSettings from '../config/defaultSettings';
 import { LinkOutlined, UserOutlined } from '@ant-design/icons';
@@ -117,6 +117,7 @@ export const antd = (memo) => {
 };
 
 export const layout = ({ initialState, setInitialState }) => {
+  const { token } = theme.useToken()
   const loopMenuItem = (menus) =>
     menus?.map(({ children, ...item }) => ({
       ...item,
@@ -124,7 +125,7 @@ export const layout = ({ initialState, setInitialState }) => {
     }));
   return {
     avatarProps: {
-      src: <UserOutlined style={{ color: '#1677ff' }} />,
+      src: <UserOutlined style={{ color: token.blue }} />,
       size: 'small',
       title: initialState.getUnionuser()?.nickname || initialState.getUnionuser()?.account,
       render: (props, dom) => <RightContent>{dom}</RightContent>
@@ -139,7 +140,7 @@ export const layout = ({ initialState, setInitialState }) => {
     },
     onMenuHeaderClick: () => history.push('/'),
     // 自定义渲染面包屑
-    breadcrumbRender: (routers = [],b) => {
+    breadcrumbRender: (routers = []) => {
       const routes = [{ linkPath: '/', breadcrumbName: '首页' }, ...routers]
       routes.forEach(item => {
         const first = routes.indexOf(item) === 0;
