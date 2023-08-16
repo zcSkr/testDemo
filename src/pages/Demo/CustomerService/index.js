@@ -22,7 +22,11 @@ const CustomerService = () => {
     {
       title: '类别',
       dataIndex: 'type',
-      render: text => ({ 'phone': '电话', 'wechat': '微信', 'qq': 'QQ' }[text])
+      valueEnum: {
+        'phone': '电话',
+        'wechat': '微信',
+        'qq': 'QQ',
+      },
     },
     {
       title: '号码',
