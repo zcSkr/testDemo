@@ -5,7 +5,6 @@ import BraftEditor from '@/components/BraftEditor';
 import { useSelector } from '@umijs/max';
 
 const FormItem = Form.Item;
-const { Option } = Select;
 const { TextArea } = Input;
 const formLayout = {
   labelCol: { span: 4 },

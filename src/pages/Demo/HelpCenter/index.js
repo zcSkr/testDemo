@@ -25,9 +25,6 @@ import UpdateQuestion from './UpdateQuestion';
 
 import * as services_helpCenter from '@/services/business/helpCenter';
 
-const { RangePicker } = DatePicker;
-const { Option } = Select;
-
 const HelpCenter = () => {
   const dispatch = useDispatch()
   const [updateModalVisible, handleUpdateModalVisible] = useState(false);

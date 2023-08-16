@@ -13,9 +13,6 @@ import TestSku from './TestSku'
 
 import * as services_demoTable from '@/services/demo/demoTable';
 
-const { RangePicker } = DatePicker;
-const { Option } = Select
-
 const DemoTable = () => {
   const dispatch = useDispatch()
   const [updateModalVisible, handleUpdateModalVisible] = useState(false);
