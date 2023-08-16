@@ -29,7 +29,6 @@ const RoleManage = () => {
   let columns = [
     {
       dataIndex: 'id',
-      hideInSearch: true,
       valueType: 'indexBorder',
     },
     {

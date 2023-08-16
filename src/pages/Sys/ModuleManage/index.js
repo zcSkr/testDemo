@@ -18,7 +18,7 @@ const ModuleManage = () => {
 
   let columns = [
     {
-      dataIndex: 'sort',
+      dataIndex: 'id',
       valueType: 'indexBorder',
     },
     {
