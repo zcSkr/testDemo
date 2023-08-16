@@ -7,7 +7,7 @@ import StandardTable from '@/components/StandardTable';
 import GlobalModal from '@/components/GlobalModal'
 import UpdateForm from './UpdateForm';
 
-import * as service_customer from '@/services/business/customer';
+import * as services_customer from '@/services/business/customer';
 
 const CustomerService = () => {
   const dispatch = useDispatch();
@@ -53,7 +53,7 @@ const CustomerService = () => {
     const hide = message.loading({ content: '正在删除', key: 'delete' });
     const res = await dispatch({
       type: 'global/service',
-      service: service_customer.remove,
+      service: services_customer.remove,
       payload: { id: record.id }
     })
     hide();
@@ -68,7 +68,7 @@ const CustomerService = () => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
     const res = await dispatch({
       type: 'global/service',
-      service: service_customer.update,
+      service: services_customer.update,
       payload: {
         id: fields.id,
         type: fields.type,
@@ -98,7 +98,7 @@ const CustomerService = () => {
         ]}
         request={({ current, ...params }) => {
           // console.log(params)//查询参数，pageNum用current特殊处理
-          return service_customer.query({ ...params, pageNum: current })
+          return services_customer.query({ ...params, pageNum: current })
         }}
         postData={data => data.list}
         columns={columns}

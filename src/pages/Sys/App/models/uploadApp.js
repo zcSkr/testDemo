@@ -1,4 +1,4 @@
-import * as service_uploadApp from '@/services/sys/uploadApp';
+import * as services_uploadApp from '@/services/sys/uploadApp';
 export default {
   namespace: 'uploadApp',
 
@@ -14,7 +14,7 @@ export default {
     *query({ payload }, { select, call, put }) {
       const { list, pagination } = yield select(store => store.uploadApp)
       const { current, pageSize } = pagination
-      const response = yield call(service_uploadApp.query, { pageNum: current, pageSize, ...payload });
+      const response = yield call(services_uploadApp.query, { pageNum: current, pageSize, ...payload });
       // console.log(response)
       if (response?.code == 200) {
         yield put({
@@ -33,7 +33,7 @@ export default {
     },
     *service({ payload, service }, { select, call, put }) {
       console.log(payload)
-      const response = yield call(service_uploadApp[service], payload);
+      const response = yield call(services_uploadApp[service], payload);
       return response;
     },
   },

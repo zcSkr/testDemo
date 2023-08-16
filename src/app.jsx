@@ -9,7 +9,7 @@ import RightContent from '@/components/RightContent';
 import Exception403 from '@/pages/Exception/403'
 import qs from 'qs';
 
-import * as service_module from '@/services/sys/module';
+import * as services_module from '@/services/sys/module';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -154,7 +154,7 @@ export const layout = ({ initialState, setInitialState }) => {
       params: { token: sessionStorage.token }, // 每当 sessionStorage.token 发生修改时重新执行 request
       // request: async (params, defaultMenuData) => {
       //   if (!params.token) return [] //没有token不走接口
-      //   const res = await service_module.queryLoginModules()
+      //   const res = await services_module.queryLoginModules()
       //   const menuRes = res.data.map(item => ({ ...item, icon: defaultMenuData.find(route => route.path == item.path)?.icon }))
       //   setInitialState({ ...initialState, menuRes })
       //   return loopMenuItem(menuRes)

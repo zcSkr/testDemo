@@ -9,8 +9,8 @@ import UpdateForm from './UpdateForm';
 import UpdatePsd from '@/components/UpdatePsd'
 const { Option } = Select;
 
-import * as service_manager from '@/services/sys/manager';
-import * as service_role from '@/services/sys/role';
+import * as services_manager from '@/services/sys/manager';
+import * as services_role from '@/services/sys/role';
 
 const ChildManage = () => {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const ChildManage = () => {
   const [roleList, setRoleList] = useState([])
   useEffect(() => {
     (async () => {
-      const res = await service_role.query({ pageSize: 100 })
+      const res = await services_role.query({ pageSize: 100 })
       if (res?.code == 200) {
         setRoleList(res.data.list)
       }
@@ -81,7 +81,7 @@ const ChildManage = () => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
     const res = await dispatch({
       type: 'global/service',
-      service: service_manager.update,
+      service: services_manager.update,
       payload: {
         id: record.id,
         state: Number(record.state) ? 0 : 1
@@ -100,7 +100,7 @@ const ChildManage = () => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
     const res = await dispatch({
       type: 'global/service',
-      service: fields.id ? service_manager.update : service_manager.add,
+      service: fields.id ? services_manager.update : services_manager.add,
       payload: {
         id: fields.id,
         account: fields.account,
@@ -122,7 +122,7 @@ const ChildManage = () => {
     const hide = message.loading({ content: '正在删除', key: 'delete' });
     const res = await dispatch({
       type: 'global/service',
-      service: service_manager.remove,
+      service: services_manager.remove,
       payload: { id: record.id }
     })
     hide();
@@ -138,7 +138,7 @@ const ChildManage = () => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
     const res = await dispatch({
       type: 'global/service',
-      service: service_manager.updatePsd,
+      service: services_manager.updatePsd,
       payload: { id: stepFormValues.id, password: fields.password }
     })
     hide();
@@ -161,7 +161,7 @@ const ChildManage = () => {
         ]}
         request={({ current, ...params }) => {
           // console.log(params)//查询参数，pageNum用current特殊处理
-          return service_manager.query({ ...params, pageNum: current })
+          return services_manager.query({ ...params, pageNum: current })
         }}
         postData={data => data.list}
         columns={columns}

@@ -11,7 +11,7 @@ import UpdateForm from './UpdateForm';
 import Info from './Info'
 import TestSku from './TestSku'
 
-import * as service_demoTable from '@/services/demo/demoTable';
+import * as services_demoTable from '@/services/demo/demoTable';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select
@@ -133,7 +133,7 @@ const DemoTable = () => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
     const res = await dispatch({
       type: 'global/service',
-      service: service_demoTable.update,
+      service: services_demoTable.update,
       payload: {
         id: record.id,
         state: Number(record.state) ? 0 : 1
@@ -152,7 +152,7 @@ const DemoTable = () => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
     const res = await dispatch({
       type: 'global/service',
-      service: fields.id ? service_demoTable.update : service_demoTable.add,
+      service: fields.id ? services_demoTable.update : services_demoTable.add,
       payload: {
         id: fields.id,
         sort: fields.sort,
@@ -174,7 +174,7 @@ const DemoTable = () => {
     const hide = message.loading({ content: '正在删除', key: 'loading' });
     const res = await dispatch({
       type: 'global/service',
-      service: service_demoTable.remove,
+      service: services_demoTable.remove,
       payload: { id: record.id }
     })
     hide()
@@ -191,7 +191,7 @@ const DemoTable = () => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
     const res = await dispatch({
       type: 'global/service',
-      service: service_demoTable.update,
+      service: services_demoTable.update,
       payload: {
         id: record.id,
         [dataIndex]: record[dataIndex]
@@ -218,7 +218,7 @@ const DemoTable = () => {
         ]}
         request={({ current, ...params }) => {
           // console.log(params)//查询参数，pageNum用current特殊处理
-          return service_demoTable.query({ ...params, pageNum: current })
+          return services_demoTable.query({ ...params, pageNum: current })
         }}
         postData={data => data.list}
         columns={columns}

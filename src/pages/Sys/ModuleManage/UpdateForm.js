@@ -3,7 +3,7 @@ import { Form, Button, Input, InputNumber, Select } from 'antd';
 import { ProForm } from '@ant-design/pro-components';
 import { useDispatch, useSelector } from '@umijs/max';
 
-import * as service_module from '@/services/sys/module';
+import * as services_module from '@/services/sys/module';
 
 const FormItem = Form.Item;
 const { TextArea } = Input
@@ -26,7 +26,7 @@ const UpdateForm = ({
   useEffect(() => {
     dispatch({
       type: 'global/service',
-      service: service_module.queryTree,
+      service: services_module.queryTree,
       payload: { pageSize: 100 }
     }).then(res => {
       if (res?.code == 200) {

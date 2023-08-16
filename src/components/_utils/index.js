@@ -1,10 +1,10 @@
-import * as service_oss from '@/services/oss';
+import * as services_oss from '@/services/oss';
 import encBase64 from 'crypto-js/enc-base64';
 import HmacSHA1 from 'crypto-js/hmac-sha1';
 import encUtf8 from 'crypto-js/enc-utf8';
 // 获取oss参数
 export const getOSSData = async () => {
-  const { data } = await service_oss.getSTSInfo()
+  const { data } = await services_oss.getSTSInfo()
   if (!data) return null
   const policyText = {
     expiration: data.expiration, // 设置policy过期时间。

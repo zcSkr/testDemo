@@ -7,7 +7,7 @@ import { history, useModel, useDispatch } from '@umijs/max';
 import GlobalModal from '@/components/GlobalModal'
 import UpdatePsd from '@/components/UpdatePsd'
 
-import * as service_manager from '@/services/sys/manager';
+import * as services_manager from '@/services/sys/manager';
 
 const HeaderDropdown = ({ overlayClassName: cls, ...restProps }) => {
   const className = useEmotionCss(({ token }) => {
@@ -60,7 +60,7 @@ const AvatarDropdown = ({ children }) => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
     const res = await dispatch({
       type: 'global/service',
-      service: service_manager.updatePsd,
+      service: services_manager.updatePsd,
       payload: { id: getUnionuser().id, password: fields.password }
     })
     hide();

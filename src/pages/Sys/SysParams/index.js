@@ -7,7 +7,7 @@ import StandardTable from '@/components/StandardTable';
 import GlobalModal from '@/components/GlobalModal'
 import UpdateForm from './UpdateForm';
 
-import * as service_params from '@/services/sys/params';
+import * as services_params from '@/services/sys/params';
 
 const SysParams = () => {
   const dispatch = useDispatch()
@@ -46,7 +46,7 @@ const SysParams = () => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
     const res = await dispatch({
       type: 'global/service',
-      service: service_params.update,
+      service: services_params.update,
       payload: {
         id: fields.id,
         codeKey: fields.codeKey,
@@ -70,7 +70,7 @@ const SysParams = () => {
         actionRef={actionRef}
         request={({ current, ...params }) => {
           // console.log(params)//查询参数，pageNum用current特殊处理
-          return service_params.query({ ...params, pageNum: current })
+          return services_params.query({ ...params, pageNum: current })
         }}
         postData={data => data.list}
         columns={columns}

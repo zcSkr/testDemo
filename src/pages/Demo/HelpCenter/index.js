@@ -23,7 +23,7 @@ import dayjs from 'dayjs';
 import UpdateForm from './UpdateForm';
 import UpdateQuestion from './UpdateQuestion';
 
-import * as service_helpCenter from '@/services/business/helpCenter';
+import * as services_helpCenter from '@/services/business/helpCenter';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -89,7 +89,7 @@ const HelpCenter = () => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
     const res = await dispatch({
       type: 'global/service',
-      service: fields.id ? service_helpCenter.update : service_helpCenter.add,
+      service: fields.id ? services_helpCenter.update : services_helpCenter.add,
       payload: {
         id: fields.id,
         primaryNavId: selectedRows[0]?.id,
@@ -112,7 +112,7 @@ const HelpCenter = () => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
     const res = await dispatch({
       type: 'global/service',
-      service: service_helpCenter.update,
+      service: services_helpCenter.update,
       payload: {
         id: record.id,
         state: Number(record.state) ? 0 : 1
@@ -131,7 +131,7 @@ const HelpCenter = () => {
     const hide = message.loading({ content: '正在删除', key: 'delete' });
     const res = await dispatch({
       type: 'global/service',
-      service: service_helpCenter.remove,
+      service: services_helpCenter.remove,
       payload: { id: record.id },
     })
     hide();
@@ -147,7 +147,7 @@ const HelpCenter = () => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
     const res = await dispatch({
       type: 'global/service',
-      service: fields.id ? service_helpCenter.update : service_helpCenter.add,
+      service: fields.id ? services_helpCenter.update : services_helpCenter.add,
       payload: {
         id: fields.id,
         title: fields.title,
@@ -168,7 +168,7 @@ const HelpCenter = () => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
     const res = await dispatch({
       type: 'global/service',
-      service: service_helpCenter.update,
+      service: services_helpCenter.update,
       payload: {
         id: record.id,
         state: Number(record.state) ? 0 : 1
@@ -188,7 +188,7 @@ const HelpCenter = () => {
     const hide = message.loading({ content: '正在删除', key: 'loading' });
     const res = await dispatch({
       type: 'global/service',
-      service: service_helpCenter.remove,
+      service: services_helpCenter.remove,
       payload: { id: record.id },
     })
     hide()
@@ -220,7 +220,7 @@ const HelpCenter = () => {
             showActions="hover" //hover always
             actionRef={listActionRef}
             request={params => {
-              return service_helpCenter.query({ pageSize: 9999, pageNum: 1 })
+              return services_helpCenter.query({ pageSize: 9999, pageNum: 1 })
             }}
             postData={data => data.list}
             tableAlertRender={false}
@@ -266,7 +266,7 @@ const HelpCenter = () => {
             request={({ current, ...params }) => {
               // console.log(params)//查询参数，pageNum用current特殊处理
               if (!selectedRows[0]) return { data: { list: [] } }
-              return service_helpCenter.query({ ...params, pageNum: current, primaryNavId: selectedRows[0]?.id })
+              return services_helpCenter.query({ ...params, pageNum: current, primaryNavId: selectedRows[0]?.id })
             }}
             postData={data => data.list}
             columns={columns}

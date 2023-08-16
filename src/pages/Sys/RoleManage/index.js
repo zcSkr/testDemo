@@ -7,8 +7,8 @@ import StandardTable from '@/components/StandardTable';
 import GlobalModal from '@/components/GlobalModal'
 import UpdateForm from './UpdateForm';
 
-import * as service_role from '@/services/sys/role';
-import * as service_module from '@/services/sys/module';
+import * as services_role from '@/services/sys/role';
+import * as services_module from '@/services/sys/module';
 
 const RoleManage = () => {
   const dispatch = useDispatch()
@@ -19,7 +19,7 @@ const RoleManage = () => {
 
   useEffect(() => {
     (async () => {
-      const res = await service_module.queryTree({ pageSize: 100 })
+      const res = await services_module.queryTree({ pageSize: 100 })
       if (res?.code == 200) {
         setModuleTreeList(res.data.list)
       }
@@ -80,7 +80,7 @@ const RoleManage = () => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
     const res = await dispatch({
       type: 'global/service',
-      service: fields.id ? service_role.update : service_role.add,
+      service: fields.id ? services_role.update : services_role.add,
       payload: {
         id: fields.id,
         roleName: fields.roleName,
@@ -102,7 +102,7 @@ const RoleManage = () => {
     const hide = message.loading({ content: '正在删除', key: 'delete' });
     const res = await dispatch({
       type: 'global/service',
-      service: service_role.remove,
+      service: services_role.remove,
       payload: { id: record.id }
     })
     hide();
@@ -125,7 +125,7 @@ const RoleManage = () => {
         ]}
         request={({ current, ...params }) => {
           // console.log(params)//查询参数，pageNum用current特殊处理
-          return service_role.query({ ...params, pageNum: current })
+          return services_role.query({ ...params, pageNum: current })
         }}
         postData={data => data.list}
         columns={columns}

@@ -7,7 +7,7 @@ import StandardTable from '@/components/StandardTable';
 import GlobalModal from '@/components/GlobalModal'
 import UpdateForm from './UpdateForm';
 
-import * as service_module from '@/services/sys/module';
+import * as services_module from '@/services/sys/module';
 
 const ModuleManage = () => {
   const dispatch = useDispatch()
@@ -57,7 +57,7 @@ const ModuleManage = () => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
     const module = await handleMoudleGroup(routes, {})
 
-    const res = await service_module.patch_add({ jsonArray: JSON.stringify(module) })
+    const res = await services_module.patch_add({ jsonArray: JSON.stringify(module) })
     hide()
     if (res.code != 200) return message.error(res.msg)
     actionRef.current.reload()
@@ -95,7 +95,7 @@ const ModuleManage = () => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
     const res = await dispatch({
       type: 'global/service',
-      service: fields.id ? service_module.update : service_module.add,
+      service: fields.id ? services_module.update : services_module.add,
       payload: {
         id: fields.id,
         pid: fields.pid,
@@ -119,7 +119,7 @@ const ModuleManage = () => {
     const hide = message.loading({ content: '正在删除', key: 'delete' });
     const res = await dispatch({
       type: 'global/service',
-      service: service_module.remove,
+      service: services_module.remove,
       payload: { id: record.id }
     })
     hide();
@@ -152,7 +152,7 @@ const ModuleManage = () => {
         ]}
         request={({ current, ...params }) => {
           // console.log(params)//查询参数，pageNum用current特殊处理
-          return service_module.queryTree({ ...params, pageNum: current })
+          return services_module.queryTree({ ...params, pageNum: current })
         }}
         postData={res => loopList(res.list)}
         columns={columns}

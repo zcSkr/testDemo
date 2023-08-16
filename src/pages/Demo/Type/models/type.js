@@ -1,4 +1,4 @@
-import * as service_type from '@/services/demo/demoTable';
+import * as services_type from '@/services/demo/demoTable';
 export default {
   namespace: 'type',
 
@@ -24,7 +24,7 @@ export default {
   },
   effects: {
     *query({ payload }, { select, call, put }) {
-      const response = yield call(service_type.query, { ...payload });
+      const response = yield call(services_type.query, { ...payload });
       if (response?.code == 200) {
         yield put({
           type: 'save',
@@ -41,7 +41,7 @@ export default {
       return response
     },
     *queryLevel2({ payload }, { select, call, put }) {
-      const response = yield call(service_type.query, { ...payload });
+      const response = yield call(services_type.query, { ...payload });
       if (response?.code == 200) {
         yield put({
           type: 'save',
@@ -58,7 +58,7 @@ export default {
       return response
     },
     *queryLevel3({ payload }, { select, call, put }) {
-      const response = yield call(service_type.query, { ...payload });
+      const response = yield call(services_type.query, { ...payload });
       if (response?.code == 200) {
         yield put({
           type: 'save',
@@ -75,7 +75,7 @@ export default {
       return response
     },
     *service({ payload, service }, { select, call, put }) {
-      const response = yield call(service_type[service], payload);
+      const response = yield call(services_type[service], payload);
       return response
     },
   },
