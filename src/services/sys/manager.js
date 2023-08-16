@@ -17,7 +17,9 @@ export async function remove(params) {
 export async function updatePsd(data) {
   return request('/mock/demo', { method: 'PUT', data });
 }
-
+export async function resetPsd(data) {
+  return request('/mock/demo', { method: 'PUT', data });
+}
 
 // 以下是正常项目标准接口
 // export async function query(params) {
@@ -33,5 +35,8 @@ export async function updatePsd(data) {
 //   return request('/v2/sub/administrator', { method: 'DELETE', params });
 // }
 // export async function updatePsd(data) {
-//   return request('/v2/sub/updatePwd', { method: 'POST', data });
+//   return request('/v2/sub/updatePwd', { method: 'PUT', data });
+// }
+// export async function resetPsd(data) {
+//   return request('/v2/sub/resetPwd', { method: 'PUT', data });
 // }

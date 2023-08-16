@@ -6,8 +6,6 @@ import { PageContainer } from '@ant-design/pro-components';
 import StandardTable from '@/components/StandardTable';
 import GlobalModal from '@/components/GlobalModal'
 import UpdateForm from './UpdateForm';
-import UpdatePsd from '@/components/UpdatePsd'
-const { Option } = Select;
 
 import * as services_manager from '@/services/sys/manager';
 import * as services_role from '@/services/sys/role';
@@ -15,7 +13,6 @@ import * as services_role from '@/services/sys/role';
 const ChildManage = () => {
   const dispatch = useDispatch();
   const [updateModalVisible, handleUpdateModalVisible] = useState(false);
-  const [psdModalVisible, handlePsdModalVisible] = useState(false);
   const [stepFormValues, setStepFormValues] = useState({});
   const actionRef = useRef();
   const [roleList, setRoleList] = useState([])
@@ -67,7 +64,9 @@ const ChildManage = () => {
       valueType: 'option',
       render: (_, record) => (
         <Space>
-          <a onClick={() => { handlePsdModalVisible(true); setStepFormValues(record); }}>修改密码</a>
+          <Popconfirm title="确定重置?" onConfirm={() => handleRestPassword(record)} okText="确定" cancelText="取消">
+            <a style={{ color: '#f50' }}>重置密码</a>
+          </Popconfirm>
           <a onClick={() => { handleUpdateModalVisible(true); setStepFormValues(record); }}>编辑</a>
           <Popconfirm title="确定删除?" onConfirm={() => handleDeleteRecord(record)} okText="确定" cancelText="取消">
             <a style={{ color: '#f50' }}>删除</a>
@@ -134,17 +133,16 @@ const ChildManage = () => {
     }
   };
 
-  const handleUpdatePsd = async fields => {
+  const handleRestPassword = async record => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
     const res = await dispatch({
       type: 'global/service',
-      service: services_manager.updatePsd,
-      payload: { id: stepFormValues.id, password: fields.password }
+      service: services_manager.resetPsd,
+      payload: { id: record.id }
     })
     hide();
     if (res?.code == 200) {
       message.success({ content: '操作成功', key: 'success' });
-      handlePsdModalVisible(false)
     } else {
       message.error({ content: res.msg, key: 'error' });
     }
@@ -178,18 +176,6 @@ const ChildManage = () => {
           values={stepFormValues}
           handleUpdate={handleUpdate}
           roleList={roleList}
-        />
-      </GlobalModal>
-      <GlobalModal
-        open={psdModalVisible}
-        onCancel={() => {
-          handlePsdModalVisible(false);
-          setStepFormValues({});
-        }}
-        title='修改密码'
-      >
-        <UpdatePsd
-          handleUpdate={handleUpdatePsd}
         />
       </GlobalModal>
     </PageContainer>
