@@ -66,15 +66,15 @@ const GlobalUploadOss = ({
         const time = await getDuration(file.originFileObj)
         props.getTime(time)
       }
+      if (accept === '.apk') { //上传apk专用
+        onChange(fileList)
+      } else {
+        onChange(fileList.map(item => item.url).filter(r => r).join(','))
+      }
     } else if (file.status === 'error') {
       message.error(`${file.name} 上传失败`);
     }
     fileList = fileList.filter(item => item.status);
-    if (accept === '.apk') { //上传apk专用
-      onChange(fileList)
-    } else {
-      onChange(fileList.map(item => item.url).filter(r => r).join(','))
-    }
     flushSync(() => setFileList(fileList)) //React18 Automatic batching 原因会导致只渲染一次导致多文件上传状态问题
   }
 
