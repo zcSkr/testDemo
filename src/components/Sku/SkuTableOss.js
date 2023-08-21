@@ -49,12 +49,12 @@ const SkuTableOss = ({
             accept="image/*"
             action={ossHost}
             data={file => ({
-              key: file.ossName,
+              key: file.uid,
               ...ossSTSInfo,
               'success_action_status': '200' //让服务端返回200,不然，默认会返回204
             })}
             beforeUpload={async (file, fileList) => { //上传前文件重命名
-              file.ossName = `Spu/${randomString(10)}${getSuffix(file.name)}`
+              file.uid = `Spu/${randomString(10)}${getSuffix(file.name)}`
               return file
             }}
             fileList={fileList}
@@ -74,12 +74,12 @@ const SkuTableOss = ({
             accept="image/*"
             action={ossHost}
             data={file => ({
-              key: file.ossName,
+              key: file.uid,
               ...ossSTSInfo,
               'success_action_status': '200' //让服务端返回200,不然，默认会返回204
             })}
             beforeUpload={async (file, fileList) => { //上传前文件重命名
-              file.ossName = `Spu/${randomString(10)}${getSuffix(file.name)}`
+              file.uid = `Spu/${randomString(10)}${getSuffix(file.name)}`
               return file
             }}
             fileList={val || []}
@@ -112,7 +112,7 @@ const SkuTableOss = ({
   const handleTitleUploadChange = (field, { file, fileList }) => {
     if (file.status === 'done') {
       message.success(`${file.name} 上传成功`);
-      file.url = ossHost + '/' + file.ossName;
+      file.url = ossHost + '/' + file.uid;
     } else if (file.status === 'error') {
       message.error(`${file.name} 上传失败`);
     }
@@ -130,7 +130,7 @@ const SkuTableOss = ({
   const handleUploadChange = (index, field, { file, fileList }) => {
     if (file.status === 'done') {
       message.success(`${file.name} 上传成功`);
-      file.url = ossHost + '/' + file.ossName;
+      file.url = ossHost + '/' + file.uid;
     } else if (file.status === 'error') {
       message.error(`${file.name} 上传失败`);
     }

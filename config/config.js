@@ -1,6 +1,5 @@
 // https://umijs.org/config/
 import { defineConfig } from '@umijs/max';
-import defaultSettings from './defaultSettings';
 import pageRoutes from './router.config';
 export default defineConfig({
   base: '/',
@@ -8,7 +7,12 @@ export default defineConfig({
   favicons: ['/favicon.ico'],
   hash: true,
   history: { type: 'hash' }, // 默认hash 可选browser
-  antd: {},
+  antd: {
+    dark: false,
+    compact: false,
+    theme: {},
+    appConfig: {},
+  },
   dva: {},
   layout: {},
   locale: {

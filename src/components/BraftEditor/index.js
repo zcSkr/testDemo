@@ -3,7 +3,7 @@ import 'braft-extensions/dist/table.css'
 import React, { useState, useRef, useEffect, useReducer } from 'react'
 import BraftEditor from 'braft-editor'
 import { ContentUtils } from 'braft-utils'
-import { Upload, message, Spin } from 'antd'
+import { Upload, message, Spin, theme } from 'antd'
 import { PictureFilled, PlaySquareFilled } from '@ant-design/icons'
 import { imageControls, excludeControls, controls, tableOptions } from './config'
 import { useModel } from '@umijs/max';
@@ -57,12 +57,12 @@ const BraftEditorComponentOSS = ({
     showUploadList: false,
     action: ossHost,
     data: (file) => ({
-      key: file.ossName,
+      key: file.uid,
       ...ossSTSInfo,
       'success_action_status': '200' //让服务端返回200,不然，默认会返回204
     }),
     beforeUpload: async (file, fileList) => {//上传前文件重命名
-      file.ossName = `BraftEditor/${randomString(10)}${getSuffix(file.name)}`
+      file.uid = `BraftEditor/${randomString(10)}${getSuffix(file.name)}`
       return file
     },
     onChange: ({ file, fileList, event }) => {
@@ -73,7 +73,7 @@ const BraftEditorComponentOSS = ({
         setUploading(false)
       } else if (file.status === 'done') {
         setUploading(false)
-        let src = ossHost + '/' + file.ossName
+        let src = ossHost + '/' + file.uid
         if (/video/.test(file.type)) {
           dispatchReducer({ type: 'insertVideo', payload: src })
         } else {
@@ -117,8 +117,9 @@ const BraftEditorComponentOSS = ({
     }
   }
 
+  const { token } = theme.useToken()
   return (
-    <div className="editor-wrapper" style={{ border: '1px solid #d9d9d9', borderRadius: 4 }}>
+    <div className="editor-wrapper" style={{ border: `1px solid ${token.colorBorder}`, borderRadius: token.borderRadius }}>
       <Spin spinning={uploading} tip="图片上传中">
         <BraftEditor
           id="editor-oss"
