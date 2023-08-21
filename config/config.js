@@ -42,10 +42,6 @@ export default defineConfig({
       },
     },
   },
-  moment2dayjs: {
-    preset: 'antd',
-    plugins: [],
-  },
   fastRefresh: true,
   devtool: process.env.NODE_ENV === 'development' ? 'eval' : false,
   model: {},
