@@ -102,6 +102,19 @@ export async function getInitialState() {
   };
 }
 
+export const antd = (memo) => {
+  // memo.theme ??= {};
+  // memo.theme.algorithm = [theme.darkAlgorithm]; // 配置 antd5 的预设 dark 算法
+  // memo.appConfig = {
+  //   message: {
+  //     // 配置 message 最大显示数，超过限制时，最早的消息会被自动关闭
+  //     maxCount: 1,
+  //   }
+  // }
+  // console.log(memo)
+  return memo;
+};
+
 export const layout = ({ initialState, setInitialState }) => {
   const { token } = theme.useToken()
   const loopMenuItem = (menus) =>

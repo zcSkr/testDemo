@@ -15,14 +15,13 @@ const Login = () => {
   const [errorMsg, setErrorMsg] = useState();
   const { initialState: { settings, setToken, setUnionuser }, refresh } = useModel('@@initialState');
 
-  const containerClassName = useEmotionCss(() => {
+  const containerClassName = useEmotionCss(({ token }) => {
     return {
       display: 'flex',
       flexDirection: 'column',
       height: '100vh',
       overflow: 'auto',
-      backgroundImage:
-        "url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr')",
+      background: `url('https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/V-_oS6r-i7wAAAAAAAAAAAAAFl94AQBr'),linear-gradient(${token.colorBgContainer}, ${token.colorBgLayout} 28%)`,
       backgroundSize: '100% 100%',
     };
   });
@@ -51,7 +50,7 @@ const Login = () => {
           onFinish={handleSubmit}
           onValuesChange={() => setStatus()}
         >
-          <Tabs centered activeKey='account' items={[{label: "账号密码登录", key: 'account'}]} />
+          <Tabs centered activeKey='account' items={[{ label: "账号密码登录", key: 'account' }]} />
           {status === 'error' && <LoginMessage content={errorMsg || "账号或密码错误"} />}
           <ProFormText
             name="account"
