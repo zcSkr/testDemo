@@ -15,7 +15,7 @@ const GlobalUploadOss = ({
   accept = 'image/*',
   value,
   crop,
-  data: { type = 'default' },
+  data: { type = 'webDefault' },
   listType = 'picture-card',
   supportSort,
   ...props

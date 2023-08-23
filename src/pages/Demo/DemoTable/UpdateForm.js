@@ -177,7 +177,7 @@ const UpdateForm = ({
         label="oss上传示例"
         rules={[{ required: true, message: '请上传！' }]}
       >
-        <GlobalUpload data={{ type: 'test' }} maxCount={2} />
+        <GlobalUpload maxCount={2} />
       </FormItem>
       <FormItem
         name="address"

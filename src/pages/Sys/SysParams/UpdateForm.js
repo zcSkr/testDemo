@@ -66,7 +66,7 @@ const UpdateForm = ({
                 label="值"
                 rules={[{ required: true, message: '请上传文件！' }]}
               >
-                <GlobalUpload accept='*' listType="text" data={{ type: 'paramsFile' }} />
+                <GlobalUpload accept='*' listType="text" />
               </FormItem>
             )
           }
