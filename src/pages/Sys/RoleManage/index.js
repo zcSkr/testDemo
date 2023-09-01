@@ -1,30 +1,18 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Space, message, Popconfirm } from 'antd';
-import React, { useState, useRef, useEffect } from 'react';
-import { useDispatch, } from '@umijs/max';
+import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import StandardTable from '@/components/StandardTable';
 import GlobalModal from '@/components/GlobalModal'
 import UpdateForm from './UpdateForm';
 
 import * as services_role from '@/services/sys/role';
-import * as services_module from '@/services/sys/module';
 
 const RoleManage = () => {
-  const dispatch = useDispatch()
   const [updateModalVisible, handleUpdateModalVisible] = useState(false);
   const [stepFormValues, setStepFormValues] = useState({});
   const actionRef = useRef();
-  const [moduleTreeList, setModuleTreeList] = useState([])
 
-  useEffect(() => {
-    (async () => {
-      const res = await services_module.queryTree({ pageSize: 100 })
-      if (res?.code == 200) {
-        setModuleTreeList(res.data.list)
-      }
-    })()
-  }, [])
 
   let columns = [
     {
@@ -70,7 +58,7 @@ const RoleManage = () => {
   const handleUpdate = async fields => {
     let moduleIds = fields.moduleIds.map(arr => {
       if (arr.length == 1) { //只选中一级的，要把所有子级带上
-        const children = moduleTreeList.find(item => item.id == arr[0]).children
+        const children = fields.moduleTreeList.find(item => item.id == arr[0]).children
         return arr.concat(children.map(item => item.id))
       }
       return arr
@@ -78,15 +66,11 @@ const RoleManage = () => {
     moduleIds = moduleIds.filter((item,index) => moduleIds.indexOf(item) == index) // 因为indexOf 只能查找到第一个，利用它去重
     // console.log(moduleIds)
     const hide = message.loading({ content: '操作中', key: 'loading' });
-    const res = await dispatch({
-      type: 'global/service',
-      service: fields.id ? services_role.update : services_role.add,
-      payload: {
-        id: fields.id,
-        roleName: fields.roleName,
-        description: fields.description,
-        moduleIds: moduleIds.join(','),
-      }
+    const res = await services_role[fields.id ? 'update' : 'add']({
+      id: fields.id,
+      roleName: fields.roleName,
+      description: fields.description,
+      moduleIds: moduleIds.join(','),
     })
     hide();
     if (res?.code == 200) {
@@ -100,11 +84,7 @@ const RoleManage = () => {
 
   const handleDeleteRecord = async record => {
     const hide = message.loading({ content: '正在删除', key: 'delete' });
-    const res = await dispatch({
-      type: 'global/service',
-      service: services_role.remove,
-      payload: { id: record.id }
-    })
+    const res = await services_role.remove({ id: record.id })
     hide();
     if (res?.code == 200) {
       message.success({ content: '删除成功', key: 'success' });
@@ -141,7 +121,6 @@ const RoleManage = () => {
         <UpdateForm
           values={stepFormValues}
           handleUpdate={handleUpdate}
-          moduleTreeList={moduleTreeList}
         />
       </GlobalModal>
     </PageContainer>

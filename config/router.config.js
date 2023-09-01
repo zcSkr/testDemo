@@ -71,12 +71,6 @@ export default [
         component: './Demo/Type',
       },
       {
-        name: '帮助中心',
-        access: 'accessRoute',
-        path: '/demo/helpCenter',
-        component: './Demo/HelpCenter',
-      },
-      {
         name: '客服中心',
         access: 'accessRoute',
         path: '/demo/customer',

@@ -1,7 +1,6 @@
 import React from 'react';
-import { Form, Button, Input } from 'antd';
+import { Form, Input } from 'antd';
 import { ProForm } from '@ant-design/pro-components';
-import { useSelector } from '@umijs/max';
 
 const FormItem = Form.Item;
 const formLayout = {
@@ -11,26 +10,14 @@ const formLayout = {
 const UpdatePsd = ({ 
   handleUpdate
 }) => {
-  const submiting = useSelector(state => state.loading).effects['global/service']
-  const [form] = Form.useForm();
-  const renderFooter = () => {
-    return (
-      <FormItem wrapperCol={24} noStyle>
-        <div style={{ textAlign: 'center' }}>
-          <Button type="primary" loading={submiting} htmlType="submit">
-            提交
-          </Button>
-        </div>
-      </FormItem>
-    );
-  };
   return (
     <ProForm
       onFinish={fieldsValue => handleUpdate({ ...fieldsValue })}
-      submitter={false}
+      submitter={{
+        render: (props,doms) => <div style={{ textAlign: 'center' }}>{doms[1]}</div>
+      }}
       layout="horizontal"
       {...formLayout}
-      form={form}
     >
       <FormItem
         name="password"
@@ -59,7 +46,7 @@ const UpdatePsd = ({
       >
         <Input.Password maxLength={50} allowClear placeholder="请输入" />
       </FormItem>
-      {renderFooter()}
+      
     </ProForm>
   );
 };

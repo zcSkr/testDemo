@@ -15,7 +15,7 @@ const GlobalUploadOss = ({
   accept = 'image/*',
   value,
   crop,
-  data: { type = 'webDefault' },
+  data,
   listType = 'picture-card',
   supportSort,
   ...props
@@ -23,6 +23,7 @@ const GlobalUploadOss = ({
   const { initialState: { ossHost, ossSuffix } } = useModel('@@initialState');
   const [previewSrc, setPreviewSrc] = useState()
   const [ossSTSInfo, setOssSTSInfo] = useState();
+  const { type = 'webDefault' } = data || {}
   const [fileList, setFileList] = useState(() => {
     if (accept === '.apk') { //上传apk专用
       return []
@@ -45,6 +46,7 @@ const GlobalUploadOss = ({
   }, [])
 
   const renameFile = (file) => {
+    console.log(type)
     file.uid = accept == '.apk' ? `${type}${getSuffix(file.name)}` : `${type}/${randomString(10)}${getSuffix(file.name)}`
   }
 
@@ -66,15 +68,15 @@ const GlobalUploadOss = ({
         const time = await getDuration(file.originFileObj)
         props.getTime(time)
       }
-      if (accept === '.apk') { //上传apk专用
-        onChange(fileList)
-      } else {
-        onChange(fileList.map(item => item.url).filter(r => r).join(','))
-      }
     } else if (file.status === 'error') {
       message.error(`${file.name} 上传失败`);
     }
     fileList = fileList.filter(item => item.status);
+    if (accept === '.apk') { //上传apk专用
+      onChange(fileList)
+    } else {
+      onChange(fileList.map(item => item.url).filter(r => r).join(','))
+    }
     flushSync(() => setFileList(fileList)) //React18 Automatic batching 原因会导致只渲染一次导致多文件上传状态问题
   }
 

@@ -6,10 +6,12 @@ import {
   Input,
   Button,
   Tag,
-  Tooltip, 
+  Tooltip,
   message,
+  theme,
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import { useEmotionCss } from '@ant-design/use-emotion-css';
 
 const SkuList = ({
   value: sku,
@@ -70,19 +72,35 @@ const SkuList = ({
       <Row type="flex" align="middle" style={{ width: '100%' }}>
         <Col span={3}>规格名</Col>
         <Col span={18}><Input value={item.key} onChange={e => handleSpecNameChange(index, e)} style={{ width: '100%', maxWidth: 200 }} placeholder="请输入规格名" /></Col>
-        <Col span={3}><Tag color="#f50" style={{ margin: 0 }} onClick={() => handleDeleteSku(index)}>删除</Tag></Col>
+        {index != 0 && <Col span={3}><Tag color={token.red6} style={{ margin: 0 }} onClick={() => handleDeleteSku(index)}>删除</Tag></Col>}
       </Row>
     )
   }
 
+  const wrapClassName = useEmotionCss(({ token }) => {
+    return {
+      border: `1px solid ${token.colorBorder}`,
+      borderRadius: token.borderRadius,
+    };
+  });
+  const addClassName = useEmotionCss(({ token }) => {
+    return {
+      padding: token.padding,
+      background: token.colorFillAlter,
+      borderRadius: token.borderRadius,
+    };
+  });
+
+  const { token } = theme.useToken()
+
   return (
-    <div style={{ border: '1px solid #f0f0f0', borderRadius: 8 }}>
+    <div className={wrapClassName}>
       {sku.map((item, index) => (
         <Card key={index} bordered={false} type="inner" title={renderTitle(item, index)}>
           <Row type="flex" align="middle">
             <Col span={3}>规格值</Col>
             <Col span={21}>
-              <div style={{ paddingLeft: '10px', lineHeight: '34px' }}>
+              <div style={{ paddingLeft: token.paddingSM, lineHeight: token.lineHeight }}>
                 {item.tags?.map((tag, i) => {
                   const isLongTag = tag.length > 20;
                   const tagElem = (
@@ -109,7 +127,7 @@ const SkuList = ({
                   <Tag
                     color="blue"
                     onClick={() => showInput(index)}
-                    style={{ background: '#fff', borderStyle: 'dashed' }}
+                    style={{ background: token.colorBgBase, borderStyle: 'dashed' }}
                   >
                     <PlusOutlined /> 添加
                   </Tag>
@@ -119,9 +137,12 @@ const SkuList = ({
           </Row>
         </Card>
       ))}
-      {sku.length < 2 && <div style={{ padding: '12px 24px', background: '#fafafa', borderRadius: '0 0 8px 8px' }}>
-        <Button onClick={handleAddSku}><PlusOutlined />添加规格项</Button>
-      </div>}
+      {
+        sku.length < 2 &&
+        <div className={addClassName}>
+          <Button onClick={handleAddSku}><PlusOutlined />添加规格项</Button>
+        </div>
+      }
     </div>
   );
 }

@@ -1,29 +1,17 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Space, message, Popconfirm, Switch, Select } from 'antd';
-import React, { useState, useRef, useEffect } from 'react';
-import { useDispatch } from '@umijs/max';
+import { Button, Space, message, Popconfirm, Switch } from 'antd';
+import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-components';
 import StandardTable from '@/components/StandardTable';
 import GlobalModal from '@/components/GlobalModal'
 import UpdateForm from './UpdateForm';
 
 import * as services_manager from '@/services/sys/manager';
-import * as services_role from '@/services/sys/role';
 
 const ChildManage = () => {
-  const dispatch = useDispatch();
   const [updateModalVisible, handleUpdateModalVisible] = useState(false);
   const [stepFormValues, setStepFormValues] = useState({});
   const actionRef = useRef();
-  const [roleList, setRoleList] = useState([])
-  useEffect(() => {
-    (async () => {
-      const res = await services_role.query({ pageSize: 100 })
-      if (res?.code == 200) {
-        setRoleList(res.data.list)
-      }
-    })()
-  }, [])
   let columns = [
     {
       dataIndex: 'id',
@@ -78,13 +66,9 @@ const ChildManage = () => {
 
   const handleSwitchChange = async record => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
-    const res = await dispatch({
-      type: 'global/service',
-      service: services_manager.update,
-      payload: {
-        id: record.id,
-        state: Number(record.state) ? 0 : 1
-      }
+    const res = await services_manager.update({
+      id: record.id,
+      state: Number(record.state) ? 0 : 1
     })
     hide()
     if (res?.code == 200) {
@@ -97,15 +81,11 @@ const ChildManage = () => {
 
   const handleUpdate = async fields => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
-    const res = await dispatch({
-      type: 'global/service',
-      service: fields.id ? services_manager.update : services_manager.add,
-      payload: {
-        id: fields.id,
-        account: fields.account,
-        nickname: fields.nickname,
-        roleIds: fields.roleIds,
-      }
+    const res = await services_manager[fields.id ? 'update' : 'add']({
+      id: fields.id,
+      account: fields.account,
+      nickname: fields.nickname,
+      roleIds: fields.roleIds,
     })
     hide();
     if (res?.code == 200) {
@@ -119,11 +99,7 @@ const ChildManage = () => {
 
   const handleDeleteRecord = async record => {
     const hide = message.loading({ content: '正在删除', key: 'delete' });
-    const res = await dispatch({
-      type: 'global/service',
-      service: services_manager.remove,
-      payload: { id: record.id }
-    })
+    const res = await services_manager.remove({ id: record.id })
     hide();
     if (res?.code == 200) {
       message.success({ content: '删除成功', key: 'success' });
@@ -135,11 +111,7 @@ const ChildManage = () => {
 
   const handleRestPassword = async record => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
-    const res = await dispatch({
-      type: 'global/service',
-      service: services_manager.resetPsd,
-      payload: { id: record.id }
-    })
+    const res = await services_manager.resetPsd({ id: record.id })
     hide();
     if (res?.code == 200) {
       message.success({ content: '操作成功', key: 'success' });
@@ -175,7 +147,6 @@ const ChildManage = () => {
         <UpdateForm
           values={stepFormValues}
           handleUpdate={handleUpdate}
-          roleList={roleList}
         />
       </GlobalModal>
     </PageContainer>

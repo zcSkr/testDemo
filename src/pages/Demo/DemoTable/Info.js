@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Radio, Switch, Space, InputNumber, Image } from 'antd';
+import { Space, Image } from 'antd';
 import { ProDescriptions, ProField } from '@ant-design/pro-components';
 import dayjs from 'dayjs';
 
@@ -20,7 +20,7 @@ const Info = ({
       <ProDescriptions.Item label="图片">
         <Image.PreviewGroup>
           <Space wrap>
-            {formVals.imgs?.split(',').map(item => <Image key={item} width={100} height={100} src={item} />)}
+            {formVals.imgs?.split(',').filter(r => r).map(item => <Image key={item} width={100} height={100} src={item} />)}
           </Space>
         </Image.PreviewGroup>
       </ProDescriptions.Item>
@@ -57,7 +57,7 @@ const Info = ({
         />
       </ProDescriptions.Item>
       <ProDescriptions.Item label="日期时间">
-        <ProField text={dayjs('2019-11-16 12:50:26').valueOf()} valueType="dateTime"/>
+        <ProField text={dayjs('2019-11-16 12:50:26').valueOf()} valueType="dateTime" />
       </ProDescriptions.Item>
       <ProDescriptions.Item label="日期">
         <ProField text={dayjs('2019-11-16 12:50:26').valueOf()} valueType="date" />

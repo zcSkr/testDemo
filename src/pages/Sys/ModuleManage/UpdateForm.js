@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Button, Input, InputNumber, Select } from 'antd';
-import { ProForm } from '@ant-design/pro-components';
-import { useDispatch, useSelector } from '@umijs/max';
+import React, { useState } from 'react';
+import { ProForm, ProFormSelect, ProFormText, ProFormDigit, ProFormTextArea } from '@ant-design/pro-components';
 
 import * as services_module from '@/services/sys/module';
 
-const FormItem = Form.Item;
-const { TextArea } = Input
 const formLayout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 18 },
@@ -15,46 +11,19 @@ const UpdateForm = ({
   handleUpdate,
   values,
 }) => {
-  const submiting = useSelector(state => state.loading).effects['global/service']
   const [formVals, setFormVals] = useState({
     ...values
   });
 
-  const [form] = Form.useForm();
-  const dispatch = useDispatch()
-  const [moduleList, setModuleList] = useState([])
-  useEffect(() => {
-    dispatch({
-      type: 'global/service',
-      service: services_module.queryTree,
-      payload: { pageSize: 100 }
-    }).then(res => {
-      if (res?.code == 200) {
-        setModuleList(res.data.list)
-      }
-    })
-  }, [])
 
-
-
-  const renderFooter = () => {
-    return (
-      <FormItem wrapperCol={24} noStyle>
-        <div style={{ textAlign: 'center' }}>
-          <Button type="primary" loading={submiting} htmlType="submit">
-            提交
-          </Button>
-        </div>
-      </FormItem>
-    );
-  };
   return (
     <ProForm
       onFinish={fieldsValue => handleUpdate({ ...formVals, ...fieldsValue })}
-      submitter={false}
+      submitter={{
+        render: (props,doms) => <div style={{ textAlign: 'center' }}>{doms[1]}</div>
+      }}
       layout="horizontal"
       {...formLayout}
-      form={form}
       initialValues={{
         pid: formVals.pid || '0',
         name: formVals.name,
@@ -63,50 +32,45 @@ const UpdateForm = ({
         description: formVals.description,
       }}
     >
-      <FormItem
+      <ProFormSelect
         name="pid"
         label="父级模块"
-        rules={[{ required: true, message: '请选择父级模块！' }]}
-      >
-        <Select
-          allowClear
-          showSearch
-          optionFilterProp="label"
-          placeholder="请选择"
-          style={{ width: '100%' }}
-          getPopupContainer={triggerNode => triggerNode.parentElement}
-          options={[{label: '顶级模块',value: '0'}].concat(moduleList.map(item => ({ label: item.name, value: item.id })))}
-        />
-      </FormItem>
-      <FormItem
+        rules={[{ required: true }]}
+        fieldProps={{
+          showSearch: true,
+          fieldNames: { label: 'name', value: 'id' },
+        }}
+        request={async () => {
+          const { data } = await services_module.queryTree({ pageSize: 999 })
+          return [{name: '顶级模块',id: '0'}].concat(data.list)
+        }}
+      />
+      <ProFormText
         name="name"
         label="模块名称"
-        rules={[{ required: true, message: '请输入模块名称！' }]}
-      >
-        <Input placeholder="请输入" maxLength={50} allowClear />
-      </FormItem>
-      <FormItem
+        rules={[{ required: true }]}
+        fieldProps={{ maxLength: 50 }}
+      />
+      <ProFormText
         name="path"
         label="请求路径"
-        rules={[{ required: true, message: '请输入请求路径！' }]}
-      >
-        <Input placeholder="请复制路由表里的path（例：/sys）" maxLength={50} allowClear />
-      </FormItem>
-      <FormItem
+        rules={[{ required: true }]}
+        placeholder="请复制路由表里的path（例：/sys）"
+        fieldProps={{ maxLength: 50 }}
+      />
+      <ProFormDigit
         name="number"
         label="排序"
-        rules={[{ required: true, message: '请输入排序！' }]}
-      >
-        <InputNumber style={{ width: '100%' }} min={1} precision={0} placeholder="请输入" />
-      </FormItem>
-      <FormItem
+        rules={[{ required: true }]}
+        min={1}
+        fieldProps={{ precision: 0 }}
+      />
+      <ProFormTextArea
         name="description"
         label="描述"
-      >
-        <TextArea placeholder="请输入" autoSize={{ minRows: 2, maxRows: 6 }} maxLength={500} allowClear showCount />
-      </FormItem>
+        fieldProps={{ autoSize: { minRows: 2, maxRows: 6 }, maxLength: 500, allowClear: true, showCount: true }}
+      />
 
-      {renderFooter()}
     </ProForm>
   );
 };

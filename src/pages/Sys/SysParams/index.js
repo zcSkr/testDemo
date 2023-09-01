@@ -1,7 +1,5 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Button, Space, message, Popconfirm, Switch } from 'antd';
+import { message } from 'antd';
 import React, { useState, useRef } from 'react';
-import { useDispatch } from '@umijs/max';
 import { PageContainer } from '@ant-design/pro-components';
 import StandardTable from '@/components/StandardTable';
 import GlobalModal from '@/components/GlobalModal'
@@ -10,7 +8,6 @@ import UpdateForm from './UpdateForm';
 import * as services_params from '@/services/sys/params';
 
 const SysParams = () => {
-  const dispatch = useDispatch()
   const [updateModalVisible, handleUpdateModalVisible] = useState(false);
   const [stepFormValues, setStepFormValues] = useState({});
   const actionRef = useRef();
@@ -44,15 +41,11 @@ const SysParams = () => {
 
   const handleUpdate = async fields => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
-    const res = await dispatch({
-      type: 'global/service',
-      service: services_params.update,
-      payload: {
-        id: fields.id,
-        codeKey: fields.codeKey,
-        codeValue: fields.codeValue,
-        description: fields.description,
-      }
+    const res = await services_params.update({
+      id: fields.id,
+      codeKey: fields.codeKey,
+      codeValue: fields.codeValue,
+      description: fields.description,
     })
     hide();
     if (res?.code == 200) {

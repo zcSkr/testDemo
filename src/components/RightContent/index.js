@@ -58,11 +58,7 @@ const AvatarDropdown = ({ children }) => {
 
   const handleUpdate = useCallback(async fields => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
-    const res = await dispatch({
-      type: 'global/service',
-      service: services_manager.updatePsd,
-      payload: { id: getUnionuser().id, password: fields.password }
-    })
+    const res = await services_manager.updatePsd({ id: getUnionuser().id, password: fields.password })
     hide();
     if (res?.code == 200) {
       message.success({ content: '操作成功', key: 'success' });

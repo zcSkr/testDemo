@@ -4,8 +4,6 @@ import { Form } from 'antd';
 import SkuList from './SkuList'
 import SkuTableOss from './SkuTableOss' //oss上传
 
-import styles from './index.less';
-
 const FormItem = Form.Item;
 const Sku = ({
   productList,
@@ -14,9 +12,8 @@ const Sku = ({
   //   { key: '颜色', inputVisible: false, inputValue: '', tags: ['红', '黄'] },
   //   { key: '尺寸', inputVisible: false, inputValue: '', tags: ['大', '小'] }
   // ],
-  form
 }) => {
-
+  const form = Form.useFormInstance();
   const [specList, setSpecList] = useState(sku);
 
   useEffect(() => {
@@ -99,7 +96,7 @@ const Sku = ({
   }
 
   return (
-    <div className={styles.skuWrap}>
+    <>
       <FormItem
         name='sku'
         label='商品规格'
@@ -153,7 +150,7 @@ const Sku = ({
           />
         </FormItem>
       }
-    </div>
+    </>
   )
 }
 

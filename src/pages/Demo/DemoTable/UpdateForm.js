@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Form, Button, Input, InputNumber, Select, Cascader, Image, Space } from 'antd';
-import { ProForm, ProFormDependency } from '@ant-design/pro-components';
+import { Form } from 'antd';
+import { ProForm, ProFormDependency, ProFormCascader, ProFormSelect, ProFormText, ProFormTextArea, ProFormMoney, ProFormDigit, ProFormRadio, ProFormSwitch, ProFormDigitRange } from '@ant-design/pro-components';
 import BraftEditor from '@/components/BraftEditor';
 import GlobalUpload from '@/components/GlobalUpload';
 import EditTag from '@/components/EditTag';
 import QQMap from '@/components/QQMap';
-import { useSelector } from '@umijs/max';
+
+import * as services_demoTable from '@/services/demo/demoTable';
 
 const FormItem = Form.Item;
-const { TextArea } = Input
 const formLayout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 18 },
@@ -17,32 +17,19 @@ const UpdateForm = ({
   handleUpdate,
   values
 }) => {
-  const submiting = useSelector(state => state.loading).effects['global/service']
   const [formVals, setFormVals] = useState({
     ...values,
   });
 
-  const [form] = Form.useForm();
-
-  const renderFooter = () => {
-    return (
-      <FormItem wrapperCol={24} noStyle>
-        <div style={{ textAlign: 'center' }}>
-          <Button type="primary" loading={submiting} htmlType="submit">
-            提交
-          </Button>
-        </div>
-      </FormItem>
-    );
-  };
 
   return (
     <ProForm
       onFinish={fieldsValue => handleUpdate({ ...formVals, ...fieldsValue })}
-      submitter={false}
+      submitter={{
+        render: (props,doms) => <div style={{ textAlign: 'center' }}>{doms[1]}</div>
+      }}
       layout="horizontal"
       {...formLayout}
-      form={form}
       initialValues={{
         sort: formVals.sort,
         name: formVals.name,
@@ -56,112 +43,82 @@ const UpdateForm = ({
         textArea: formVals.textArea,
       }}
     >
-      <FormItem
-        name="sort"
-        label="排序权重"
-        rules={[{ required: true, message: '请输入！' }]}
-      >
-        <InputNumber style={{ width: '100%' }} min={1} precision={0} placeholder="请输入" />
-      </FormItem>
-      <FormItem
-        name="name"
-        label="文本"
-        rules={[{ required: true, message: '请输入！' }]}
-      >
-        <Input placeholder="请输入" maxLength={50} allowClear />
-      </FormItem>
-      <FormItem
-        name="textArea"
-        label="文本域"
-        rules={[{ required: true, message: '请输入！' }]}
-      >
-        <TextArea placeholder="请输入" autoSize={{ minRows: 2, maxRows: 6 }} maxLength={500} allowClear showCount />
-      </FormItem>
-      <FormItem
-        name="cascader"
-        label="Cascader示例"
-        rules={[{ required: true, message: '请选择！' }]}
-      >
-        <Cascader
-          allowClear
-          showSearch
-          expandTrigger='hover'
-          placeholder="请选择"
-          style={{ width: '100%' }}
-          getPopupContainer={triggerNode => triggerNode.parentElement}
-          options={[
-            {
-              value: 'zhejiang',
-              label: '浙江',
-              children: [
-                {
-                  value: 'hangzhou',
-                  label: '杭州',
-                  children: [
-                    {
-                      value: 'xihu',
-                      label: '西湖',
-                    },
-                  ],
-                },
-              ],
-            },
-            {
-              value: 'jiangsu',
-              label: '江苏',
-              children: [
-                {
-                  value: 'nanjing',
-                  label: '南京',
-                  children: [
-                    {
-                      value: 'zhonghuamen',
-                      label: '中华门',
-                    },
-                  ],
-                },
-              ],
-            },
-          ]}
-        />
-      </FormItem>
-      <FormItem
-        name="select"
-        label="select示例"
-        rules={[{ required: true, message: '请选择！' }]}
-      >
-        <Select
-          allowClear
-          showSearch
-          optionFilterProp="label"
-          placeholder="请选择"
-          style={{ width: '100%' }}
-          getPopupContainer={triggerNode => triggerNode.parentElement}
-          options={[{label: '0', value: '0'},{label: '1', value: '1'},{label: '2', value: '3'},{label: '我擦', value: '3'}]}
-        />
-      </FormItem>
-      <FormItem noStyle shouldUpdate={(prevValues, curValues) => prevValues.select !== curValues.select || prevValues.cascader !== curValues.cascader}>
-        {() => (
-          form.getFieldValue('select') == 0 &&
-          <FormItem
-            name="url"
-            label="链接"
-            rules={[{ required: true, message: '请输入！' }]}
-          >
-            <Input placeholder="请输入" maxLength={50} allowClear />
-          </FormItem>
-        )}
-      </FormItem>
+      <ProFormText
+        name="proformtext"
+        label="proformtext示例"
+        rules={[{ required: true }]}
+        fieldProps={{ maxLength: 50 }}
+      />
+      <ProFormTextArea
+        name="ProFormTextArea"
+        label="ProFormTextArea示例"
+        rules={[{ required: true }]}
+        fieldProps={{ autoSize: { minRows: 2, maxRows: 6 }, maxLength: 500, allowClear: true, showCount: true }}
+      />
+      <ProFormDigit
+        name="proformdigit"
+        label="proformdigit示例"
+        rules={[{ required: true }]}
+        min={0}
+        fieldProps={{ precision: 0 }}
+      />
+      <ProFormMoney
+        name="proformmoney"
+        label="proformmoney示例"
+        rules={[{ required: true }]}
+        min={0}
+        fieldProps={{ precision: 2 }}
+      />
+      <ProFormSelect
+        name="proformselect"
+        label="proformselect示例"
+        rules={[{ required: true }]}
+        fieldProps={{
+          showSearch: true,
+          fieldNames: { label: 'name', value: 'id' },
+        }}
+        request={async () => {
+          const { data } = await services_demoTable.query({ pageSize: 999 })
+          return data.list
+        }}
+      />
+      <ProFormCascader
+        name="proformcascader"
+        label="proformcascader示例"
+        rules={[{ required: true }]}
+        fieldProps={{
+          showSearch: true,
+          expandTrigger: "hover",
+          fieldNames: { label: 'name', value: 'id' },
+        }}
+        request={async () => {
+          const { data } = await services_demoTable.query({ pageSize: 999 })
+          return data.list
+        }}
+      />
+      <ProFormRadio.Group
+        name="ProFormRadio"
+        label="ProFormRadio示例"
+        rules={[{ required: true }]}
+        options={[{ label: 'item 1', value: 'a' }, { label: 'item 2', value: 'b' }, { label: 'item 3', value: 'c' }]}
+      />
+      <ProFormSwitch
+        name="ProFormSwitch"
+        label="ProFormSwitch示例"
+        rules={[{ required: true }]}
+        fieldProps={{ checkedChildren: '是', unCheckedChildren: '否' }}
+      />
+      <ProFormDigitRange
+        name="ProFormDigitRange"
+        label="ProFormDigitRange示例"
+        rules={[{ required: true }]}
+        fieldProps={{ precision: 0 }}
+      />
+
       <ProFormDependency name={['select']}>
         {({ select }) => (
           select == 0 &&
-          <FormItem
-            name="url"
-            label="链接"
-            rules={[{ required: true, message: '请输入！' }]}
-          >
-            <Input placeholder="请输入" maxLength={50} allowClear />
-          </FormItem>
+          dom元素
         )}
       </ProFormDependency>
 
@@ -186,15 +143,6 @@ const UpdateForm = ({
       >
         <QQMap />
       </FormItem>
-      <FormItem label="图片纯展示示例">
-        <Image.PreviewGroup>
-          <Space wrap>
-            {
-              formVals.imgs?.split(',').map(item => <Image key={item} width={100} height={100} src={item} style={{ margin: '0 8px 8px 0' }} />)
-            }
-          </Space>
-        </Image.PreviewGroup>
-      </FormItem>
       <FormItem
         name="content1"
         label="oss富文本示例"
@@ -202,7 +150,7 @@ const UpdateForm = ({
       >
         <BraftEditor />
       </FormItem>
-      {renderFooter()}
+      
     </ProForm>
   );
 };

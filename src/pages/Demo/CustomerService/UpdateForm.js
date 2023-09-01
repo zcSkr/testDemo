@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, Input, InputNumber, Select, Cascader, Image, Space } from 'antd';
-import { ProForm } from '@ant-design/pro-components';
-import { useSelector } from '@umijs/max';
-const FormItem = Form.Item;
-const { TextArea } = Input
+import { ProForm, ProFormTextArea, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 const formLayout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 18 },
@@ -12,67 +8,45 @@ const UpdateForm = ({
   handleUpdate,
   values
 }) => {
-  const submiting = useSelector(state => state.loading).effects['global/service']
   const [formVals, setFormVals] = useState({
     ...values
   });
 
-  const [form] = Form.useForm();
-
-  const renderFooter = () => {
-    return (
-      <FormItem wrapperCol={24} noStyle>
-        <div style={{ textAlign: 'center' }}>
-          <Button type="primary" loading={submiting} htmlType="submit">
-            提交
-          </Button>
-        </div>
-      </FormItem>
-    );
-  };
   return (
     <ProForm
       onFinish={fieldsValue => handleUpdate({ ...formVals, ...fieldsValue })}
-      submitter={false}
+      submitter={{
+        render: (props, doms) => <div style={{ textAlign: 'center' }}>{doms[1]}</div>
+      }}
       layout="horizontal"
       {...formLayout}
-      form={form}
       initialValues={{
         number: formVals.number,
         remarks: formVals.remarks,
         type: formVals.type,
       }}
     >
-      <FormItem
+      <ProFormSelect
         name="type"
         label="类别"
-        rules={[{ required: true, message: '请选择类别！' }]}
-      >
-        <Select
-          allowClear
-          showSearch
-          optionFilterProp="label"
-          placeholder="请选择"
-          style={{ width: '100%' }}
-          getPopupContainer={triggerNode => triggerNode.parentElement}
-          options={[{label: '电话',value: 'phone'},{label: '微信',value: 'wechat'},{label: 'QQ',value: 'qq'}]}
-        />
-      </FormItem>
-      <FormItem
+        rules={[{ required: true }]}
+        fieldProps={{
+          showSearch: true,
+        }}
+        options={[{ label: '电话', value: 'phone' }, { label: '微信', value: 'wechat' }, { label: 'QQ', value: 'qq' }]}
+      />
+      <ProFormText
         name="number"
         label="联系号码"
-        rules={[{ required: true, message: '请输入联系号码！' }]}
-      >
-        <Input style={{ width: '100%' }} placeholder="请输入" />
-      </FormItem>
-      <FormItem
+        rules={[{ required: true }]}
+        fieldProps={{ maxLength: 50 }}
+      />
+      <ProFormTextArea
         name="remarks"
         label="备注"
-      >
-        <TextArea placeholder="请输入" autoSize={{ minRows: 2, maxRows: 6 }} maxLength={500} allowClear showCount />
-      </FormItem>
-
-      {renderFooter()}
+        rules={[{ required: true }]}
+        fieldProps={{ autoSize: { minRows: 2, maxRows: 6 }, maxLength: 500, allowClear: true, showCount: true }}
+      />
     </ProForm>
   );
 };

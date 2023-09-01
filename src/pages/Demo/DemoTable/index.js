@@ -1,7 +1,6 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, message, Popconfirm, DatePicker, Switch, Select, Image, Input, Space, Tooltip } from 'antd';
 import React, { useState, useRef } from 'react';
-import { useDispatch } from '@umijs/max';
 import { PageContainer } from '@ant-design/pro-components';
 import StandardTable from '@/components/StandardTable';
 import GlobalModal from '@/components/GlobalModal'
@@ -14,7 +13,6 @@ import TestSku from './TestSku'
 import * as services_demoTable from '@/services/demo/demoTable';
 
 const DemoTable = () => {
-  const dispatch = useDispatch()
   const [updateModalVisible, handleUpdateModalVisible] = useState(false);
   const [infoModalVisible, handleInfoModalVisible] = useState(false);
   const [skuModalVisible, handleSkuModalVisible] = useState(false);
@@ -128,13 +126,9 @@ const DemoTable = () => {
 
   const handleSwitchChange = async record => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
-    const res = await dispatch({
-      type: 'global/service',
-      service: services_demoTable.update,
-      payload: {
-        id: record.id,
-        state: Number(record.state) ? 0 : 1
-      }
+    const res = await services_demoTable.update({
+      id: record.id,
+      state: Number(record.state) ? 0 : 1
     })
     hide()
     if (res?.code == 200) {
@@ -147,15 +141,11 @@ const DemoTable = () => {
 
   const handleUpdate = async fields => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
-    const res = await dispatch({
-      type: 'global/service',
-      service: fields.id ? services_demoTable.update : services_demoTable.add,
-      payload: {
-        id: fields.id,
-        sort: fields.sort,
-        name: fields.name,
-        url: fields.url,
-      }
+    const res = await services_demoTable[fields.id ? 'update' : 'add']({
+      id: fields.id,
+      sort: fields.sort,
+      name: fields.name,
+      url: fields.url,
     })
     hide();
     if (res?.code == 200) {
@@ -169,11 +159,7 @@ const DemoTable = () => {
 
   const handleDeleteRecord = async record => {
     const hide = message.loading({ content: '正在删除', key: 'loading' });
-    const res = await dispatch({
-      type: 'global/service',
-      service: services_demoTable.remove,
-      payload: { id: record.id }
-    })
+    const res = await services_demoTable.remove({ id: record.id })
     hide()
     if (res?.code == 200) {
       message.success({ content: '删除成功', key: 'success' });
@@ -186,13 +172,9 @@ const DemoTable = () => {
   const handleSave = async (dataIndex, record) => {
     // console.log(dataIndex,record)
     const hide = message.loading({ content: '操作中', key: 'loading' });
-    const res = await dispatch({
-      type: 'global/service',
-      service: services_demoTable.update,
-      payload: {
-        id: record.id,
-        [dataIndex]: record[dataIndex]
-      }
+    const res = await services_demoTable.update({
+      id: record.id,
+      [dataIndex]: record[dataIndex]
     })
     hide();
     if (res?.code == 200) {

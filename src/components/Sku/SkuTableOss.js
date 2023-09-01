@@ -6,6 +6,7 @@ import {
   message,
 } from 'antd';
 import { useModel } from '@umijs/max';
+import { useEmotionCss } from '@ant-design/use-emotion-css';
 import StandardTable from '@/components/StandardTable';
 import { UploadOutlined } from '@ant-design/icons';
 import { getOSSData, getSuffix, randomString } from '../_utils';
@@ -21,11 +22,14 @@ const SkuTableOss = ({
   const [ossSTSInfo, setOssSTSInfo] = useState();
 
   useEffect(() => {
-    (async () => {
-      const res = await getOSSData()
-      setOssSTSInfo(res)
-    })()
+    queryOSSData()
   }, [])
+
+  const queryOSSData = async () => {
+    const res = await getOSSData()
+    setOssSTSInfo(res)
+  }
+
 
   let columns = sku.map(item => ({ title: item.key, dataIndex: item.key }))
   columns.push(
@@ -139,9 +143,16 @@ const SkuTableOss = ({
     list[index][field] = fileList
     handleSkuTableChange([...list])
   }
-
+  const wrapClassName = useEmotionCss(({ token }) => {
+    return {
+      '.ant-pro-card .ant-pro-card-body': {
+        paddingInline: 0
+      }
+    };
+  });
   return (
     <StandardTable
+      className={wrapClassName}
       bordered
       search={false}
       options={false}

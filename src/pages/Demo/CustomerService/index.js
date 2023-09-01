@@ -1,7 +1,6 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, message, Popconfirm, Space } from 'antd';
 import React, { useState, useRef } from 'react';
-import { useDispatch } from '@umijs/max';
 import { PageContainer } from '@ant-design/pro-components';
 import StandardTable from '@/components/StandardTable';
 import GlobalModal from '@/components/GlobalModal'
@@ -10,7 +9,6 @@ import UpdateForm from './UpdateForm';
 import * as services_customer from '@/services/business/customer';
 
 const CustomerService = () => {
-  const dispatch = useDispatch();
   const [updateModalVisible, handleUpdateModalVisible] = useState(false);
   const [stepFormValues, setStepFormValues] = useState({});
   const actionRef = useRef();
@@ -55,11 +53,7 @@ const CustomerService = () => {
   ];
   const handleDeleteRecord = async record => {
     const hide = message.loading({ content: '正在删除', key: 'delete' });
-    const res = await dispatch({
-      type: 'global/service',
-      service: services_customer.remove,
-      payload: { id: record.id }
-    })
+    const res = await services_customer.remove({ id: record.id })
     hide();
     if (res?.code == 200) {
       message.success("删除成功");
@@ -70,15 +64,11 @@ const CustomerService = () => {
   };
   const handleUpdate = async fields => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
-    const res = await dispatch({
-      type: 'global/service',
-      service: services_customer.update,
-      payload: {
-        id: fields.id,
-        type: fields.type,
-        remarks: fields.remarks,
-        number: fields.number,
-      }
+    const res = await services_customer.update({
+      id: fields.id,
+      type: fields.type,
+      remarks: fields.remarks,
+      number: fields.number,
     })
     hide();
     if (res?.code == 200) {
