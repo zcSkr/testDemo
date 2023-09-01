@@ -26,7 +26,7 @@ export default defineConfig({
   routes: pageRoutes,
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: {},
-  headScripts: [ //需要头部引入的三方script配置
+  scripts: [ //需要body引入的三方script配置
     'https://map.qq.com/api/js?v=2.exp&key=TUJBZ-GMTR4-FE7UG-XIRYO-IQM2F-TCF4X', //腾讯地图script
     'http://api.map.baidu.com/api?v=2.0&ak=GC2tQ11of0Kr8WLpYws4ySC3aPT7t4ly',//百度地图script
     'https://webapi.amap.com/maps?v=1.4.15&key=c070243f603d1206459ee7e2f8cbb191',//高德地图script

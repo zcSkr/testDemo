@@ -111,7 +111,7 @@ const ChildManage = () => {
 
   const handleRestPassword = async record => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
-    const res = await services_manager.resetPsd({ id: record.id })
+    const res = await services_manager.resetPwd({ id: record.id })
     hide();
     if (res?.code == 200) {
       message.success({ content: '操作成功', key: 'success' });

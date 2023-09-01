@@ -3,9 +3,9 @@ import { Dropdown, Spin, message } from 'antd';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import classNames from 'classnames';
 import { LogoutOutlined, SettingOutlined } from '@ant-design/icons';
-import { history, useModel, useDispatch } from '@umijs/max';
+import { history, useModel } from '@umijs/max';
 import GlobalModal from '@/components/GlobalModal'
-import UpdatePsd from '@/components/UpdatePsd'
+import UpdatePwd from '@/components/UpdatePwd'
 
 import * as services_manager from '@/services/sys/manager';
 
@@ -21,7 +21,6 @@ const HeaderDropdown = ({ overlayClassName: cls, ...restProps }) => {
 };
 
 const AvatarDropdown = ({ children }) => {
-  const dispatch = useDispatch()
   const [updateModalVisible, handleUpdateModalVisible] = useState(false);
   const { initialState: { getUnionuser }, setInitialState, refresh } = useModel('@@initialState');
 
@@ -49,7 +48,7 @@ const AvatarDropdown = ({ children }) => {
         sessionStorage.removeItem('token')
         history.replace('/user/login')
         refresh()
-      } else if (key === 'changePsd') {
+      } else if (key === 'changePwd') {
         handleUpdateModalVisible(true)
       }
     },
@@ -58,7 +57,7 @@ const AvatarDropdown = ({ children }) => {
 
   const handleUpdate = useCallback(async fields => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
-    const res = await services_manager.updatePsd({ id: getUnionuser().id, password: fields.password })
+    const res = await services_manager.updatePwd({ id: getUnionuser().id, password: fields.password })
     hide();
     if (res?.code == 200) {
       message.success({ content: '操作成功', key: 'success' });
@@ -82,7 +81,7 @@ const AvatarDropdown = ({ children }) => {
         menu={{
           onClick: onMenuClick,
           items: [
-            { label: '修改密码', icon: <SettingOutlined />, key: 'changePsd' },
+            { label: '修改密码', icon: <SettingOutlined />, key: 'changePwd' },
             { label: '退出登录', icon: <LogoutOutlined />, key: 'logout' }
           ]
         }}
@@ -96,7 +95,7 @@ const AvatarDropdown = ({ children }) => {
         }}
         title="修改密码"
       >
-        <UpdatePsd handleUpdate={handleUpdate} />
+        <UpdatePwd handleUpdate={handleUpdate} />
       </GlobalModal>
     </>
   );

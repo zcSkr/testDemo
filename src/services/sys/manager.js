@@ -14,10 +14,10 @@ export async function update(data) {
 export async function remove(params) {
   return request('/mock/demo', { method: 'DELETE', params });
 }
-export async function updatePsd(data) {
+export async function updatePwd(data) {
   return request('/mock/demo', { method: 'PUT', data });
 }
-export async function resetPsd(data) {
+export async function resetPwd(data) {
   return request('/mock/demo', { method: 'PUT', data });
 }
 
@@ -34,9 +34,9 @@ export async function resetPsd(data) {
 // export async function remove(params) {
 //   return request('/v2/sub/administrator', { method: 'DELETE', params });
 // }
-// export async function updatePsd(data) {
+// export async function updatePwd(data) {
 //   return request('/v2/sub/updatePwd', { method: 'PUT', data });
 // }
-// export async function resetPsd(data) {
+// export async function resetPwd(data) {
 //   return request('/v2/sub/resetPwd', { method: 'PUT', data });
 // }

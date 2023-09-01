@@ -1,8 +1,6 @@
 import React from 'react';
-import { Form, Input } from 'antd';
-import { ProForm } from '@ant-design/pro-components';
+import { ProForm, ProFormText } from '@ant-design/pro-components';
 
-const FormItem = Form.Item;
 const formLayout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 18 },
@@ -19,17 +17,15 @@ const UpdatePsd = ({
       layout="horizontal"
       {...formLayout}
     >
-      <FormItem
+      <ProFormText.Password 
         name="password"
         label="新密码"
-        rules={[{ required: true, message: '请输入新密码！' }]}
-      >
-        <Input.Password maxLength={50} allowClear placeholder="请输入" />
-      </FormItem>
-      <FormItem
-        name="againPsd"
+        rules={[{ required: true }]}
+        fieldProps={{ maxLength: 50 }}
+      />
+      <ProFormText.Password 
+        name="againPwd"
         label="确认密码"
-        required
         rules={[
           (form) => ({
             validator(rule, value) {
@@ -43,10 +39,8 @@ const UpdatePsd = ({
             },
           })
         ]}
-      >
-        <Input.Password maxLength={50} allowClear placeholder="请输入" />
-      </FormItem>
-      
+        fieldProps={{ maxLength: 50 }}
+      />
     </ProForm>
   );
 };
