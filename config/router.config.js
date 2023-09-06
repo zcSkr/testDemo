@@ -76,6 +76,12 @@ export default [
         path: '/demo/customer',
         component: './Demo/CustomerService',
       },
+      {
+        name: '开通区域',
+        access: 'accessRoute',
+        path: '/demo/area',
+        component: './Demo/Area',
+      },
     ]
   },
   {
