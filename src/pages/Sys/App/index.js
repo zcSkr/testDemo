@@ -1,7 +1,6 @@
 import { DownCircleTwoTone } from '@ant-design/icons';
 import {
   message,
-  Form,
   Checkbox,
   Timeline,
 } from 'antd';
@@ -12,7 +11,6 @@ import dayjs from 'dayjs'
 
 import * as services_uploadApp from '@/services/sys/uploadApp';
 
-const FormItem = Form.Item;
 const formLayout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 18 },
@@ -91,7 +89,7 @@ const UploadApp = () => {
           />
           <ProFormDependency name={['updatePort']}>
             {({ updatePort }) => (
-              <FormItem
+              <ProForm.Item
                 name="apkFileUrl"
                 label="安装包"
                 rules={[{ required: true, message: '请上传.apk文件！' }]}
@@ -102,7 +100,7 @@ const UploadApp = () => {
                   data={{ type: 'APK/' + updatePort }}
                   totalNum={1}
                 />
-              </FormItem>
+              </ProForm.Item>
             )}
           </ProFormDependency>
           <ProFormText
@@ -112,13 +110,13 @@ const UploadApp = () => {
             placeholder="请输入版本号（例1.0.0）"
             fieldProps={{ maxLength: 50 }}
           />
-          <FormItem
+          <ProForm.Item
             name="isConstraint"
             label="是否强制更新"
             valuePropName="checked"
           >
             <Checkbox>是</Checkbox>
-          </FormItem>
+          </ProForm.Item>
           <ProFormTextArea
             name="updateLog"
             label="更新描述"

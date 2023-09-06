@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Form } from 'antd';
 import { ProForm, ProFormDependency, ProFormCascader, ProFormSelect, ProFormText, ProFormTextArea, ProFormMoney, ProFormDigit, ProFormRadio, ProFormSwitch, ProFormDigitRange } from '@ant-design/pro-components';
 import BraftEditor from '@/components/BraftEditor';
 import GlobalUpload from '@/components/GlobalUpload';
@@ -8,7 +7,6 @@ import QQMap from '@/components/QQMap';
 
 import * as services_demoTable from '@/services/demo/demoTable';
 
-const FormItem = Form.Item;
 const formLayout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 18 },
@@ -122,34 +120,34 @@ const UpdateForm = ({
         )}
       </ProFormDependency>
 
-      <FormItem
+      <ProForm.Item
         name="tags"
         label="标签示例"
         rules={[{ required: true, message: '请添加！' }]}
       >
         <EditTag />
-      </FormItem>
-      <FormItem
+      </ProForm.Item>
+      <ProForm.Item
         name="logo1"
         label="oss上传示例"
         rules={[{ required: true, message: '请上传！' }]}
       >
         <GlobalUpload maxCount={2} />
-      </FormItem>
-      <FormItem
+      </ProForm.Item>
+      <ProForm.Item
         name="address"
         label="腾讯地图示例"
         rules={[{ required: true, message: '请选择！' }]}
       >
         <QQMap />
-      </FormItem>
-      <FormItem
+      </ProForm.Item>
+      <ProForm.Item
         name="content1"
         label="oss富文本示例"
         rules={[{ required: true, message: '请输入！' }]}
       >
         <BraftEditor />
-      </FormItem>
+      </ProForm.Item>
       
     </ProForm>
   );

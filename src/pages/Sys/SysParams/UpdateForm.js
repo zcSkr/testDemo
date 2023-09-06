@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { Form } from 'antd';
 import { ProForm, ProFormText, ProFormTextArea } from '@ant-design/pro-components';
 import BraftEditor from '@/components/BraftEditor';
 import GlobalUpload from '@/components/GlobalUpload';
 
-const FormItem = Form.Item;
 const formLayout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 18 },
@@ -30,26 +28,26 @@ const UpdateForm = ({
         description: formVals.description,
       }}
     >
-      <FormItem label="键">{formVals.codeKey}</FormItem>
+      <ProForm.Item label="键">{formVals.codeKey}</ProForm.Item>
       {
         formVals.valueType == 'imgText' &&
-        <FormItem
+        <ProForm.Item
           name="codeValue"
           label="值"
           rules={[{ required: true }]}
         >
           <BraftEditor />
-        </FormItem>
+        </ProForm.Item>
       }
       {
         formVals.valueType == 'file' &&
-        <FormItem
+        <ProForm.Item
           name="codeValue"
           label="值"
           rules={[{ required: true, message: '请上传文件！' }]}
         >
           <GlobalUpload accept='*' listType="text" />
-        </FormItem>
+        </ProForm.Item>
       }
       {
         formVals.valueType == 'text' &&
