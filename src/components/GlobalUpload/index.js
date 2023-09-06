@@ -39,11 +39,13 @@ const GlobalUploadOss = ({
     }
   })
   useEffect(() => {
-    (async () => {
-      const res = await getOSSData()
-      setOssSTSInfo(res)
-    })()
+    queryOSSData()
   }, [])
+
+  const queryOSSData  = async () => {
+    const res = await getOSSData()
+    setOssSTSInfo(res)
+  } 
 
   const renameFile = (file) => {
     console.log(type)

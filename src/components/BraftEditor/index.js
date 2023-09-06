@@ -41,14 +41,16 @@ const BraftEditorComponentOSS = ({
   const timer = useRef();
   const [ossSTSInfo, setOssSTSInfo] = useState();
   useEffect(() => {
-    (async () => {
-      const res = await getOSSData()
-      setOssSTSInfo(res)
-    })()
+    queryOSSData()
     return () => {
       clearTimeout(timer.current)
     };
   }, [])
+
+  const queryOSSData  = async () => {
+    const res = await getOSSData()
+    setOssSTSInfo(res)
+  } 
 
   const uploadProps = {
     name: 'file',
