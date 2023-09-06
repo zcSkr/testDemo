@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
-import { Form, Button, Input, InputNumber, Select, Cascader, Image, Space } from 'antd';
-import { ProForm, ProFormSelect, ProFormMoney } from '@ant-design/pro-components';
-import { useSelector } from '@umijs/max';
+import { ProForm, ProFormCascader, ProFormDigit, ProFormText } from '@ant-design/pro-components';
 
 import * as services_demoTable from '@/services/demo/demoTable';
 
-const FormItem = Form.Item;
-const { TextArea } = Input
 const formLayout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 18 },
@@ -15,32 +11,18 @@ const UpdateForm = ({
   handleUpdate,
   values
 }) => {
-  const submiting = useSelector(state => state.loading).effects['global/service']
   const [formVals, setFormVals] = useState({
     ...values,
   });
 
-  const [form] = Form.useForm();
-
-  const renderFooter = () => {
-    return (
-      <FormItem wrapperCol={24} noStyle>
-        <div style={{ textAlign: 'center' }}>
-          <Button type="primary" loading={submiting} htmlType="submit">
-            提交
-          </Button>
-        </div>
-      </FormItem>
-    );
-  };
-
   return (
     <ProForm
       onFinish={fieldsValue => handleUpdate({ ...formVals, ...fieldsValue })}
-      submitter={false}
+      submitter={{
+        render: (props, doms) => <div style={{ textAlign: 'center' }}>{doms[1]}</div>
+      }}
       layout="horizontal"
       {...formLayout}
-      form={form}
       initialValues={{
         sort: formVals.sort,
         name: formVals.name,
@@ -54,34 +36,34 @@ const UpdateForm = ({
         textArea: formVals.textArea,
       }}
     >
-      <ProFormSelect
-        name="proformselect"
+      <ProFormCascader
+        name="proformcascader"
         label="上级区域"
-        placeholder="请选择（默认顶级）"
         fieldProps={{
           showSearch: true,
+          expandTrigger: "hover",
           fieldNames: { label: 'name', value: 'id' },
+          changeOnSelect: true
         }}
+        placeholder="请选择（默认顶级）"
         request={async () => {
           const { data } = await services_demoTable.query({ pageSize: 999 })
           return data.list
         }}
       />
-      <FormItem
-        name="name"
+      <ProFormText
+        name="proformtext"
         label="区域名称"
-        rules={[{ required: true, message: '请输入！' }]}
-      >
-        <Input placeholder="请输入" maxLength={50} allowClear />
-      </FormItem>
-      <FormItem
-        name="sort"
+        rules={[{ required: true }]}
+        fieldProps={{ maxLength: 50 }}
+      />
+      <ProFormDigit
+        name="proformdigit"
         label="排序"
-        rules={[{ required: true, message: '请输入！'}]}
-      >
-        <InputNumber style={{ width: '100%' }} min={0} precision={0} placeholder="请输入" />
-      </FormItem>
-      {renderFooter()}
+        rules={[{ required: true }]}
+        min={1}
+        fieldProps={{ precision: 0 }}
+      />
     </ProForm>
   );
 };
