@@ -82,6 +82,12 @@ export default [
         path: '/demo/area',
         component: './Demo/Area',
       },
+      {
+        name: '常量管理',
+        access: 'accessRoute',
+        path: '/demo/constant',
+        component: './Demo/Constant',
+      },
     ]
   },
   {
