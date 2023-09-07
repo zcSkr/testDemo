@@ -47,10 +47,10 @@ const BraftEditorComponentOSS = ({
     };
   }, [])
 
-  const queryOSSData  = async () => {
+  const queryOSSData = async () => {
     const res = await getOSSData()
     setOssSTSInfo(res)
-  } 
+  }
 
   const uploadProps = {
     name: 'file',
@@ -121,8 +121,8 @@ const BraftEditorComponentOSS = ({
 
   const { token } = theme.useToken()
   return (
-    <div className="editor-wrapper" style={{ border: `1px solid ${token.colorBorder}`, borderRadius: token.borderRadius }}>
-      <Spin spinning={uploading} tip="图片上传中">
+    <Spin spinning={uploading} tip="图片上传中">
+      <div className="editor-wrapper" style={{ border: `1px solid ${token.colorBorder}`, borderRadius: token.borderRadius }}>
         <BraftEditor
           id="editor-oss"
           ref={editorRef}
@@ -138,8 +138,8 @@ const BraftEditorComponentOSS = ({
           contentStyle={{ height: 500 }}
           onSave={() => editorRef.current?.getDraftInstance().blur()} //ctrl+s保存的回调
         />
-      </Spin>
-    </div>
+      </div>
+    </Spin>
   )
 }
 
