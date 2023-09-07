@@ -137,6 +137,7 @@ const BraftEditorComponentOSS = ({
           fontSizes={[12, 14, 16, 18, 20, 24, 28, 30, 32, 36, 40, 48]}
           contentStyle={{ height: 500 }}
           onSave={() => editorRef.current?.getDraftInstance().blur()} //ctrl+s保存的回调
+          imageResizable={false} //禁止图片拖拽 会报错getBoundingClientRect
         />
       </div>
     </Spin>
