@@ -16,11 +16,13 @@ const GlobalImport = ({
 
   const handleUploadChange = ({ file, fileList }) => {
     // console.log(file,fileList)
-    if (file.status === 'done') {
-      message.success(`${file.name} 上传成功`);
-      onSuccess?.()
-    } else if (file.status === 'error') {
-      message.error(`${file.name} 上传失败`);
+    if (file.response) {
+      if (file.response.code === 200) {
+        message.success(`${file.name} 导入成功`);
+        onSuccess?.()
+      } else {
+        message.error(file.response.msg);
+      }
     }
   }
 
@@ -31,7 +33,7 @@ const GlobalImport = ({
       name='file'
       showUploadList={false}
       {...props}
-      beforeUpload={(file,fileList) => {
+      beforeUpload={async (file,fileList) => {
         const timestamp = new Date().getTime()
         const rand = Math.floor(Math.random() * 100) //0-100随机整数
         setHeaders({
@@ -41,7 +43,7 @@ const GlobalImport = ({
           timestamp,
           rand
         })
-        return Promise.resolve()
+        return file
       }}
       headers={headers}
       action={requestUrl + action}
