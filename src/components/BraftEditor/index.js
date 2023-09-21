@@ -39,18 +39,12 @@ const BraftEditorComponentOSS = ({
   const [uploading, setUploading] = useState(false);
   const editorRef = useRef()
   const timer = useRef();
-  const [ossSTSInfo, setOssSTSInfo] = useState();
+  const ossSTSInfo = useRef()
   useEffect(() => {
-    queryOSSData()
     return () => {
       clearTimeout(timer.current)
     };
   }, [])
-
-  const queryOSSData = async () => {
-    const res = await getOSSData()
-    setOssSTSInfo(res)
-  }
 
   const uploadProps = {
     name: 'file',
@@ -58,11 +52,14 @@ const BraftEditorComponentOSS = ({
     multiple: true,
     showUploadList: false,
     action: ossHost,
-    data: (file) => ({
-      key: file.uid,
-      ...ossSTSInfo,
-      'success_action_status': '200' //让服务端返回200,不然，默认会返回204
-    }),
+    data: async file => {
+      if (!ossSTSInfo.current) ossSTSInfo.current = await getOSSData()
+      return {
+        key: file.uid,
+        ...ossSTSInfo.current,
+        'success_action_status': '200' //让服务端返回200,不然，默认会返回204
+      }
+    },
     beforeUpload: async (file, fileList) => {//上传前文件重命名
       file.uid = `BraftEditor/${randomString(10)}${getSuffix(file.name)}`
       return file

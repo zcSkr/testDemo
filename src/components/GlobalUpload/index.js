@@ -22,7 +22,7 @@ const GlobalUploadOss = ({
 }) => {
   const { initialState: { ossHost, ossSuffix } } = useModel('@@initialState');
   const [previewSrc, setPreviewSrc] = useState()
-  const [ossSTSInfo, setOssSTSInfo] = useState();
+  const ossSTSInfo = useRef()
   const { type = 'webDefault' } = data || {}
   const [fileList, setFileList] = useState(() => {
     if (accept === '.apk') { //上传apk专用
@@ -38,17 +38,8 @@ const GlobalUploadOss = ({
       })) : []
     }
   })
-  useEffect(() => {
-    queryOSSData()
-  }, [])
-
-  const queryOSSData  = async () => {
-    const res = await getOSSData()
-    setOssSTSInfo(res)
-  } 
-
+  
   const renameFile = (file) => {
-    console.log(type)
     file.uid = accept == '.apk' ? `${type}${getSuffix(file.name)}` : `${type}/${randomString(10)}${getSuffix(file.name)}`
   }
 
@@ -116,11 +107,14 @@ const GlobalUploadOss = ({
       listType={listType}
       maxCount={maxCount}
       accept={accept}
-      data={file => ({
-        key: file.uid,
-        ...ossSTSInfo,
-        'success_action_status': '200' //让服务端返回200,不然，默认会返回204
-      })}
+      data={async file => {
+        if (!ossSTSInfo.current) ossSTSInfo.current = await getOSSData()
+        return {
+          key: file.uid,
+          ...ossSTSInfo.current,
+          'success_action_status': '200' //让服务端返回200,不然，默认会返回204
+        }
+      }}
       action={ossHost}
       multiple={maxCount > 1}
       fileList={fileList}

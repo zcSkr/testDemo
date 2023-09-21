@@ -19,16 +19,7 @@ const SkuTableOss = ({
   // console.log(props)
   const { initialState: { ossHost } } = useModel('@@initialState');
   const [fileList, setFileList] = useState([])
-  const [ossSTSInfo, setOssSTSInfo] = useState();
-
-  useEffect(() => {
-    queryOSSData()
-  }, [])
-
-  const queryOSSData = async () => {
-    const res = await getOSSData()
-    setOssSTSInfo(res)
-  }
+  const ossSTSInfo = useRef()
 
 
   let columns = sku.map(item => ({ title: item.key, dataIndex: item.key }))
@@ -52,11 +43,14 @@ const SkuTableOss = ({
             name='file'
             accept="image/*"
             action={ossHost}
-            data={file => ({
-              key: file.uid,
-              ...ossSTSInfo,
-              'success_action_status': '200' //让服务端返回200,不然，默认会返回204
-            })}
+            data={async file => {
+              if (!ossSTSInfo.current) ossSTSInfo.current = await getOSSData()
+              return {
+                key: file.uid,
+                ...ossSTSInfo.current,
+                'success_action_status': '200' //让服务端返回200,不然，默认会返回204
+              }
+            }}
             beforeUpload={async (file, fileList) => { //上传前文件重命名
               file.uid = `Spu/${randomString(10)}${getSuffix(file.name)}`
               return file

@@ -39,6 +39,7 @@ const errorHandler = (error) => {
       description: errorText,
     });
     if (status === 401) {
+      sessionStorage.clear()
       history.replace('/user/login');
     }
   } else if (!response) {
