@@ -6,7 +6,6 @@ import {
   message,
 } from 'antd';
 import { useModel } from '@umijs/max';
-import { useEmotionCss } from '@ant-design/use-emotion-css';
 import StandardTable from '@/components/StandardTable';
 import { UploadOutlined } from '@ant-design/icons';
 import { getOSSData, getSuffix, randomString } from '../_utils';
@@ -137,16 +136,9 @@ const SkuTableOss = ({
     list[index][field] = fileList
     handleSkuTableChange([...list])
   }
-  const wrapClassName = useEmotionCss(({ token }) => {
-    return {
-      '.ant-pro-card .ant-pro-card-body': {
-        paddingInline: 0
-      }
-    };
-  });
   return (
     <StandardTable
-      className={wrapClassName}
+      ghost
       bordered
       search={false}
       options={false}
