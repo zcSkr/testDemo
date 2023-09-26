@@ -8,6 +8,6 @@ export default function access(initialState) {
   return {
     accessDev: getUnionuser()?.account === 'dev',
     // App.jsx 有请求菜单的时候用权限菜单，没有请求菜单的时候就是本地开发的时候为true
-    accessRoute: (props) => paths ? paths.includes(props.path) : true,
+    accessRoute: (props) => paths ? paths.includes(props.path) : getUnionuser()?.account === 'dev',
   };
 }

@@ -91,6 +91,12 @@ export async function getInitialState() {
   const setToken = token => sessionStorage.token = token
   const getUnionuser = () => sessionStorage.unionuser ? JSON.parse(sessionStorage.unionuser) : null
   const setUnionuser = unionuser => sessionStorage.unionuser = JSON.stringify(unionuser)
+  const queryMenu = async () => {
+    return //请求接口时注释掉
+		if (!getUnionuser()) return
+		const { data } = await services_module.queryLoginModules()
+		return data
+	}
   return {
     settings: defaultSettings,
     requestUrl,
@@ -100,6 +106,8 @@ export async function getInitialState() {
     setToken,
     getUnionuser,
     setUnionuser,
+    menuRes: await queryMenu(),
+		queryMenu,
   };
 }
 
@@ -152,13 +160,12 @@ export const layout = ({ initialState, setInitialState }) => {
       locale: false,
       // 权限路由
       params: { token: sessionStorage.token }, // 每当 sessionStorage.token 发生修改时重新执行 request
-      // request: async (params, defaultMenuData) => {
-      //   if (!params.token) return [] //没有token不走接口
-      //   const res = await services_module.queryLoginModules()
-      //   const menuRes = res.data.map(item => ({ ...item, icon: defaultMenuData.find(route => route.path == item.path)?.icon }))
-      //   setInitialState({ ...initialState, menuRes })
-      //   return loopMenuItem(menuRes)
-      // }
+      request: async (params, defaultMenuData) => {
+				if (!params.token) return []; //没有token不走接口
+				const menuRes = await initialState.queryMenu()
+				const routes = menuRes?.map((item) => ({ ...item, icon: defaultMenuData.find((route) => route.path == item.path)?.icon }))
+				return loopMenuItem(routes);
+			},
     },
     links: process.env.NODE_ENV === 'development' ? [
       <a href="http://192.168.2.74:9010/admin/swagger-ui.html" target="_blank">
