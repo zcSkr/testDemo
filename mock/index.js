@@ -1,7 +1,7 @@
 import mockjs from 'mockjs';
 export default {
   'POST /mock/login': (req, res) => {
-    if (req.body.account !== 'baba' || req.body.password !== '123456') {
+    if (req.body.account !== 'dev' || req.body.password !== 'dev') {
       res.send({
         code: 888,
         data: null,
@@ -12,7 +12,7 @@ export default {
         code: 200,
         data: {
           user: {
-            account: "baba",
+            account: "dev",
             id: "zc",
             nickname: "萨诺斯",
             token: "token",

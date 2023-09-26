@@ -55,7 +55,7 @@ const Login = () => {
           <ProFormText
             name="account"
             fieldProps={{ size: 'large', prefix: <UserOutlined /> }}
-            placeholder="登录账号baba"
+            placeholder="登录账号dev"
             rules={[
               {
                 required: true,
@@ -66,7 +66,7 @@ const Login = () => {
           <ProFormText.Password
             name="password"
             fieldProps={{ size: 'large', prefix: <LockOutlined /> }}
-            placeholder='密码123456'
+            placeholder='密码dev'
             rules={[
               {
                 required: true,
