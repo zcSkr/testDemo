@@ -10,10 +10,10 @@
     "deadcode": "max deadcode"
   },
   "dependencies": {
-    "@ant-design/pro-components": "^2.6.29",
+    "@ant-design/pro-components": "^2.6.30",
     "@ant-design/use-emotion-css": "^1.0.4",
-    "@umijs/max": "^4.0.85",
-    "antd": "^5.10.0",
+    "@umijs/max": "^4.0.86",
+    "antd": "^5.10.1",
     "antd-img-crop": "^4.13.0",
     "braft-editor": "^2.3.9",
     "braft-extensions": "^0.1.1",
