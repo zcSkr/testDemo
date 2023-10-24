@@ -54,7 +54,7 @@ const UpdateForm = ({
           fieldNames: { label: 'name', value: 'id' },
         }}
         request={async () => {
-          const { data } = await services_module.queryTree({ pageSize: 999 })
+          const { data } = await services_module.queryTree({ pageSize: 0 })
           //给Cascader造回显的数据，二维数组
           const moduleIds = data.list.map(item => {
             if (formVals.moduleIds?.includes(item.id)) { //一级存在

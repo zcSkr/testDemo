@@ -76,7 +76,7 @@ const UpdateForm = ({
           fieldNames: { label: 'name', value: 'id' },
         }}
         request={async () => {
-          const { data } = await services_demoTable.query({ pageSize: 999 })
+          const { data } = await services_demoTable.query({ pageSize: 0 })
           return data.list
         }}
       />
@@ -90,7 +90,7 @@ const UpdateForm = ({
           fieldNames: { label: 'name', value: 'id' },
         }}
         request={async () => {
-          const { data } = await services_demoTable.query({ pageSize: 999 })
+          const { data } = await services_demoTable.query({ pageSize: 0 })
           return data.list
         }}
       />

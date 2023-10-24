@@ -47,7 +47,7 @@ const UpdateForm = ({
         }}
         placeholder="请选择（默认顶级）"
         request={async () => {
-          const { data } = await services_demoTable.query({ pageSize: 999 })
+          const { data } = await services_demoTable.query({ pageSize: 0 })
           return data.list
         }}
       />

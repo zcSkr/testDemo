@@ -47,7 +47,7 @@ const UpdateForm = ({
         label="角色"
         rules={[{ required: true }]}
         request={async () => {
-          const { data } = await services_role.query({ pageSize: 999 })
+          const { data } = await services_role.query({ pageSize: 0 })
           return data.list.map(item => ({ label: item.roleName, value: item.id }))
         }}
       />

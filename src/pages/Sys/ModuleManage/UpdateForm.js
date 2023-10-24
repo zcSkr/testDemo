@@ -41,7 +41,7 @@ const UpdateForm = ({
           fieldNames: { label: 'name', value: 'id' },
         }}
         request={async () => {
-          const { data } = await services_module.queryTree({ pageSize: 999 })
+          const { data } = await services_module.queryTree({ pageSize: 0 })
           return [{name: '顶级模块',id: '0'}].concat(data.list)
         }}
       />
