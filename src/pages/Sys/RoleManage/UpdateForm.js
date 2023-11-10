@@ -49,6 +49,7 @@ const UpdateForm = ({
         label="模块"
         rules={[{ required: true }]}
         fieldProps={{
+          multiple: true,
           showSearch: true,
           expandTrigger: "hover",
           fieldNames: { label: 'name', value: 'id' },
