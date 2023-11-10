@@ -108,6 +108,7 @@ export async function getInitialState() {
     setUnionuser,
     menuRes: await queryMenu(),
 		queryMenu,
+    token: getToken(),
   };
 }
 
@@ -159,7 +160,7 @@ export const layout = ({ initialState, setInitialState }) => {
     menu: {
       locale: false,
       // 权限路由
-      params: { token: sessionStorage.token }, // 每当 sessionStorage.token 发生修改时重新执行 request
+      params: { token: initialState.token }, // 每当 sessionStorage.token 发生修改时重新执行 request
       request: async (params, defaultMenuData) => {
 				if (!params.token) return []; //没有token不走接口
 				const menuRes = await initialState.queryMenu()
