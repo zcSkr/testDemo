@@ -1,6 +1,6 @@
 import { history } from '@umijs/max';
 import { notification, theme } from 'antd';
-import md5 from 'md5'
+import md5 from 'crypto-js/md5'
 import defaultSettings from '../config/defaultSettings';
 import { LinkOutlined, UserOutlined } from '@ant-design/icons';
 // import { PageLoading } from '@ant-design/pro-components';
@@ -67,7 +67,7 @@ const headerInterceptor = (url, options) => {
         'Content-Type': options.requestType == 'form' ? 'application/x-www-form-urlencoded;charset=UTF-8' : 'application/json;charset=UTF-8',
         'api-version': 1,
         token: sessionStorage.token,
-        apiSecret: md5(md5(timestamp + "ccys" + rand)),
+        apiSecret: md5(md5(timestamp + "ccys" + rand).toString()).toString(),
         timestamp,
         rand
       }

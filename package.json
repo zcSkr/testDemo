@@ -20,7 +20,6 @@
     "braft-utils": "^3.0.12",
     "crypto-js": "^4.2.0",
     "lodash": "^4.17.21",
-    "md5": "^2.3.0",
     "qs": "^6.11.2",
     "react-sortable-hoc": "^2.0.0"
   },

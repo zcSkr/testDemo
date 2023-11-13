@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Upload, message, Button } from 'antd';
 import { ImportOutlined } from '@ant-design/icons'
 import { useModel } from '@umijs/max';
-import md5 from 'md5'
+import md5 from 'crypto-js/md5'
 
 const GlobalImport = ({
   maxCount = 1,
@@ -39,7 +39,7 @@ const GlobalImport = ({
         setHeaders({
           'api-version': 1,
           token: sessionStorage.token || '',
-          apiSecret: md5(md5(timestamp + "ccys" + rand)),
+          apiSecret: md5(md5(timestamp + "ccys" + rand).toString()).toString(),
           timestamp,
           rand
         })
