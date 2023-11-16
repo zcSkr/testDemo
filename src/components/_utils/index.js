@@ -14,11 +14,7 @@ export const getOSSData = async () => {
     ],
   };
   const policy = encBase64.stringify(encUtf8.parse(JSON.stringify(policyText))) // policy必须为base64的string。
-  // 计算签名。
-  function computeSignature(accessKeySecret, canonicalString) {
-    return encBase64.stringify(HmacSHA1(canonicalString, accessKeySecret));
-  }
-  const signature = computeSignature(data.accessKeySecret, policy)
+  const signature = encBase64.stringify(HmacSHA1(policy, data.accessKeySecret))
   const formData = {
     OSSAccessKeyId: data.accessKeyId,
     signature,
