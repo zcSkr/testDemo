@@ -62,7 +62,7 @@ const headerInterceptor = (url, options) => {
     url,
     options: {
       ...options,
-      data: options.requestType == 'form' ? qs.stringify(options.data) : options.data,
+      data: options.requestType == 'form' ? qs.stringify(options.data, { skipNulls: true }) : options.data,
       headers: {
         'Content-Type': options.requestType == 'form' ? 'application/x-www-form-urlencoded;charset=UTF-8' : 'application/json;charset=UTF-8',
         'api-version': 1,
