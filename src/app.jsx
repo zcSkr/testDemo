@@ -65,7 +65,6 @@ const headerInterceptor = (url, options) => {
       data: options.requestType == 'form' ? qs.stringify(options.data, { skipNulls: true }) : options.data,
       headers: {
         'Content-Type': options.requestType == 'form' ? 'application/x-www-form-urlencoded;charset=UTF-8' : 'application/json;charset=UTF-8',
-        'api-version': 1,
         token: sessionStorage.token,
         apiSecret: md5(md5(timestamp + "ccys" + rand).toString()).toString(),
         timestamp,
