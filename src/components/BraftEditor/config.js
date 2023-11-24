@@ -8,7 +8,7 @@ export const imageControls = [
 export const excludeControls = [
   'line-height', 'letter-spacing',
   'superscript', 'subscript', 'remove-styles', 'emoji',
-  'text-indent', 'link', 'hr',
+  'link', 'hr',
   'list-ul', 'list-ol', 'blockquote', 'code',
   'media',
   'clear',
