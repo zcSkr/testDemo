@@ -15,6 +15,7 @@ const Constant = () => {
   const actionRef = useRef();
   let columns = [
     {
+      title: '索引',
       dataIndex: 'id',
       valueType: 'indexBorder',
     },

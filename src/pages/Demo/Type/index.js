@@ -37,10 +37,10 @@ const Type = () => {
 
   let columns = [
     {
+      title: '索引',
       dataIndex: 'id',
-      width: 30,
-      hideInSearch: true,
       valueType: 'indexBorder',
+      width: 30,
     },
     {
       title: '排序',
