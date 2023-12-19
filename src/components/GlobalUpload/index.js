@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Upload, message, Button, Image, Space } from 'antd';
 import { useModel } from '@umijs/max';
-import { PlusOutlined, UploadOutlined, CloseOutlined } from '@ant-design/icons'
+import { PlusOutlined, UploadOutlined } from '@ant-design/icons'
 import ImgCrop from 'antd-img-crop';
 import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
 import styles from './index.less';
@@ -73,31 +73,13 @@ const GlobalUploadOss = ({
     flushSync(() => setFileList(fileList)) //React18 Automatic batching 原因会导致只渲染一次导致多文件上传状态问题
   }
 
-  let previewProps = {}
-  if (accept?.indexOf('image') != -1) { //目前仅针对图片利用Image组件4.7.0的新特性实现自定义预览
-    previewProps = {
-      onPreview: file => setPreviewSrc(file.url)
-    }
-  }
+  let imageProps = {}
   if (accept?.indexOf('video') != -1) { //自定义的视频预览
-    previewProps = {
-      onPreview: file => {
-        setVideoSrc(file.url)
-        setClassNameVisible(true)
-      }
+    imageProps = {
+      imageRender: () => <video width="80%" controls src={previewSrc} />,
+      toolbarRender: () => null,
     }
   }
-
-  // 处理视频预览
-  const [videoSrc, setVideoSrc] = useState(false)
-  const [classNameVisible, setClassNameVisible] = useState(false)
-  useEffect(() => {
-    if (classNameVisible == false) {
-      setTimeout(() => {
-        setVideoSrc('')
-      }, 200)
-    }
-  }, [classNameVisible]);
 
 
   const uploadComponent = (
@@ -121,7 +103,7 @@ const GlobalUploadOss = ({
       onChange={handleUploadChange}
       beforeUpload={beforeUpload}
       onRemove={file => onRemove && onRemove(file)}
-      {...previewProps}
+      onPreview={file => setPreviewSrc(file.url)}
     >
       {
         fileList.length >= maxCount ? null :
@@ -196,26 +178,10 @@ const GlobalUploadOss = ({
         src={previewSrc}
         preview={{
           visible: Boolean(previewSrc),
-          onVisibleChange: (visible, prevVisible) => setPreviewSrc(undefined)
+          onVisibleChange: (visible, prevVisible) => setPreviewSrc(void 0),
+          ...imageProps
         }}
       />
-      {
-        videoSrc &&
-        <div className={"ant-image-preview-root " + (classNameVisible ? styles.videoPreviewMask : styles.videoPreviewMaskHide)} >
-          <div className={"ant-image-preview-mask " + (classNameVisible ? styles.videoPreviewMask : styles.videoPreviewMaskHide)} >
-            <div className={"ant-image-preview-wrap " + (classNameVisible ? styles.videoPreviewWrap : styles.videoPreviewWrapHide)}>
-              <ul className="ant-image-preview-operations">
-                <li className="ant-image-preview-operations-operation">
-                  <CloseOutlined onClick={() => setClassNameVisible(false)} style={{ fontSize: 18, cursor: 'pointer' }} />
-                </li>
-              </ul>
-              <div className="ant-image-preview-img-wrapper" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 'calc(100vh - 46px)' }} onClick={() => setClassNameVisible(false)}>
-                <video className="ant-image-preview-img" style={{ maxHeight: '100%', maxWidth: '100%' }} autoPlay controls poster={videoSrc + ossSuffix} src={videoSrc} onClick={e => e.stopPropagation()} />
-              </div>
-            </div>
-          </div>
-        </div>
-      }
     </div>
   )
 }
