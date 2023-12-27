@@ -35,7 +35,7 @@ const GlobalImport = ({
       {...props}
       beforeUpload={async (file,fileList) => {
         const timestamp = new Date().getTime()
-        const rand = Math.floor(Math.random() * 100) //0-100随机整数
+        const rand = Math.floor(Math.random() * 99999) //0-99999随机整数
         setHeaders({
           'api-version': 1,
           token: sessionStorage.token || '',
