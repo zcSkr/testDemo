@@ -10,7 +10,7 @@ import { DndContext, PointerSensor, useSensor } from '@dnd-kit/core';
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy, horizontalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-const GlobalUploadOss = ({
+const GlobalUpload = ({
   maxCount = 1,
   onChange,
   onRemove,
@@ -84,9 +84,7 @@ const GlobalUploadOss = ({
   }
 
   const DraggableUploadListItem = ({ originNode, file }) => {
-    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
-      id: file.uid,
-    });
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: file.uid });
     const divClassName = useEmotionCss(({ token }) => {
       return {
         transform: CSS.Transform.toString(transform),
@@ -107,13 +105,9 @@ const GlobalUploadOss = ({
     );
   };
 
-  const sensor = useSensor(PointerSensor, {
-    activationConstraint: {
-      distance: 10,
-    },
-  });
+  const sensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } });
 
-  const onDragEnd = ({ active, over }) => {
+  const handleDragEnd = ({ active, over }) => {
     if (active.id !== over?.id) {
       setFileList((prev) => {
         const activeIndex = prev.findIndex((i) => i.uid === active.id);
@@ -145,7 +139,7 @@ const GlobalUploadOss = ({
       fileList={fileList}
       onChange={handleUploadChange}
       beforeUpload={beforeUpload}
-      onRemove={file => onRemove && onRemove(file)}
+      onRemove={file => onRemove?.(file)}
       onPreview={file => setPreviewSrc(file.url)}
       itemRender={(originNode, file) => <DraggableUploadListItem originNode={originNode} file={file} />}
     >
@@ -166,7 +160,7 @@ const GlobalUploadOss = ({
 
   return (
     <>
-      <DndContext sensors={[sensor]} onDragEnd={onDragEnd}>
+      <DndContext sensors={[sensor]} onDragEnd={handleDragEnd}>
         <SortableContext items={fileList.map((i) => i.uid)} strategy={['picture-card', 'picture-circle'].includes(listType) ? horizontalListSortingStrategy : verticalListSortingStrategy}>
           {
             !!crop ?
@@ -196,4 +190,4 @@ const GlobalUploadOss = ({
   )
 }
 
-export default GlobalUploadOss
+export default GlobalUpload
