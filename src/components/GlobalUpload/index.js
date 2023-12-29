@@ -1,12 +1,15 @@
 import React, { useState, useRef } from 'react';
-import { Upload, message, Button, Image, Space } from 'antd';
+import { Upload, message, Button, Image } from 'antd';
 import { useModel } from '@umijs/max';
 import { PlusOutlined, UploadOutlined } from '@ant-design/icons'
 import ImgCrop from 'antd-img-crop';
-import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
-import styles from './index.less';
 import { getOSSData, getSuffix, randomString, getDuration } from '../_utils';
 import { flushSync } from 'react-dom';
+import { useEmotionCss } from '@ant-design/use-emotion-css';
+import { DndContext, PointerSensor, useSensor } from '@dnd-kit/core';
+import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy, horizontalListSortingStrategy } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+
 const GlobalUploadOss = ({
   maxCount = 1,
   onChange,
@@ -17,7 +20,6 @@ const GlobalUploadOss = ({
   crop,
   data,
   listType = 'picture-card',
-  supportSort,
   ...props
 }) => {
   const { initialState: { ossHost, ossSuffix } } = useModel('@@initialState');
@@ -38,7 +40,7 @@ const GlobalUploadOss = ({
       })) : []
     }
   })
-  
+
   const renameFile = (file) => {
     file.uid = accept == '.apk' ? `${type}${getSuffix(file.name)}` : `${type}/${randomString(10)}${getSuffix(file.name)}`
   }
@@ -81,6 +83,47 @@ const GlobalUploadOss = ({
     }
   }
 
+  const DraggableUploadListItem = ({ originNode, file }) => {
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+      id: file.uid,
+    });
+    const divClassName = useEmotionCss(({ token }) => {
+      return {
+        transform: CSS.Transform.toString(transform),
+        transition,
+        cursor: 'move',
+        width: '100%',
+        height: '100%',
+        'a': {
+          pointerEvents: 'none',
+        }
+      };
+    });
+    return (
+      <div ref={setNodeRef} className={divClassName} {...attributes} {...listeners}>
+        {/* hide error tooltip when dragging */}
+        {file.status === 'error' && isDragging ? originNode.props.children : originNode}
+      </div>
+    );
+  };
+
+  const sensor = useSensor(PointerSensor, {
+    activationConstraint: {
+      distance: 10,
+    },
+  });
+
+  const onDragEnd = ({ active, over }) => {
+    if (active.id !== over?.id) {
+      setFileList((prev) => {
+        const activeIndex = prev.findIndex((i) => i.uid === active.id);
+        const overIndex = prev.findIndex((i) => i.uid === over?.id);
+        const sortFileList = arrayMove(prev, activeIndex, overIndex)
+        onChange(sortFileList.map(item => item.url).filter(r => r).join(','))
+        return sortFileList;
+      });
+    }
+  };
 
   const uploadComponent = (
     <Upload
@@ -104,6 +147,7 @@ const GlobalUploadOss = ({
       beforeUpload={beforeUpload}
       onRemove={file => onRemove && onRemove(file)}
       onPreview={file => setPreviewSrc(file.url)}
+      itemRender={(originNode, file) => <DraggableUploadListItem originNode={originNode} file={file} />}
     >
       {
         fileList.length >= maxCount ? null :
@@ -120,58 +164,24 @@ const GlobalUploadOss = ({
     </Upload>
   )
 
-  const SortableItem = SortableElement(({ item }) => <Image style={{ cursor: 'move' }} preview={false} width={50} height={50} src={item.url} />);
-  const SortableList = SortableContainer(() => {
-    return (
-      <Space className={styles.SortContainer}>
-        {fileList.map((item, index) => (
-          <SortableItem key={`item-${index}`} disabled={false} index={index} item={item} />
-        ))}
-      </Space>
-    );
-  });
-  const uploadWrapRef = useRef()
-  const SortableComponent = () => {
-    //.uploadImg_sort的样式写在主要是定义zIndex为1000+，因为antd的modal层级为1000.目的是为了解决拖拽时元素看不见的问题
-    return (
-      <SortableList
-        helperContainer={() => uploadWrapRef.current}
-        helperClass="uploadImg_sort"
-        lockOffset={0}
-        transitionDuration={500} //拖拽过度动画时长
-        lockToContainerEdges={true}
-        axis="xy"
-        onSortEnd={({ oldIndex, newIndex }) => {
-          console.log(arrayMove(fileList, oldIndex, newIndex))
-          const sortFileList = arrayMove(fileList, oldIndex, newIndex)
-          onChange(sortFileList.map(item => item.url).filter(r => r).join(','))
-          setFileList(sortFileList)
-        }}
-      />
-    )
-  }
-
   return (
-    <div ref={uploadWrapRef} style={{ overflow: 'hidden' }} className={styles.uploadWrap}>
-      {
-        !!crop ?
-          <>
-            <ImgCrop rotationSlider showGrid modalTitle="裁剪图片"
-              beforeCrop={(file, fileList) => {
-                renameFile(file)
-                return true
-              }}
-            >
-              {uploadComponent}
-            </ImgCrop>
-            {supportSort && value?.length > 1 ? <SortableComponent /> : null}
-          </>
-          :
-          <>
-            {uploadComponent}
-            {supportSort && value?.length > 1 ? <SortableComponent /> : null}
-          </>
-      }
+    <>
+      <DndContext sensors={[sensor]} onDragEnd={onDragEnd}>
+        <SortableContext items={fileList.map((i) => i.uid)} strategy={['picture-card', 'picture-circle'].includes(listType) ? horizontalListSortingStrategy : verticalListSortingStrategy}>
+          {
+            !!crop ?
+              <ImgCrop rotationSlider showGrid modalTitle="裁剪图片"
+                beforeCrop={(file, fileList) => {
+                  renameFile(file)
+                  return true
+                }}
+              >
+                {uploadComponent}
+              </ImgCrop>
+              : uploadComponent
+          }
+        </SortableContext>
+      </DndContext>
       <Image
         width={0}
         height={0}
@@ -182,7 +192,7 @@ const GlobalUploadOss = ({
           ...imageProps
         }}
       />
-    </div>
+    </>
   )
 }
 
