@@ -111,19 +111,6 @@ export async function getInitialState() {
   };
 }
 
-export const antd = (memo) => {
-  // memo.theme ??= {};
-  // memo.theme.algorithm = [theme.darkAlgorithm]; // 配置 antd5 的预设 dark 算法
-  // memo.appConfig = {
-  //   message: {
-  //     // 配置 message 最大显示数，超过限制时，最早的消息会被自动关闭
-  //     maxCount: 1,
-  //   }
-  // }
-  // console.log(memo)
-  return memo;
-};
-
 export const layout = ({ initialState, setInitialState }) => {
   const { token } = theme.useToken()
   const loopMenuItem = (menus) =>
@@ -159,7 +146,7 @@ export const layout = ({ initialState, setInitialState }) => {
     menu: {
       locale: false,
       // 权限路由
-      params: { token: initialState.token }, // 每当 sessionStorage.token 发生修改时重新执行 request
+      params: { token: initialState.token }, // 每当 initialState.token 发生修改时重新执行 request
       request: async (params, defaultMenuData) => {
 				if (!params.token) return []; //没有token不走接口
 				const menuRes = await initialState.queryMenu()
