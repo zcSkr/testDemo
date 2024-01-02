@@ -20,9 +20,10 @@ const GlobalUpload = ({
   crop,
   data,
   listType = 'picture-card',
+  poster,
   ...props
 }) => {
-  const { initialState: { ossHost, ossSuffix } } = useModel('@@initialState');
+  const { initialState: { ossHost } } = useModel('@@initialState');
   const [previewSrc, setPreviewSrc] = useState()
   const ossSTSInfo = useRef()
   const { type = 'webDefault' } = data || {}
@@ -36,7 +37,7 @@ const GlobalUpload = ({
         name: item.split('/').slice(-1)?.[0],
         status: 'done',
         url: item,
-        thumbUrl: /video/.test(accept) ? item + ossSuffix : item
+        thumbUrl: /video/.test(accept) ? poster : item
       })) : []
     }
   })
@@ -50,12 +51,9 @@ const GlobalUpload = ({
     if (file.status === 'done') {
       message.success(`${file.name} 上传成功`);
       file.url = ossHost + '/' + file.uid;
-      if (/video/.test(accept)) {
-        file.thumbUrl = file.url + ossSuffix;
-      }
       if (/audio|video/.test(file.type) && props.getTime) {
         const time = await getDuration(file.originFileObj)
-        props.getTime(time)
+        props.getTime?.(time)
       }
     } else if (file.status === 'error') {
       message.error(`${file.name} 上传失败`);

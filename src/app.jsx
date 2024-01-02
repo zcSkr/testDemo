@@ -85,7 +85,6 @@ export const request = {
 // 更多信息见文档：https://next.umijs.org/docs/api/runtime-config#getinitialstate
 export async function getInitialState() {
   const ossHost = 'https://school-coach-static.oss-cn-chengdu.aliyuncs.com' //oss上传路径
-  const ossSuffix = '?x-oss-process=video/snapshot,t_1000,m_fast' //oss视频链接拼接此后缀即为视频封面图
   const getToken = () => sessionStorage.token
   const setToken = token => sessionStorage.token = token
   const getUnionuser = () => sessionStorage.unionuser ? JSON.parse(sessionStorage.unionuser) : null
@@ -100,7 +99,6 @@ export async function getInitialState() {
     settings: defaultSettings,
     requestUrl,
     ossHost,
-    ossSuffix,
     getToken,
     setToken,
     getUnionuser,

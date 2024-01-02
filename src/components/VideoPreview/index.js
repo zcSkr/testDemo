@@ -1,20 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Image } from 'antd';
-import { useModel } from '@umijs/max'
 
 const VideoPreview = ({
   src,
+  poster,
   width,
   height,
 }) => {
-  const { initialState: { ossSuffix } } = useModel('@@initialState');
   const [visible, setVisible] = useState(false)
 
   return (
     <Image
       width={width}
       height={height}
-      src={src + ossSuffix}
+      src={poster}
       preview={{
         visible,
         onVisibleChange: (value) => setVisible(value),
