@@ -123,8 +123,6 @@ export const layout = ({ initialState, setInitialState }) => {
       title: initialState.getUnionuser()?.nickname || initialState.getUnionuser()?.account,
       render: (props, dom) => <RightContent>{dom}</RightContent>
     },
-    actionsRender: (props) => [], //if不写这行，layout仅在top模式下没有显示avatarProps
-    //  rightContentRender: () => <RightContent />,
     rightContentRender: false,
     onPageChange: ({ pathname }) => {
       if (!initialState.getUnionuser() && pathname !== '/user/login') {// 如果没有登录，重定向到 login
