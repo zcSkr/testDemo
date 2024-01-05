@@ -1,25 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import { Form } from 'antd';
+import { ProForm, ProFormDependency } from '@ant-design/pro-components';
 
 import SkuList from './SkuList'
-import SkuTableOss from './SkuTableOss' //oss上传
+import SkuTable from './SkuTable'
 
-const FormItem = Form.Item;
 const Sku = ({
-  productList,
-  sku = [{ key: '', inputVisible: false, inputValue: '', tags: [] }],
-  // sku = [ //模拟数据
-  //   { key: '颜色', inputVisible: false, inputValue: '', tags: ['红', '黄'] },
-  //   { key: '尺寸', inputVisible: false, inputValue: '', tags: ['大', '小'] }
-  // ],
+  separator = '卐',
 }) => {
-  const form = Form.useFormInstance();
-  const [specList, setSpecList] = useState(sku);
+  const form = ProForm.useFormInstance();
+  const sku = ProForm.useWatch('sku', form); //监听sku变化
 
   useEffect(() => {
-    handleChangeSku(sku)
-  }, [sku])
+    handleResetSkuList(sku)
+  },[sku])
 
+  const handleResetSkuList = (sku) => {
+    if(!sku) return
+    sku = sku.filter(item => item)
+    const flatten = setArray(sku.map(item => item.tags?.split(',') || [])) || []
+    const newList = flatten.map((item, i) => {
+      const obj = { key: `key_${i}`  }
+      const specsJson = sku.map((record, i) => {
+        obj[record.name] = item.split(separator)[i]
+        return ({ key: record.name, value: item.split(separator)[i] })
+      })
+      obj.specsJson = JSON.stringify(specsJson)
+      const skuList = form.getFieldValue('skuList')
+      if (skuList?.length) { //处理数据回显
+        skuList.forEach(item => {
+          if (obj.specsJson == item.specsJson) {
+            for (let key in item) {
+              if(key != 'key') obj[key] = item[key] //除24行的唯一键外，对其他字段赋值
+            }
+          }
+        })
+      }
+      return obj
+    })
+    // console.log(newList, 'newList')
+    form.setFieldsValue({ skuList: newList })
+  }
+
+  //得出规格笛卡尔积
   const setArray = (arr) => {
     let len = arr.length;
     // 当数组大于等于2个的时候
@@ -37,7 +59,7 @@ const Sku = ({
       // 2层嵌套循环,将组合放到新数组中
       for (let i = 0; i < len1; i++) {
         for (let j = 0; j < len2; j++) {
-          items[index] = arr[0][i] + '卐' + arr[1][j];
+          items[index] = arr[0][i] + separator + arr[1][j];
           index++;
         }
       }
@@ -54,102 +76,57 @@ const Sku = ({
     }
   }
 
-  const handleChangeSku = specList => {
-    setSpecList([...specList])
-    form?.setFieldsValue({ sku: [...specList] })
-    let newList = []
-    const flatten = setArray(specList.map(item => item.tags)) || []
-    // console.log(123)
-    flatten.forEach((item, i) => {
-      let obj = {
-        key: `key_${i}`,
-        price: null,
-        num: null,
-        img: null
-      }
-      let attributes = []
-      specList.forEach((record, i) => {
-        obj[record.key] = item.split('卐')[i]
-        attributes.push({ key: record.key, value: item.split('卐')[i] })
-      })
-      obj.attributes = JSON.stringify(attributes)
-
-      if (productList?.length) { //有数据回显的话
-        productList.forEach(item => {
-          if (obj.attributes == item.attributes) {
-            obj.id = item.id
-            obj.price = item.price
-            obj.num = item.num
-            obj.fileList = item.img ? [{
-              uid: -1,
-              name: item.img.split('/')[2],
-              status: 'done',
-              url: item.img,
-              response: { data: item.img, code: 200 }
-            }] : []
-          }
-        })
-      }
-      newList.push(obj)
-    })
-    form.setFieldsValue({ skuList: newList })
-  }
-
   return (
     <>
-      <FormItem
-        name='sku'
-        label='商品规格'
-        required
-        initialValue={sku}
+      <ProForm.Item
+        name="sku"
+        label="商品规格"
         rules={[
+          { required: true, message: '请创建规格！' },
           {
             validator(rule, value) {
-              if (!value) {
-                return Promise.reject('请创建规格！');
-              }
-              if (value.some(item => (!item.key || item.tags.length === 0))) {
-                return Promise.reject('请创建规格项!');
+              if (value?.some(item => (!item.name || !item.tags))) {
+                return Promise.reject('请完善规格名/规格值!');
               }
               return Promise.resolve();
             },
           }
         ]}
       >
-        <SkuList handleChangeSku={handleChangeSku} />
-      </FormItem>
-      {!!form.getFieldValue('skuList')?.length &&
-        <FormItem
-          name='skuList'
-          label='规格项目表'
-          required
-          rules={[
-            {
-              validator(rule, value) {
-                if (!value) {
-                  return Promise.reject('请创建商品规格！');
-                }
-                if (value.some(item => item.price === null)) {
-                  return Promise.reject('请输入规格项价格!');
-                }
-                if (value.some(item => item.num === null)) {
-                  return Promise.reject('请输入规格项库存!');
-                }
-                if (value.some(item => (item.img === null || item.img.length === 0))) {
-                  return Promise.reject('请上传规格图片!');
-                }
-                return Promise.resolve();
-              },
-            }
-          ]}
-        >
-          {/* oss用SkuTableOss，普通用SkuTable */}
-          <SkuTableOss
-            handleSkuTableChange={skuList => form.setFieldsValue({ skuList })}
-            sku={specList}
-          />
-        </FormItem>
-      }
+        <SkuList />
+      </ProForm.Item>
+
+      <ProFormDependency name={['sku', 'skuList']}>
+        {({ sku, skuList }) => {
+          if (skuList?.length > 0) {
+            return (
+              <ProForm.Item
+                name='skuList'
+                label='规格项目表'
+                rules={[
+                  { required: true, message: '请创建规格！' },
+                  {
+                    validator(rule, value) {
+                      if (value?.some(item => item.price === void 0)) {
+                        return Promise.reject('请输入规格项价格!');
+                      }
+                      if (value?.some(item => item.num === void 0)) {
+                        return Promise.reject('请输入规格项库存!');
+                      }
+                      // if (value?.some(item => (item.img === void 0))) {
+                      //   return Promise.reject('请上传规格图片!');
+                      // }
+                      return Promise.resolve();
+                    },
+                  }
+                ]}
+              >
+                <SkuTable sku={sku.filter(item => item)} />
+              </ProForm.Item>
+            )
+          }
+        }}
+      </ProFormDependency>
     </>
   )
 }

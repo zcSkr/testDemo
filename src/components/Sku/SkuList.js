@@ -1,150 +1,62 @@
 import React from 'react';
-import {
-  Row,
-  Col,
-  Card,
-  Input,
-  Button,
-  Tag,
-  Tooltip,
-  message,
-  theme,
-} from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import { useEmotionCss } from '@ant-design/use-emotion-css';
+import { Row, Col, Card, Button, theme, Form } from 'antd';
+import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
+import { ProForm, ProFormText } from '@ant-design/pro-components';
+import EditTag from '@/components/EditTag';
 
 const SkuList = ({
-  value: sku,
-  handleChangeSku,
+  value,
+  onChange,
+  maxCount = 2,
 }) => {
-
-  const handleClose = (index, removedTag) => {
-    sku[index].tags = sku[index].tags.filter(tag => tag != removedTag);
-    handleChangeSku(sku)
-  };
-
-  const showInput = (index) => {
-    sku[index].inputVisible = true;
-    handleChangeSku(sku)
-  };
-
-  const handleInputChange = (index, e) => {
-    sku[index].inputValue = e.target.value;
-    handleChangeSku(sku)
-  };
-  const handleInputConfirm = (index) => {
-    let inputValue = sku[index].inputValue
-    let tags = sku[index].tags
-    if (inputValue && tags.indexOf(inputValue) === -1) {
-      tags = [...tags, inputValue];
-    }
-    sku[index].tags = tags
-    sku[index].inputValue = ''
-    sku[index].inputVisible = false
-    handleChangeSku(sku)
-  };
-
-  const handleAddSku = () => {
-    sku.push({ key: '', inputVisible: false, inputValue: '', tags: [] })
-    handleChangeSku(sku)
-  }
-
-  const handleDeleteSku = (index) => {
-    if (sku.length == 1) {
-      message.warning('至少有一项规格！')
-      return
-    }
-    sku.splice(index, 1)
-    handleChangeSku(sku)
-  }
-
-  const handleSpecNameChange = (index, e) => {
-    if (sku.some(item => item.key == e.target.value)) {
-      sku[index].key = ''
-    } else {
-      sku[index].key = e.target.value
-    }
-    handleChangeSku(sku)
-  }
-
-  const renderTitle = (item, index) => {
-    return (
-      <Row type="flex" align="middle" style={{ width: '100%' }}>
-        <Col span={3}>规格名</Col>
-        <Col span={18}><Input value={item.key} onChange={e => handleSpecNameChange(index, e)} style={{ width: '100%', maxWidth: 200 }} placeholder="请输入规格名" /></Col>
-        {index != 0 && <Col span={3}><Tag color={token.red6} style={{ margin: 0 }} onClick={() => handleDeleteSku(index)}>删除</Tag></Col>}
-      </Row>
-    )
-  }
-
-  const wrapClassName = useEmotionCss(({ token }) => {
-    return {
-      border: `1px solid ${token.colorBorder}`,
-      borderRadius: token.borderRadius,
-    };
-  });
-  const addClassName = useEmotionCss(({ token }) => {
-    return {
-      padding: token.padding,
-      background: token.colorFillAlter,
-      borderRadius: token.borderRadius,
-    };
-  });
-
   const { token } = theme.useToken()
 
   return (
-    <div className={wrapClassName}>
-      {sku.map((item, index) => (
-        <Card key={index} bordered={false} type="inner" title={renderTitle(item, index)}>
-          <Row type="flex" align="middle">
-            <Col span={3}>规格值</Col>
-            <Col span={21}>
-              <div style={{ paddingLeft: token.paddingSM, lineHeight: token.lineHeight }}>
-                {item.tags?.map((tag, i) => {
-                  const isLongTag = tag.length > 20;
-                  const tagElem = (
-                    <Tag key={tag} closable={true} onClose={() => handleClose(index, tag)}>
-                      {isLongTag ? `${tag.slice(0, 20)}...` : tag}
-                    </Tag>
-                  );
-                  return isLongTag ? <Tooltip title={tag} key={tag}>{tagElem}</Tooltip> : tagElem;
-                })}
-                {item.inputVisible && (
-                  <Input
-                    type="text"
-                    size="small"
-                    autoFocus
-                    placeholder="请输入规格值"
-                    style={{ width: 100 }}
-                    value={item.inputValue}
-                    onChange={e => handleInputChange(index, e)}
-                    onBlur={() => handleInputConfirm(index)}
-                    onPressEnter={() => handleInputConfirm(index)}
-                  />
-                )}
-                {!item.inputVisible && (
-                  <Tag
-                    color="blue"
-                    onClick={() => showInput(index)}
-                    style={{ background: token.colorBgBase, borderStyle: 'dashed' }}
-                  >
-                    <PlusOutlined /> 添加
-                  </Tag>
-                )}
-              </div>
-            </Col>
-          </Row>
-        </Card>
-      ))}
-      {
-        sku.length < 2 &&
-        <div className={addClassName}>
-          <Button onClick={handleAddSku}><PlusOutlined />添加规格项</Button>
-        </div>
-      }
-    </div>
-  );
+    <Form.List name="sku">
+      {(fields, { remove, add }) => (
+        <>
+          {fields.map((field, index) => {
+            return (
+              <Card
+                key={field.key}
+                bordered={false}
+                style={{ borderRadius: 0 }}
+                headStyle={{ borderRadius: 0 }}
+                type="inner"
+                title={
+                  <Row type="flex" align="middle" gutter={token.padding}>
+                    <Col span={3}>规格名</Col>
+                    <Col span={10}>
+                      <ProFormText name={[field.name, 'name']} fieldProps={{ maxLength: 50 }} noStyle />
+                    </Col>
+                    {index !== 0 && <DeleteOutlined onClick={() => remove(field.name)} style={{ color: token.colorError, fontSize: token.fontSizeLG, cursor: 'pointer' }} />}
+                  </Row>
+                }
+              >
+                <Row type="flex" align="middle">
+                  <Col span={3}>规格值</Col>
+                  <Col span={21}>
+                    <ProForm.Item
+                      name={[field.name, 'tags']}
+                      noStyle
+                    >
+                      <EditTag />
+                    </ProForm.Item>
+                  </Col>
+                </Row>
+              </Card>
+            )
+          })}
+          {
+            fields.length < maxCount &&
+            <ProForm.Item style={{ marginTop: token.margin }}>
+              <Button type='primary' onClick={() => add()}><PlusOutlined />添加规格项</Button>
+            </ProForm.Item>
+          }
+        </>
+      )}
+    </Form.List>
+  )
 }
 
 export default SkuList

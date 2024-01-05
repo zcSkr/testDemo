@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Upload, message, Button, Image } from 'antd';
 import { useModel } from '@umijs/max';
 import { PlusOutlined, UploadOutlined } from '@ant-design/icons'
@@ -24,7 +24,7 @@ const GlobalUpload = ({
   ...props
 }) => {
   const { initialState: { ossHost } } = useModel('@@initialState');
-  const [previewSrc, setPreviewSrc] = useState()
+  const [previewSrc, setPreviewSrc] = useState('')
   const ossSTSInfo = useRef()
   const { type = 'webDefault' } = data || {}
   const [fileList, setFileList] = useState(() => {
@@ -50,6 +50,7 @@ const GlobalUpload = ({
     // console.log(file,fileList)
     if (file.status === 'done') {
       message.success(`${file.name} 上传成功`);
+      file.name = file.uid.split('/').slice(-1)?.[0], //修改文件显示名
       file.url = ossHost + '/' + file.uid;
       if (/audio|video/.test(file.type) && props.getTime) {
         const time = await getDuration(file.originFileObj)
@@ -85,7 +86,7 @@ const GlobalUpload = ({
         width: '100%',
         height: '100%',
         'a': {
-          pointerEvents: 'none',
+          pointerEvents: isDragging ? 'none' : 'auto',
         }
       };
     });
@@ -144,16 +145,18 @@ const GlobalUpload = ({
               itemRender={(originNode, file) => <DraggableUploadListItem originNode={originNode} file={file} />}
             >
               {
-                fileList.length >= maxCount ? null :
-                  (
-                    ['text', 'picture'].includes(listType) ?
-                      <Button icon={<UploadOutlined />}>上传文件</Button> :
-                      <div>
-                        <PlusOutlined />
-                        <div className="ant-upload-text">上传{/video/.test(accept) ? '视频' : '图片'}{maxCount ? `(${fileList.length}/${maxCount})` : ''}</div>
-                        {title ? <div>{title}</div> : null}
-                      </div>
-                  )
+                props.children || (
+                  fileList.length >= maxCount ? null :
+                    (
+                      ['text', 'picture'].includes(listType) ?
+                        <Button icon={<UploadOutlined />}>上传文件</Button> :
+                        <div>
+                          <PlusOutlined />
+                          <div className="ant-upload-text">上传{/video/.test(accept) ? '视频' : '图片'}{maxCount ? `(${fileList.length}/${maxCount})` : ''}</div>
+                          {title ? <div>{title}</div> : null}
+                        </div>
+                    )
+                )
               }
             </Upload>
           </ImgCrop>
