@@ -1,5 +1,5 @@
 import { Form, Input, message } from 'antd';
-import React, { useState, useRef, useEffect, useContext } from 'react';
+import React, { useState, useRef, useEffect, useContext, useCallback } from 'react';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { ProTable } from '@ant-design/pro-components';
 
@@ -7,7 +7,7 @@ const FormItem = Form.Item
 const StandardTable = ({ columns, handleSave, request, ...props }) => {
   const [pagination, setPagination] = useState({ current: 1, pageSize: 10, total: 0 })
   const EditableContext = React.createContext();
-  const EditableRow = ({ index, ...props }) => {
+  const EditableRow = useCallback(({ index, ...props }) => {
     const [form] = Form.useForm();
     return (
       <Form form={form} component={false}>
@@ -16,8 +16,8 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
         </EditableContext.Provider>
       </Form>
     );
-  };
-  const EditableCell = ({
+  }, []);
+  const EditableCell = useCallback(({
     title,
     editable,
     children,
@@ -86,7 +86,7 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
     }
 
     return <td {...restProps}>{childNode}</td>;
-  };
+  }, []);
 
   const components = {
     body: {
