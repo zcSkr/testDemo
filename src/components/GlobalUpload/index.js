@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { Upload, message, Button, Image } from 'antd';
 import { useModel } from '@umijs/max';
 import { PlusOutlined, UploadOutlined } from '@ant-design/icons'
@@ -42,16 +42,16 @@ const GlobalUpload = ({
     }
   })
 
-  const renameFile = (file) => {
+  const renameFile = useCallback((file) => {
     file.uid = accept == '.apk' ? `${type}${getSuffix(file.name)}` : `${type}/${randomString(10)}${getSuffix(file.name)}`
-  }
+  }, [])
 
-  const handleUploadChange = async ({ file, fileList }) => {
+  const handleUploadChange = useCallback(async ({ file, fileList }) => {
     // console.log(file,fileList)
     if (file.status === 'done') {
       message.success(`${file.name} 上传成功`);
       file.name = file.uid.split('/').slice(-1)?.[0], //修改文件显示名
-      file.url = ossHost + '/' + file.uid;
+        file.url = ossHost + '/' + file.uid;
       if (/audio|video/.test(file.type) && props.getTime) {
         const time = await getDuration(file.originFileObj)
         props.getTime?.(time)
@@ -66,7 +66,7 @@ const GlobalUpload = ({
       onChange(fileList.map(item => item.url).filter(r => r).join(','))
     }
     flushSync(() => setFileList(fileList)) //React18 Automatic batching 原因会导致只渲染一次导致多文件上传状态问题
-  }
+  }, [])
 
   let imageProps = {}
   if (accept?.indexOf('video') != -1) { //自定义的视频预览
@@ -76,7 +76,7 @@ const GlobalUpload = ({
     }
   }
 
-  const DraggableUploadListItem = ({ originNode, file }) => {
+  const DraggableUploadListItem = useCallback(({ originNode, file }) => {
     const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: file.uid });
     const divClassName = useEmotionCss(({ token }) => {
       return {
@@ -96,11 +96,11 @@ const GlobalUpload = ({
         {file.status === 'error' && isDragging ? originNode.props.children : originNode}
       </div>
     );
-  };
+  }, []);
 
   const sensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } });
 
-  const handleDragEnd = ({ active, over }) => {
+  const handleDragEnd = useCallback(({ active, over }) => {
     if (active.id !== over?.id) {
       setFileList((prev) => {
         const activeIndex = prev.findIndex((i) => i.uid === active.id);
@@ -110,7 +110,7 @@ const GlobalUpload = ({
         return sortFileList;
       });
     }
-  };
+  }, []);
 
   return (
     <>

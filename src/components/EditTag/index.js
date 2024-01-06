@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Input, Space, Tag, Tooltip } from 'antd';
 import { DndContext, PointerSensor, useSensor, closestCenter } from '@dnd-kit/core';
 import { arrayMove, SortableContext, useSortable, horizontalListSortingStrategy } from '@dnd-kit/sortable';
@@ -50,7 +50,7 @@ const EditTag = ({
 
   const sensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } });
 
-  const handleDragEnd = ({ active, over }) => {
+  const handleDragEnd = useCallback(({ active, over }) => {
     if (!over) return;
     if (active.id !== over.id) {
       setTags((data) => {
@@ -61,7 +61,7 @@ const EditTag = ({
         return sortTags
       });
     }
-  };
+  }, []);
 
   const DraggableTag = ({ tag, index }) => {
     const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: tag });

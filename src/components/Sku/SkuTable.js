@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { Button, InputNumber, Flex } from 'antd';
 import StandardTable from '@/components/StandardTable';
 import { UploadOutlined } from '@ant-design/icons';
@@ -11,19 +11,18 @@ const SkuTable = ({
 }) => {
   const actionRef = useRef();
 
-  let columns = sku.map(item => ({ title: item.name, dataIndex: item.name }))
-  columns.push(
+  let columns = sku.map(item => ({ title: item.name, dataIndex: item.name })).concat([
     {
       title: ({ dataIndex }) => <InputNumber status="none" onBlur={e => handleTitleBlur(e, dataIndex)} style={{ width: '100%' }} min={0} precision={2} placeholder="价格" />,
       dataIndex: 'price',
       width: 100,
-      render: (val, record, index, action, props) => <InputNumber status="none" defaultValue={record[props.dataIndex]} onChange={value => handleColChange(props.dataIndex, record, value)} style={{ width: '100%' }} min={0.01} precision={2} placeholder="价格" />
+      render: (val, record, index, action, props) => <InputNumber status="none" value={record[props.dataIndex]} onChange={value => handleColChange(props.dataIndex, record, value)} style={{ width: '100%' }} min={0} precision={2} placeholder="价格" />
     },
     {
       title: ({ dataIndex }) => <InputNumber status="none" onBlur={e => handleTitleBlur(e, dataIndex)} style={{ width: '100%' }} min={0} precision={0} placeholder="库存" />,
       dataIndex: 'num',
       width: 100,
-      render: (val, record, index, action, props) => <InputNumber status="none" defaultValue={record[props.dataIndex]} onChange={value => handleColChange(props.dataIndex, record, value)} style={{ width: '100%' }} min={0} precision={0} placeholder="库存" />
+      render: (val, record, index, action, props) => <InputNumber status="none" value={record[props.dataIndex]} onChange={value => handleColChange(props.dataIndex, record, value)} style={{ width: '100%' }} min={0} precision={0} placeholder="库存" />
     },
     {
       title: ({ dataIndex }) => (
@@ -43,8 +42,8 @@ const SkuTable = ({
           </Flex>
         )
       }
-    },
-  )
+    }
+  ])
 
   const handleColChange = (dataIndex, record, val) => {
     value.forEach(item => {
@@ -75,7 +74,7 @@ const SkuTable = ({
     actionRef.current?.reload()
   }
 
-  const handleBatchUpload = (val,action) => {
+  const handleBatchUpload = (val, action) => {
     value.forEach(item => {
       if (!item[action]) {
         item[action] = val

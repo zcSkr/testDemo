@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { ProForm, ProFormDependency } from '@ant-design/pro-components';
 
 import SkuList from './SkuList'
@@ -12,14 +12,14 @@ const Sku = ({
 
   useEffect(() => {
     handleResetSkuList(sku)
-  },[sku])
+  }, [sku])
 
-  const handleResetSkuList = (sku) => {
-    if(!sku) return
+  const handleResetSkuList = useCallback((sku) => {
+    if (!sku) return
     sku = sku.filter(item => item)
     const flatten = setArray(sku.map(item => item.tags?.split(',') || [])) || []
     const newList = flatten.map((item, i) => {
-      const obj = { key: `key_${i}`  }
+      const obj = { key: `key_${i}` }
       const specsJson = sku.map((record, i) => {
         obj[record.name] = item.split(separator)[i]
         return ({ key: record.name, value: item.split(separator)[i] })
@@ -30,7 +30,7 @@ const Sku = ({
         skuList.forEach(item => {
           if (obj.specsJson == item.specsJson) {
             for (let key in item) {
-              if(key != 'key') obj[key] = item[key] //除24行的唯一键外，对其他字段赋值
+              if (key != 'key') obj[key] = item[key] //除24行的唯一键外，对其他字段赋值
             }
           }
         })
@@ -39,10 +39,10 @@ const Sku = ({
     })
     // console.log(newList, 'newList')
     form.setFieldsValue({ skuList: newList })
-  }
+  }, [])
 
   //得出规格笛卡尔积
-  const setArray = (arr) => {
+  const setArray = useCallback((arr) => {
     let len = arr.length;
     // 当数组大于等于2个的时候
     if (len >= 2) {
@@ -74,7 +74,7 @@ const Sku = ({
     } else {
       return arr[0];
     }
-  }
+  }, [])
 
   return (
     <>

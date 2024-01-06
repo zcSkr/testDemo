@@ -17,11 +17,11 @@ const GlobalAudit = ({
   children
 }) => {
   const formRef = useRef()
-  const handleAudit = async state => {
+  const handleAudit = useCallback(async state => {
     formRef.current.setFields([{ name: fieldNames.description, errors: [] }])
     formRef.current.setFieldsValue({ [fieldNames.state]: state })
     formRef.current.submit()
-  }
+  }, [])
 
   return (
     <ProForm
