@@ -22,7 +22,7 @@ const UpdateForm = ({
     <ProForm
       onFinish={fieldsValue => handleUpdate({ ...formVals, ...fieldsValue })}
       submitter={{
-        render: (props, doms) => <div style={{ textAlign: 'center' }}>{doms[0]}</div>
+        render: (props, doms) => <div style={{ textAlign: 'center' }}>{doms[1]}</div>
       }}
       layout="horizontal"
       formRef={formRef}

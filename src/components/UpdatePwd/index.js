@@ -12,7 +12,7 @@ const UpdatePsd = ({
     <ProForm
       onFinish={fieldsValue => handleUpdate({ ...fieldsValue })}
       submitter={{
-        render: (props,doms) => <div style={{ textAlign: 'center' }}>{doms[0]}</div>
+        render: (props,doms) => <div style={{ textAlign: 'center' }}>{doms[1]}</div>
       }}
       layout="horizontal"
       {...formLayout}
