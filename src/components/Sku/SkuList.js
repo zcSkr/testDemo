@@ -5,8 +5,6 @@ import { ProForm, ProFormText } from '@ant-design/pro-components';
 import EditTag from '@/components/EditTag';
 
 const SkuList = ({
-  value,
-  onChange,
   maxCount = 2,
 }) => {
   const { token } = theme.useToken()
