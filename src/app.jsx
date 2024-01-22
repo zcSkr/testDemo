@@ -55,9 +55,6 @@ const errorHandler = (error) => {
 const headerInterceptor = (url, options) => {
   const timestamp = new Date().getTime()
   const rand = Math.floor(Math.random() * 99999) //0-99999随机整数
-  if (url.substr(0, 4) != 'http') {
-    url = (process.env.NODE_ENV === 'development' ? '/api' : requestUrl) + url;
-  }
   return {
     url,
     options: {
@@ -77,6 +74,7 @@ const headerInterceptor = (url, options) => {
 //打包时接口请求路径
 const requestUrl = 'https://www.fastmock.site/mock/19502d36f214e49aeb0b29a39556846e/mock'
 export const request = {
+  baseURL: process.env.NODE_ENV === 'development' ? '/api' : requestUrl,
   errorConfig: { errorHandler },
   requestType: 'form',//post 请求时数据类型，默认form，需要json时services层改变传值
   requestInterceptors: [headerInterceptor],
