@@ -44,7 +44,7 @@
 
 # 业务组件
 ###### 使用React Hooks重构了之前的常用组件
-## 组件`BraftEditor`、`GlobalUpload`、`Sku`用到的鱼oss有关参数的处理在`components/_utils`
+## 组件`BraftEditor`、`GlobalUpload`、`Sku`用到的与oss有关参数的处理在`components/_utils`
 1. Bmap:百度地图。需引入三方js，配置如`config/config.js`39行
 2. BraftEditor:富文本编辑器oss版本
 3. GlobalDrawer:公共抽屉弹出层

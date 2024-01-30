@@ -149,11 +149,11 @@ export const layout = ({ initialState, setInitialState }) => {
 			},
     },
     links: process.env.NODE_ENV === 'development' ? [
-      <a href="http://192.168.2.74:9010/admin/swagger-ui.html" target="_blank">
+      <a key="localApi" href="http://192.168.2.74:9010/admin/swagger-ui.html" target="_blank">
         <LinkOutlined />
         <span>本地接口文档</span>
       </a>,
-      <a href="https://xx.xxx.com/xxx/swagger-ui.html" target="_blank">
+      <a key="onlineApi" href="https://xx.xxx.com/xxx/swagger-ui.html" target="_blank">
         <LinkOutlined />
         <span>线上接口文档</span>
       </a>,
