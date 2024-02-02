@@ -95,37 +95,14 @@ const Sku = ({
       >
         <SkuList />
       </ProForm.Item>
-
+      
       <ProFormDependency name={['sku', 'skuList']}>
-        {({ sku, skuList }) => {
-          if (skuList?.length > 0) {
-            return (
-              <ProForm.Item
-                name='skuList'
-                label='规格项目表'
-                rules={[
-                  { required: true, message: '请创建规格！' },
-                  {
-                    validator(rule, value) {
-                      if (value?.some(item => item.price === void 0)) {
-                        return Promise.reject('请输入规格项价格!');
-                      }
-                      if (value?.some(item => item.num === void 0)) {
-                        return Promise.reject('请输入规格项库存!');
-                      }
-                      // if (value?.some(item => (item.img === void 0))) {
-                      //   return Promise.reject('请上传规格图片!');
-                      // }
-                      return Promise.resolve();
-                    },
-                  }
-                ]}
-              >
-                <SkuTable sku={sku.filter(item => item)} />
-              </ProForm.Item>
-            )
-          }
-        }}
+        {({ sku, skuList }) => (
+          skuList?.length > 0 &&
+          <ProForm.Item label="规格项目表" required>
+            <SkuTable sku={sku.filter(item => item)} />
+          </ProForm.Item>
+        )}
       </ProFormDependency>
     </>
   )

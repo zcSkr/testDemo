@@ -71,7 +71,7 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
         <FormItem
           style={{ margin: 0 }}
           name={dataIndex}
-          rules={[{ required: editable.required ?? true, message: `${title}是必填项！` }]}
+          rules={[{ required: editable.required ?? true, message: `${title}是必填项` }]}
         >
           {
             editable.renderEditCell?.(inputRef, save) ||

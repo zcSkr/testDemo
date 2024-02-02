@@ -1,28 +1,47 @@
-import React, { useRef } from 'react';
-import { Button, InputNumber, Flex } from 'antd';
-import StandardTable from '@/components/StandardTable';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
+import { Button, InputNumber, Flex, Form } from 'antd';
+import { EditableProTable } from '@ant-design/pro-components';
 import { UploadOutlined } from '@ant-design/icons';
 import GlobalUpload from '@/components/GlobalUpload'
 
 const SkuTable = ({
   sku,
-  value,
-  onChange,
 }) => {
   const actionRef = useRef();
+  const editableFormRef = useRef()
+  const [editableKeys, setEditableRowKeys] = useState([]);
+  useEffect(() => {
+    setEditableRowKeys(editableFormRef.current?.getRowsData()?.map(item => (item.id || item.key)) || [])
+  }, [sku])
 
-  let columns = sku.map(item => ({ title: item.name, dataIndex: item.name })).concat([
+  let columns = sku.map(item => ({ title: item.name, dataIndex: item.name, editable: false })).concat([
     {
       title: ({ dataIndex }) => <InputNumber status="none" onBlur={e => handleTitleBlur(e, dataIndex)} style={{ width: '100%' }} min={0} precision={2} placeholder="价格" />,
       dataIndex: 'price',
       width: 100,
-      render: (val, record, index, action, props) => <InputNumber status="none" value={record[props.dataIndex]} onChange={value => handleColChange(props.dataIndex, record, value)} style={{ width: '100%' }} min={0} precision={2} placeholder="价格" />
+      valueType: 'digit',
+      formItemProps: {
+        rules: [{ required: true, message: '请输入价格' }]
+      },
+      fieldProps: {
+        min: 0,
+        precision: 2,
+        style: { width: '100%' }
+      }
     },
     {
       title: ({ dataIndex }) => <InputNumber status="none" onBlur={e => handleTitleBlur(e, dataIndex)} style={{ width: '100%' }} min={0} precision={0} placeholder="库存" />,
       dataIndex: 'num',
       width: 100,
-      render: (val, record, index, action, props) => <InputNumber status="none" value={record[props.dataIndex]} onChange={value => handleColChange(props.dataIndex, record, value)} style={{ width: '100%' }} min={0} precision={0} placeholder="库存" />
+      valueType: 'digit',
+      formItemProps: {
+        rules: [{ required: true, message: '请输入库存' }]
+      },
+      fieldProps: {
+        min: 0,
+        precision: 0,
+        style: { width: '100%' }
+      }
     },
     {
       title: ({ dataIndex }) => (
@@ -32,69 +51,56 @@ const SkuTable = ({
       ),
       dataIndex: 'img',
       width: 200,
-      render: (val, record, index, action, props) => {
-        const maxCount = 1
-        return (
-          <Flex>
-            <GlobalUpload listType='text' maxCount={maxCount} value={record[props.dataIndex]} onChange={value => handleColUpload(props.dataIndex, record, value)}>
-              {record[props.dataIndex]?.split(',').length >= maxCount ? null : <Button><UploadOutlined /> 上传图片</Button>}
-            </GlobalUpload>
-          </Flex>
-        )
-      }
+      formItemProps: {
+        rules: [{ required: true, message: '请上传图片' }]
+      },
+      renderFormItem: () => <ColUpload maxCount={1} />,
     }
   ])
 
-  const handleColChange = (dataIndex, record, val) => {
-    value.forEach(item => {
-      if (item.key == record.key) {
-        item[dataIndex] = val
-      }
-    })
-    actionRef.current?.reload()
-  }
-  
 
-  const handleTitleBlur = (e, action) => {
-    value.forEach(item => {
-      if (item[action] === void 0) {
-        item[action] = Number(e.target.value)
-      }
-    })
-    onChange(value)
-  }
+  const ColUpload = useCallback(({ value, onChange, maxCount }) => {
+    const { status } = Form.Item.useStatus()
+    return (
+      <Flex>
+        <GlobalUpload listType='text' maxCount={1} value={value} onChange={onChange}>
+          {value?.split(',').filter(r => r).length >= maxCount ? null : <Button danger={status == 'error'}><UploadOutlined /> 上传图片</Button>}
+        </GlobalUpload>
+      </Flex>
+    )
+  }, [])
 
-  const handleColUpload = (dataIndex, record, val) => {
-    // console.log(dataIndex, record, val)
-    value.forEach(item => {
-      if (item.key == record.key) {
-        item[dataIndex] = val
+  const handleTitleBlur = useCallback((e, dataIndex) => {
+    editableFormRef.current.getRowsData()?.forEach((item, index) => {
+      if (item[dataIndex] === void 0) {
+        editableFormRef.current.setRowData(index, { ...item, [dataIndex]: Number(e.target.value) })
       }
     })
-    actionRef.current?.reload()
-  }
+  }, [])
 
-  const handleBatchUpload = (val, action) => {
-    value.forEach(item => {
-      if (!item[action]) {
-        item[action] = val
+  const handleBatchUpload = useCallback((val, dataIndex) => {
+    editableFormRef.current.getRowsData()?.forEach((item, index) => {
+      if (!item[dataIndex]) {
+        editableFormRef.current.setRowData(index, { ...item, [dataIndex]: val })
       }
     })
-    onChange(value)
-  };
+  }, []);
 
   return (
-    <StandardTable
-      actionRef={actionRef}
-      ghost
+    <EditableProTable
+      name='skuList'
+      rowKey={record => record.key || record.id}
       bordered
-      search={false}
-      options={false}
-      loading={false}
-      dataSource={value}
-      pagination={false}
+      recordCreatorProps={false}
+      editable={{
+        type: 'multiple',
+        editableKeys,
+        onChange: value => setEditableRowKeys(value),
+      }}
+      ghost
+      actionRef={actionRef}
+      editableFormRef={editableFormRef}
       columns={columns}
-      columnEmptyText={false}
     />
   );
 }
