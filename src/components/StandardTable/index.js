@@ -3,7 +3,6 @@ import React, { useState, useRef, useEffect, useContext, useCallback } from 'rea
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { ProTable } from '@ant-design/pro-components';
 
-const FormItem = Form.Item
 const StandardTable = ({ columns, handleSave, request, ...props }) => {
   const [pagination, setPagination] = useState({ current: 1, pageSize: 10, total: 0 })
   const EditableContext = React.createContext();
@@ -52,23 +51,11 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
       }
     };
 
-    const editableCellValueWrapClassName = useEmotionCss(({ token }) => {
-      return {
-        border: '1px solid transparent',
-        cursor: 'pointer',
-        ':hover': {
-          borderColor: token.colorPrimaryHover,
-          borderRadius: token.borderRadiusSM,
-          padding: `0 ${token.paddingXXS}px`,
-        },
-      };
-    });
-
     let childNode = children;
 
     if (editable) {
       childNode = editing ? (
-        <FormItem
+        <Form.Item
           style={{ margin: 0 }}
           name={dataIndex}
           rules={[{ required: editable.required ?? true, message: `${title}是必填项` }]}
@@ -77,9 +64,9 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
             editable.renderEditCell?.(inputRef, save) ||
             <Input ref={inputRef} onPressEnter={save} onBlur={save} placeholder="请输入" size="small" style={{ width: '100%' }} />
           }
-        </FormItem>
+        </Form.Item>
       ) : (
-        <div className={editableCellValueWrapClassName} onClick={toggleEdit}>
+        <div className="editableCellValueWrap" onClick={toggleEdit}>
           {children}
         </div>
       );
@@ -112,12 +99,26 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
     };
   });
 
+  const editableRowClassName = useEmotionCss(({ token }) => {
+    return {
+      '.editableCellValueWrap': {
+        border: '1px solid transparent',
+      },
+      ':hover .editableCellValueWrap': {
+        cursor: 'pointer',
+        borderColor: token.colorPrimaryHover,
+        borderRadius: token.borderRadiusSM,
+      },
+    };
+  });
+
   return (
     <ProTable
       rowKey={record => record.key || record.id}
       search={{ labelWidth: 'auto' }}
       dateFormatter={false}
       {...props}
+      rowClassName={() => [editableRowClassName, typeof props.rowClassName == 'function' ? props.rowClassName() : props.rowClassName]}
       request={request ? async (params, sort, filter) => {
         const res = await request(params, sort, filter)
         if (res.code == 200) {
