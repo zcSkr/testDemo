@@ -116,7 +116,7 @@ const UpdateForm = ({
       <ProFormDependency name={['select']}>
         {({ select }) => (
           select == 0 &&
-          dom元素
+          'dom元素'
         )}
       </ProFormDependency>
 
