@@ -50,7 +50,7 @@ const Area = () => {
         <Space>
           <a onClick={() => { handleUpdateModalVisible(true); setStepFormValues(record); }}>编辑</a>
           <Popconfirm title="确定删除?" onConfirm={() => handleDeleteRecord(record)} okText="确定" cancelText="取消">
-            <a style={{ color: '#f5222d' }}>删除</a>
+            <a style={{ color: '#ff4d4f' }}>删除</a>
           </Popconfirm>
         </Space>
       ),

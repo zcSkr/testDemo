@@ -1,10 +1,11 @@
-import { Form, Input, message } from 'antd';
-import React, { useState, useRef, useEffect, useContext, useCallback } from 'react';
+import { Form, Input, message, Popover, theme } from 'antd';
+import React, { useState, useRef, useEffect, useContext, useCallback, forwardRef } from 'react';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { ProTable } from '@ant-design/pro-components';
 
 const StandardTable = ({ columns, handleSave, request, ...props }) => {
   const [pagination, setPagination] = useState({ current: 1, pageSize: 10, total: 0 })
+  const { token } = theme.useToken()
   const EditableContext = React.createContext();
   const EditableRow = useCallback(({ index, ...props }) => {
     const [form] = Form.useForm();
@@ -23,6 +24,7 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
     dataIndex,
     record,
     handleSave,
+    formItemProps,
     ...restProps
   }) => {
     const [editing, setEditing] = useState(false);
@@ -52,18 +54,16 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
     };
 
     let childNode = children;
-
+    const newFormItemProps = typeof formItemProps == 'function' ? formItemProps() : formItemProps
     if (editable) {
       childNode = editing ? (
         <Form.Item
-          style={{ margin: 0 }}
+          label={title}
           name={dataIndex}
-          rules={[{ required: editable.required ?? true, message: `${title}是必填项` }]}
+          noStyle
+          {...newFormItemProps}
         >
-          {
-            editable.renderEditCell?.(inputRef, save) ||
-            <Input ref={inputRef} onPressEnter={save} onBlur={save} placeholder="请输入" size="small" style={{ width: '100%' }} />
-          }
+          <CustomInput editable={editable} save={save} ref={inputRef} />
         </Form.Item>
       ) : (
         <div className="editableCellValueWrap" onClick={toggleEdit}>
@@ -74,6 +74,19 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
 
     return <td {...restProps}>{childNode}</td>;
   }, []);
+
+  const CustomInput = forwardRef(({ value, onChange, editable, save }, ref) => {
+    const { errors } = Form.Item.useStatus()
+    const props = { value, onChange, ref, onPressEnter: save, onBlur: save, size: 'small', style: { width: '100%' } }
+    return (
+      <Popover content={<span style={{ color: token.colorError }}>{errors[0]}</span>} open={Boolean(errors[0])}>
+        {
+          editable.renderEditCell?.(props) || 
+          <Input {...props} placeholder="请输入" allowClear />
+        }
+      </Popover>
+    )
+  })
 
   const components = {
     body: {
@@ -94,6 +107,7 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
         editable: col.editable,
         dataIndex: col.dataIndex,
         title: col.title,
+        formItemProps: col.formItemProps,
         handleSave: handleSave,
       }),
     };

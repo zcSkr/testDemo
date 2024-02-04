@@ -86,9 +86,11 @@ const DemoTable = () => {
       title: '单元格编辑',
       dataIndex: 'name',
       hideInSearch: true,
+      formItemProps: {
+        rules: [{ required: true }] //单元格编辑必传校验
+      },
       editable: {
-        required: true, // 默认为true，false为不是表单校验
-        renderEditCell: (ref, save) => <Input size='small' maxLength={50} ref={ref} onPressEnter={save} onBlur={save} /> //传了会覆盖可编辑单元格的默认Input,比如传入一个InputNumber
+        renderEditCell: (props) => <Input {...props} placeholder="请输入"  /> //传了会覆盖可编辑单元格的默认Input,比如传入一个InputNumber
       },
     },
     {
@@ -118,7 +120,7 @@ const DemoTable = () => {
           <a onClick={() => { handleInfoModalVisible(true); setStepFormValues(record); }}>详情</a>
           <a onClick={() => { handleUpdateModalVisible(true); setStepFormValues(record); }}>编辑</a>
           <Popconfirm title="确定删除?" onConfirm={() => handleDeleteRecord(record)} okText="确定" cancelText="取消">
-            <a style={{ color: '#f5222d' }}>删除</a>
+            <a style={{ color: '#ff4d4f' }}>删除</a>
           </Popconfirm>
         </Space>
       ),
