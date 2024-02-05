@@ -90,7 +90,7 @@ const DemoTable = () => {
         rules: [{ required: true }] //单元格编辑必传校验
       },
       editable: {
-        renderEditCell: ({ save, ...props }) => <Input {...props} onPressEnter={save} onBlur={save} placeholder="请输入" allowClear /> //传了会覆盖可编辑单元格的默认Input,比如传入一个InputNumber
+        renderEditCell: ({ save, ...props }) => <Input {...props} onPressEnter={save} placeholder="请输入" allowClear /> //传了会覆盖可编辑单元格的默认Input,比如传入一个InputNumber
       },
     },
     {

@@ -77,12 +77,12 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
 
   const CustomInput = forwardRef(({ value, onChange, editable, save }, ref) => {
     const { errors } = Form.Item.useStatus()
-    const props = { value, onChange, ref, size: 'small', style: { width: '100%' } }
+    const props = { value, onChange, ref, size: 'small', style: { width: '100%' }, onBlur: save }
     return (
       <Popover content={<span style={{ color: token.colorError }}>{errors[0]}</span>} open={Boolean(errors[0])}>
         {
           editable.renderEditCell?.({ ...props, save }) || 
-          <Input {...props} onPressEnter={save} onBlur={save} placeholder="请输入" allowClear />
+          <Input {...props} onPressEnter={save} placeholder="请输入" allowClear />
         }
       </Popover>
     )
