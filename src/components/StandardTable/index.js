@@ -47,7 +47,9 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
       try {
         const values = await form.validateFields([dataIndex]);
         toggleEdit();
-        handleSave(dataIndex, { ...record, ...values });
+        if (record[dataIndex] !== values[dataIndex]) {
+          handleSave(dataIndex, { ...record, ...values });
+        }
       } catch (errInfo) {
         console.log('Save failed:', errInfo);
       }
@@ -81,7 +83,7 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
     return (
       <Popover content={<span style={{ color: token.colorError }}>{errors[0]}</span>} open={Boolean(errors[0])}>
         {
-          editable.renderEditCell?.({ ...props, save }) || 
+          editable.renderEditCell?.({ ...props, save }) ||
           <Input {...props} onPressEnter={save} placeholder="请输入" allowClear />
         }
       </Popover>
