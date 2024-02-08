@@ -35,7 +35,7 @@ export default defineConfig({
   proxy: {
     '/api': {
       target: 'http://localhost:8000',
-      // target: 'https://www.fastmock.site/mock/19502d36f214e49aeb0b29a39556846e/mock',
+      // target: 'https://mock.apifox.com/m1/888457-0-default',
       changeOrigin: true,
       pathRewrite: {
         '^/api': '',

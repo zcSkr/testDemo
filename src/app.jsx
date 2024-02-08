@@ -72,7 +72,7 @@ const headerInterceptor = (url, options) => {
 };
 
 //打包时接口请求路径
-const requestUrl = 'https://www.fastmock.site/mock/19502d36f214e49aeb0b29a39556846e/mock'
+const requestUrl = 'https://mock.apifox.com/m1/888457-0-default'
 export const request = {
   baseURL: process.env.NODE_ENV === 'development' ? '/api' : requestUrl,
   errorConfig: { errorHandler },
