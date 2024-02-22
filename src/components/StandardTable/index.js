@@ -104,13 +104,14 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
 
     return {
       ...col,
-      onCell: record => ({
+      onCell: (record, index) => ({
         record,
         editable: col.editable,
         dataIndex: col.dataIndex,
         title: col.title,
         formItemProps: col.formItemProps,
         handleSave: handleSave,
+        ...col.onCell?.(record, index),// 融合Column传入onCell函数，用于单元格合并
       }),
     };
   });
