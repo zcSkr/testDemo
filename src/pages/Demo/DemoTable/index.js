@@ -107,7 +107,7 @@ const DemoTable = () => {
       render: (val,record) => <Tooltip title={record.createTime}>{record.createTime}</Tooltip>,
       fieldProps: (form) => ({
         disabledDate: current => current > dayjs().endOf('day'),
-        defaultPickerValue: [dayjs().subtract(1, 'month'), dayjs()],
+        defaultPickerValue: [dayjs().subtract(1, 'month'), dayjs().subtract(1, 'month')],
         placeholder: ['开始时间', '结束时间'],
       }),
     },
