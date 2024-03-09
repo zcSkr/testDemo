@@ -50,7 +50,7 @@ export default defineConfig({
   initialState: {}, // access 插件依赖 initial State 所以需要同时开启
   deadCode: { //检测未使用的文件和导出
     failOnHint: true, //检测失败是否终止进程
-    exclude: ['src/pages/document.ejs'],  //排除检测的范围
+    exclude: [],  //排除检测的范围
   },
   helmet: false, //不会集成 react-helmet-async同时构建产物也会减少相应的尺寸
 });
