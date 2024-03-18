@@ -59,7 +59,7 @@ const Login = () => {
             rules={[
               {
                 required: true,
-                message: '请输入登录账号！',
+                message: '请输入登录账号',
               },
             ]}
           />
@@ -70,7 +70,7 @@ const Login = () => {
             rules={[
               {
                 required: true,
-                message: '请输入密码！',
+                message: '请输入密码',
               },
             ]}
           />

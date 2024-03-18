@@ -82,7 +82,7 @@ const Sku = ({
         name="sku"
         label="商品规格"
         rules={[
-          { required: true, message: '请创建规格！' },
+          { required: true, message: '请创建规格' },
           {
             validator(rule, value) {
               if (value?.some(item => (!item.name || !item.tags))) {

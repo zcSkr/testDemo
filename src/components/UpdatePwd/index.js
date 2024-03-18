@@ -30,10 +30,10 @@ const UpdatePsd = ({
           (form) => ({
             validator(rule, value) {
               if (!value) {
-                return Promise.reject('请输入确认密码！');
+                return Promise.reject('请输入确认密码');
               }
               if (form.getFieldValue('password') !== value) {
-                return Promise.reject('两次密码输入不一致!');
+                return Promise.reject('两次密码输入不一致');
               }
               return Promise.resolve();
             },

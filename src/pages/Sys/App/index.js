@@ -92,7 +92,7 @@ const UploadApp = () => {
               <ProForm.Item
                 name="apkFileUrl"
                 label="安装包"
-                rules={[{ required: true, message: '请上传.apk文件！' }]}
+                rules={[{ required: true, message: '请上传.apk文件' }]}
               >
                 <GlobalUpload
                   accept='.apk'
@@ -121,7 +121,7 @@ const UploadApp = () => {
             name="updateLog"
             label="更新描述"
             rules={[{ required: true }]}
-            placeholder="请输入更新描述！"
+            placeholder="请输入更新描述"
             fieldProps={{ autoSize: { minRows: 2, maxRows: 6 }, maxLength: 500, allowClear: true, showCount: true }}
           />
         </ProForm>

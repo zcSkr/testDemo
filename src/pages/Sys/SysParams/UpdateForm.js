@@ -44,7 +44,7 @@ const UpdateForm = ({
         <ProForm.Item
           name="codeValue"
           label="值"
-          rules={[{ required: true, message: '请上传文件！' }]}
+          rules={[{ required: true, message: '请上传文件' }]}
         >
           <GlobalUpload accept='*' listType="text" />
         </ProForm.Item>

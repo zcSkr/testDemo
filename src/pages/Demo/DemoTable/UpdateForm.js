@@ -123,28 +123,28 @@ const UpdateForm = ({
       <ProForm.Item
         name="tags"
         label="标签示例"
-        rules={[{ required: true, message: '请添加！' }]}
+        rules={[{ required: true, message: '请添加' }]}
       >
         <EditTag />
       </ProForm.Item>
       <ProForm.Item
         name="logo1"
         label="oss上传示例"
-        rules={[{ required: true, message: '请上传！' }]}
+        rules={[{ required: true, message: '请上传' }]}
       >
         <GlobalUpload maxCount={2} />
       </ProForm.Item>
       <ProForm.Item
         name="address"
         label="腾讯地图示例"
-        rules={[{ required: true, message: '请选择！' }]}
+        rules={[{ required: true, message: '请选择' }]}
       >
         <QQMap />
       </ProForm.Item>
       <ProForm.Item
         name="content1"
         label="oss富文本示例"
-        rules={[{ required: true, message: '请输入！' }]}
+        rules={[{ required: true, message: '请输入' }]}
       >
         <BraftEditor />
       </ProForm.Item>

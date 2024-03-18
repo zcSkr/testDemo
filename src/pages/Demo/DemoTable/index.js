@@ -40,8 +40,12 @@ const DemoTable = () => {
       valueType: 'select',
       fieldProps: (form) => ({
         showSearch: true,
-        options: [{ label: 'select1', value: 1 }, { label: 'select2', value: 2 }]
+        fieldNames: { label: 'name', value: 'id' },
       }),
+      request:  async () => {
+        const { data } = await services_demoTable.query({ pageSize: 0 })
+        return data.list
+      }
     },
     {
       title: '状态',
