@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { ProForm, ProFormDependency, ProFormCascader, ProFormSelect, ProFormText, ProFormTextArea, ProFormMoney, ProFormDigit, ProFormRadio, ProFormSwitch, ProFormDigitRange } from '@ant-design/pro-components';
+import { ProForm, ProFormDependency, ProFormCascader, ProFormSelect, ProFormText, ProFormTextArea, ProFormMoney, ProFormDigit, ProFormRadio, ProFormSwitch, ProFormDigitRange, ProFormDatePicker } from '@ant-design/pro-components';
 import BraftEditor from '@/components/BraftEditor';
 import GlobalUpload from '@/components/GlobalUpload';
 import EditTag from '@/components/EditTag';
 import QQMap from '@/components/QQMap';
+import dayjs from 'dayjs';
 
 import * as services_demoTable from '@/services/demo/demoTable';
 
@@ -111,6 +112,16 @@ const UpdateForm = ({
         label="ProFormDigitRange示例"
         rules={[{ required: true }]}
         fieldProps={{ precision: 0 }}
+      />
+      <ProFormDatePicker
+        name="ProFormDatePicker"
+        label="ProFormDatePicker示例"
+        rules={[{ required: true }]}
+        width='100%'
+        fieldProps={{
+          disabledDate: current => current < dayjs().startOf('day')
+        }}
+        normalize={value => value?.format('YYYY-MM-DD')}
       />
 
       <ProFormDependency name={['select']}>
