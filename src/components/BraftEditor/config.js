@@ -2,7 +2,7 @@ export const imageControls = [
   'align-left', // 设置图片居左
   'align-center', // 设置图片居中
   'align-right', // 设置图片居右
-  // 'size',
+  'size',
   'remove'
 ]
 export const excludeControls = [
