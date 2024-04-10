@@ -50,8 +50,8 @@ const GlobalUpload = ({
     // console.log(file,fileList)
     if (file.status === 'done') {
       message.success(`${file.name} 上传成功`);
-      file.name = file.uid.split('/').slice(-1)?.[0], //修改文件显示名
-        file.url = ossHost + '/' + file.uid;
+      file.name = file.uid.split('/').slice(-1)?.[0] //修改文件显示名
+      file.url = ossHost + '/' + file.uid;
       if (/audio|video/.test(file.type) && props.getTime) {
         const time = await getDuration(file.originFileObj)
         props.getTime?.(time)
