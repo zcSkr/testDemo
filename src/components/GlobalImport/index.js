@@ -37,7 +37,6 @@ const GlobalImport = ({
         const timestamp = new Date().getTime()
         const rand = Math.floor(Math.random() * 99999) //0-99999随机整数
         setHeaders({
-          'api-version': 1,
           token: sessionStorage.token || '',
           apiSecret: md5(md5(timestamp + "ccys" + rand).toString()).toString(),
           timestamp,
