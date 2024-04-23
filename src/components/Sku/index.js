@@ -86,7 +86,7 @@ const Sku = ({
           {
             validator(rule, value) {
               if (value?.some(item => (!item.name || !item.tags))) {
-                return Promise.reject('请完善规格名/规格值!');
+                return Promise.reject('请完善规格名/规格值');
               }
               return Promise.resolve();
             },

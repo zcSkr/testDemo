@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Button, message } from 'antd';
 import { ExportOutlined } from '@ant-design/icons'
 
 const GlobalExport = ({
   action, //接口路径
   params, //接口传参
+  children,
 }) => {
 
-  const handleExport = async () => {
+  const handleExport = useCallback(async () => {
     const hide = message.loading({ content: '操作中', key: 'loading' });
     // console.log(params)
     const res = await action(params)
@@ -23,11 +24,11 @@ const GlobalExport = ({
     a.click();
     URL.revokeObjectURL(objectURL);
     a = null;
-  }
+  }, [params])
 
   return (
     <Button onClick={handleExport}>
-      <ExportOutlined /> 导出
+      {children || <><ExportOutlined /> 导出</>}
     </Button>
   )
 }

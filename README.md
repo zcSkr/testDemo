@@ -1,5 +1,5 @@
 # 依赖安装
-1. 推荐使用pnpm。常用命令：pnpm outdated检测更新；pnpm up遵循 package.json 指定的范围更新所有的依赖项；
+1. 推荐使用pnpm。常用命令：`pnpm outdated`检测更新；`pnpm up`遵循 package.json 指定的范围更新所有的依赖项；
 2. yarn，由于yarn的扁平化处理，有“幽灵依赖”，可能会导致antd的国际化失效等异常问题
 
 # Ant Design Pro
@@ -35,7 +35,7 @@
 #### 2. models层
 1. 规范写法参考`src/pages/Demo/DemoTable/models/demoTable.js`,由于ProTable组件，models不再存储list数组，仅需存储pagination
 2. umi4.x.x使用的是[@umijs/plugin-dva](https://umijs.org/zh-CN/plugins/plugin-dva)插件，使用约定式的model组织方式，故不再有公私有models概念。pageA可以connect pageB的model使用。（[回顾umi2.x.x 页面 model 不能被其他页面所引用的原因](https://v2.umijs.org/zh/guide/with-dva.html#model-%E6%B3%A8%E5%86%8C)）
-3. `src/models`下的文件，放一些通用的model就够，比如`global.js` 等所有项目都可能用到的model
+3. `src/models`下的文件，可以放一些简易数据流
 
 #### 3. services层
 1. 规范写法参考`src/services/demo/demoTable.js`,get类的将params放在`params`里，post类的将参数放在`data`里。
@@ -45,24 +45,28 @@
 # 业务组件
 ###### 使用React Hooks重构了之前的常用组件
 ## 组件`BraftEditor`、`GlobalUpload`、`Sku`用到的与oss有关参数的处理在`components/_utils`
-1. Bmap:百度地图。需引入三方js，配置如`config/config.js`39行
+1. Bmap:百度地图。需引入三方js，配置如`config/config.js -> scripts`
 2. BraftEditor:富文本编辑器oss版本
 3. GlobalDrawer:公共抽屉弹出层
 4. GlobalModal:公共Modal弹出层
 5. GlobalUpload:公共上传文件（仅video和img表现良好）oss版本
-6. QQMap:腾讯地图。需引入三方js，配置如`config/config.js`38行
+6. QQMap:腾讯地图。需引入三方js，配置如`config/config.js -> scripts`
 7. StandardTable: 公共ProTable组件
 8. Sku: 商品规格组件oss版本
 9. EditTag: 标签添加组件
 10. GlobalAudit: 常用于审核部分
 11. VideoPreview: 用于表格列视频展示播放
-12. Amap:高德地图。需引入三方js，配置如`config/config.js`40行
-13. UpdatePsd:公共修改密码弹窗组件
+12. Amap:高德地图。需引入三方js，配置如`config/config.js -> scripts`
+13. UpdatePwd:公共修改密码弹窗组件
 14. VideoPreview: 视频预览组件（常用于表格列）
 15. GlobalAudit: 公共审核组件（包含textArea和审核成功按钮和审核失败按钮）
 16. GlobalExport: 公共导出组件（常见于表格导出）特别注意：service层需要responseType: 'blob', getResponse: true。
 17. GlobalImport: 公共导入组件（常见于表格导入excel）
-18. GlobalSearchSelect: 下拉框输入异步请求的组件，搜索之后查询接口展示select（常见于表单select数据量很大时用此组件替代）
+
+# 构建流程
+1. 修改`config/config.js`中publicPath和favicons配置。例如: publicPath: '/admin/', favicons: ['/admin/favicon.ico']。
+2. 修改`config/defaultSettings.js`中 logo。例如: logo: '/admin/logo.svg'。
+3. 运行`pnpm build`, 默认开启了umi的deadCode。正式上线前build需要删除所有死码，非正式上线前build可临时关闭deadCode。
 
 # 常用的代码提交默认前缀标签规则
 1. feat: 新功能（feature）

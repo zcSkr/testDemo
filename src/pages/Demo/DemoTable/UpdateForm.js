@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ProForm, ProFormDependency, ProFormCascader, ProFormSelect, ProFormText, ProFormTextArea, ProFormMoney, ProFormDigit, ProFormRadio, ProFormSwitch, ProFormDigitRange, ProFormDatePicker } from '@ant-design/pro-components';
+import { ProForm, ProFormDependency, ProFormCascader, ProFormSelect, ProFormText, ProFormTextArea, ProFormMoney, ProFormDigit, ProFormRadio, ProFormSwitch, ProFormDigitRange, ProFormDatePicker, ProFormDateTimePicker } from '@ant-design/pro-components';
 import BraftEditor from '@/components/BraftEditor';
 import GlobalUpload from '@/components/GlobalUpload';
 import EditTag from '@/components/EditTag';
@@ -9,8 +9,8 @@ import dayjs from 'dayjs';
 import * as services_demoTable from '@/services/demo/demoTable';
 
 const formLayout = {
-  labelCol: { span: 4 },
-  wrapperCol: { span: 18 },
+  labelCol: { span: 6 },
+  wrapperCol: { span: 16 },
 };
 const UpdateForm = ({
   handleUpdate,
@@ -25,7 +25,7 @@ const UpdateForm = ({
     <ProForm
       onFinish={fieldsValue => handleUpdate({ ...formVals, ...fieldsValue })}
       submitter={{
-        render: (props,doms) => <div style={{ textAlign: 'center' }}>{doms[1]}</div>
+        render: (props, doms) => <div style={{ textAlign: 'center' }}>{doms[1]}</div>
       }}
       layout="horizontal"
       {...formLayout}
@@ -99,7 +99,11 @@ const UpdateForm = ({
         name="ProFormRadio"
         label="ProFormRadio示例"
         rules={[{ required: true }]}
-        options={[{ label: 'item 1', value: 'a' }, { label: 'item 2', value: 'b' }, { label: 'item 3', value: 'c' }]}
+        valueEnum={{
+          a: 'item 1',
+          b: 'item 2',
+          c: 'item 3',
+        }}
       />
       <ProFormSwitch
         name="ProFormSwitch"
@@ -119,9 +123,19 @@ const UpdateForm = ({
         rules={[{ required: true }]}
         width='100%'
         fieldProps={{
-          disabledDate: current => current < dayjs().startOf('day')
+          minDate: dayjs()
         }}
         normalize={value => value?.format('YYYY-MM-DD')}
+      />
+      <ProFormDateTimePicker
+        name="ProFormDateTimePicker"
+        label="ProFormDateTimePicker示例"
+        rules={[{ required: true }]}
+        width='100%'
+        fieldProps={{
+          minDate: dayjs()
+        }}
+        normalize={value => value?.format('YYYY-MM-DD HH:mm:ss')}
       />
 
       <ProFormDependency name={['select']}>
@@ -135,6 +149,7 @@ const UpdateForm = ({
         name="tags"
         label="标签示例"
         rules={[{ required: true, message: '请添加' }]}
+        style={{ width: '100%' }}
       >
         <EditTag />
       </ProForm.Item>
@@ -142,6 +157,7 @@ const UpdateForm = ({
         name="logo1"
         label="oss上传示例"
         rules={[{ required: true, message: '请上传' }]}
+        style={{ width: '100%' }}
       >
         <GlobalUpload maxCount={2} />
       </ProForm.Item>
@@ -149,6 +165,7 @@ const UpdateForm = ({
         name="address"
         label="腾讯地图示例"
         rules={[{ required: true, message: '请选择' }]}
+        style={{ width: '100%' }}
       >
         <QQMap />
       </ProForm.Item>
@@ -156,10 +173,11 @@ const UpdateForm = ({
         name="content1"
         label="oss富文本示例"
         rules={[{ required: true, message: '请输入' }]}
+        style={{ width: '100%' }}
       >
         <BraftEditor />
       </ProForm.Item>
-      
+
     </ProForm>
   );
 };

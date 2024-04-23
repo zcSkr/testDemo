@@ -19,7 +19,6 @@ const SkuList = ({
                 key={field.key}
                 bordered={false}
                 style={{ borderRadius: 0 }}
-                headStyle={{ borderRadius: 0 }}
                 type="inner"
                 title={
                   <Row type="flex" align="middle" gutter={token.padding}>

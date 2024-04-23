@@ -110,7 +110,7 @@ const DemoTable = () => {
       ellipsis: true,
       render: (val,record) => <Tooltip title={record.createTime}>{record.createTime}</Tooltip>,
       fieldProps: (form) => ({
-        disabledDate: current => current > dayjs().endOf('day'),
+        maxDate: dayjs(),
         defaultPickerValue: [dayjs().subtract(1, 'month'), dayjs().subtract(1, 'month')],
         placeholder: ['开始时间', '结束时间'],
       }),
@@ -216,7 +216,7 @@ const DemoTable = () => {
           setStepFormValues({});
         }}
         title={stepFormValues.id ? '编辑' : '新增'}
-        width={1000}
+        width={860}
       >
         <UpdateForm
           values={stepFormValues}

@@ -19,7 +19,7 @@ const GlobalImport = ({
     if (file.response) {
       if (file.response.code === 200) {
         message.success(`${file.name} 导入成功`);
-        onSuccess?.()
+        onSuccess?.(file, fileList)
       } else {
         message.error(file.response.msg);
       }
@@ -51,7 +51,7 @@ const GlobalImport = ({
       multiple={maxCount > 1}
       onChange={handleUploadChange}
     >
-      <Button icon={<ImportOutlined />}>导入 </Button>
+      {props.children || <Button icon={<ImportOutlined />}>导入 </Button>}
     </Upload>
   )
 }

@@ -34,7 +34,7 @@ const GlobalAudit = ({
                 ({ getFieldValue }) => ({
                   validator(_, value) {
                     if (getFieldValue(fieldNames.state) == 2 && !value) {
-                      return Promise.reject(new Error('请输入审核失败理由!'));
+                      return Promise.reject(new Error('请输入审核失败理由'));
                     }
                     return Promise.resolve()
                   },

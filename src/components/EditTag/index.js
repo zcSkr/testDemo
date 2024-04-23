@@ -11,9 +11,6 @@ const EditTag = ({
 
   const [inputVisible, setInputVisible] = useState(false)
   const [inputValue, setInputValue] = useState('')
-  const [editInputIndex, setEditInputIndex] = useState(-1)
-  const [editInputValue, setEditInputValue] = useState('')
-  const editInputRef = useRef()
   const inputRef = useRef()
   const [tags, setTags] = useState(value?.split(',') || [])
 
@@ -29,23 +26,11 @@ const EditTag = ({
     onChange(newTags.join(',') || void 0)
   }
 
-  const handleEditInputConfirm = () => {
-    const newTags = [...value];
-    newTags[editInputIndex] = editInputValue;
-    setEditInputIndex(-1)
-    setEditInputValue('')
-    setTags(newTags)
-    onChange(newTags.join(',') || void 0)
-  }
-
   useEffect(() => {
     if (inputVisible) {
       inputRef.current?.focus()
     }
-    if (editInputIndex != -1) {
-      editInputRef.current?.focus()
-    }
-  }, [inputVisible, editInputIndex])
+  }, [inputVisible])
 
 
   const sensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } });
@@ -89,17 +74,7 @@ const EditTag = ({
           onChange(tags.filter(r => r !== tag).join(',') || void 0)
         }}
       >
-        <span
-          onDoubleClick={e => {
-            if (index !== 0) {
-              setEditInputValue(tag)
-              setEditInputIndex(index)
-              e.preventDefault();
-            }
-          }}
-        >
-          {isLongTag ? `${tag.slice(0, 20)}...` : tag}
-        </span>
+        {isLongTag ? `${tag.slice(0, 20)}...` : tag}
       </Tag>
     );
   };
@@ -109,20 +84,6 @@ const EditTag = ({
       <DndContext sensors={[sensor]} onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
         <SortableContext items={tags} strategy={horizontalListSortingStrategy}>
           {tags?.map((tag, index) => {
-            if (editInputIndex === index) {
-              return (
-                <Input
-                  ref={editInputRef}
-                  key={tag}
-                  type="text"
-                  size="small"
-                  value={editInputValue}
-                  onChange={e => setEditInputValue(e.target.value)}
-                  onBlur={handleEditInputConfirm}
-                  onPressEnter={handleEditInputConfirm}
-                />
-              );
-            }
             const isLongTag = tag.length > 20;
             return isLongTag ? (
               <Tooltip title={tag} key={tag}>
