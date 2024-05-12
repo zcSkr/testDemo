@@ -1,4 +1,6 @@
 import React, { useRef, useEffect } from 'react';
+import { FormControlRender } from '@ant-design/pro-components';
+import { theme } from 'antd'
 
 const AMapComponent = ({
   style,
@@ -6,6 +8,7 @@ const AMapComponent = ({
   onlyShow,
   value
 }) => {
+  const { token } = theme.useToken()
   const containerRef = useRef()
   const map = useRef()
 	const marker = useRef()
@@ -58,7 +61,9 @@ const AMapComponent = ({
 
 
   return (
-    <div ref={containerRef} style={{ maxWidth: '100%', minHeight: 400, height: 400, ...style }}></div>
+    <FormControlRender>
+      {(itemProps) => <div ref={containerRef} style={{ maxWidth: '100%', minHeight: 400, height: 400, borderRadius: token.borderRadius, border: `1px solid ${itemProps.status === 'error' ? token.colorError : 'transparent'}`, ...style }}></div>}
+    </FormControlRender>
   )
 }
 

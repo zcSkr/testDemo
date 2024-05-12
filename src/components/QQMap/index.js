@@ -1,4 +1,6 @@
 import React, { useRef, useEffect } from 'react';
+import { FormControlRender } from '@ant-design/pro-components';
+import { theme } from 'antd'
 // QQMap
 const QQMapComponent = ({
   zoom,
@@ -18,7 +20,7 @@ const QQMapComponent = ({
   value,
   address,
 }) => {
-
+  const { token } = theme.useToken()
   const containerRef = useRef()
   const QMap = useRef();
   const marker = useRef();
@@ -106,7 +108,9 @@ const QQMapComponent = ({
 
 
   return (
-    <div ref={containerRef} style={{ maxWidth: '100%', minHeight: 400, height: 400, ...style }}></div>
+    <FormControlRender>
+      {(itemProps) => <div ref={containerRef} style={{ maxWidth: '100%', minHeight: 400, height: 400, borderRadius: token.borderRadius, border: `1px solid ${itemProps.status === 'error' ? token.colorError : 'transparent'}`, ...style }}></div>}
+    </FormControlRender>
   )
 }
 

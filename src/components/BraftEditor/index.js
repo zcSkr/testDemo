@@ -9,6 +9,8 @@ import { imageControls, excludeControls, controls, tableOptions } from './config
 import { useModel } from '@umijs/max';
 import Table from 'braft-extensions/dist/table'
 import { getOSSData, getSuffix, randomString } from '../_utils';
+import { FormControlRender } from '@ant-design/pro-components';
+
 const BraftEditorComponentOSS = ({
   value,
   readOnly, //仅读模式
@@ -118,25 +120,29 @@ const BraftEditorComponentOSS = ({
 
   const { token } = theme.useToken()
   return (
-    <Spin spinning={uploading} tip="图片上传中">
-      <div className="editor-wrapper" style={{ border: `1px solid ${token.colorBorder}`, borderRadius: token.borderRadius }}>
-        <BraftEditor
-          id="editor-oss"
-          ref={editorRef}
-          value={editorState}
-          placeholder="请输入"
-          onChange={handleChange}
-          readOnly={!!readOnly}
-          // controls={controls} //不要全屏就配置controls
-          excludeControls={excludeControls} //excludeControls
-          extendControls={extendControls}
-          imageControls={imageControls}
-          fontSizes={[12, 14, 16, 18, 20, 24, 28, 30, 32, 36, 40, 48]}
-          contentStyle={{ height: 500 }}
-          onSave={() => editorRef.current?.getDraftInstance().blur()} //ctrl+s保存的回调
-        />
-      </div>
-    </Spin>
+    <FormControlRender>
+      {(itemProps) => (
+        <Spin spinning={uploading} tip="图片上传中">
+          <div className="editor-wrapper" style={{ border: `1px solid ${itemProps.status === 'error' ? token.colorError : token.colorBorder}`, borderRadius: token.borderRadius }}>
+            <BraftEditor
+              id="editor-oss"
+              ref={editorRef}
+              value={editorState}
+              placeholder="请输入"
+              onChange={handleChange}
+              readOnly={!!readOnly}
+              // controls={controls} //不要全屏就配置controls
+              excludeControls={excludeControls} //excludeControls
+              extendControls={extendControls}
+              imageControls={imageControls}
+              fontSizes={[12, 14, 16, 18, 20, 24, 28, 30, 32, 36, 40, 48]}
+              contentStyle={{ height: 500 }}
+              onSave={() => editorRef.current?.getDraftInstance().blur()} //ctrl+s保存的回调
+            />
+          </div>
+        </Spin>
+      )}
+    </FormControlRender>
   )
 }
 
