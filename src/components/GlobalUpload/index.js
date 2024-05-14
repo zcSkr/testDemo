@@ -116,7 +116,7 @@ const GlobalUpload = ({
     <>
       <DndContext sensors={[sensor]} onDragEnd={handleDragEnd}>
         <SortableContext items={fileList.map((i) => i.uid)} strategy={['picture-card', 'picture-circle'].includes(listType) ? horizontalListSortingStrategy : verticalListSortingStrategy}>
-          <ImgCrop cropShape={listType == 'picture-circle' ? 'round' : 'rect'} rotationSlider showGrid modalTitle="裁剪图片"
+          <ImgCrop aspect={crop?.aspect || 1} cropShape={listType == 'picture-circle' ? 'round' : 'rect'} rotationSlider showGrid modalTitle="裁剪图片"
             beforeCrop={(file, fileList) => {
               renameFile(file)
               return !!crop //裁切弹窗打开前的回调，若返回 false 或 reject，弹窗将不会打开
