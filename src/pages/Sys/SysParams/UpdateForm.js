@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ProForm, ProFormText, ProFormTextArea } from '@ant-design/pro-components';
+import { ProForm, ProFormText, ProFormTextArea, ProFormDigit, ProFormSwitch } from '@ant-design/pro-components';
 import BraftEditor from '@/components/BraftEditor';
 import GlobalUpload from '@/components/GlobalUpload';
 
@@ -46,7 +46,7 @@ const UpdateForm = ({
           label="值"
           rules={[{ required: true, message: '请上传文件' }]}
         >
-          <GlobalUpload accept='*' listType="text" />
+          <GlobalUpload accept='*' listType="text" maxCount={1} />
         </ProForm.Item>
       }
       {
@@ -56,6 +56,46 @@ const UpdateForm = ({
           label="值"
           rules={[{ required: true }]}
           fieldProps={{ maxLength: 50 }}
+        />
+      }
+      {
+        formVals.valueType == 'img' &&
+        <ProForm.Item
+          name="codeValue"
+          label="值"
+          rules={[{ required: true, message: '请上传图片' }]}
+        >
+          <GlobalUpload maxCount={1} />
+        </ProForm.Item>
+      }
+      {
+        formVals.valueType == 'integer' &&
+        <ProFormDigit
+          name="codeValue"
+          label="值"
+          rules={[{ required: true }]}
+          min={0}
+          fieldProps={{ precision: 0 }}
+        />
+      }
+      {
+        formVals.valueType == 'decimal' &&
+        <ProFormDigit
+          name="codeValue"
+          label="值"
+          rules={[{ required: true }]}
+          min={0}
+          fieldProps={{ precision: 2 }}
+        />
+      }
+      {
+        formVals.valueType == 'bool' &&
+        <ProFormSwitch
+          name="codeValue"
+          label="值"
+          rules={[{ required: true }]}
+          fieldProps={{ checkedChildren: '开启', unCheckedChildren: '关闭' }}
+          normalize={value => value ? 1 : 0}
         />
       }
       <ProFormTextArea
