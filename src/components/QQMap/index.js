@@ -90,7 +90,7 @@ const QQMapComponent = ({
     }
   }, [value]);
 
-  // 拓展的逆地址解析
+  // 拓展的逆地址解析 ，注意：腾讯系统架构改造，2024-06-07关闭后无法使用，得用WebServiceAPI方案
   // const timerRef = useRef()
   // useEffect(() => {
   //   const geocoder = new qq.maps.Geocoder()
