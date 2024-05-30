@@ -32,6 +32,7 @@ const UpdateForm = ({
         rules={[{ required: true }]}
         fieldProps={{
           showSearch: true,
+          fetchDataOnSearch: false,
         }}
         options={[{ label: '电话', value: 'phone' }, { label: '微信', value: 'wechat' }, { label: 'QQ', value: 'qq' }]}
       />

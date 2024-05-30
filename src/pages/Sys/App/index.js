@@ -84,6 +84,7 @@ const UploadApp = () => {
             rules={[{ required: true }]}
             fieldProps={{
               showSearch: true,
+              fetchDataOnSearch: false,
             }}
             options={[{ label: '用户端', value: 'member' }]}
           />

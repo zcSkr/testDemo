@@ -74,6 +74,7 @@ const UpdateForm = ({
         rules={[{ required: true }]}
         fieldProps={{
           showSearch: true,
+          fetchDataOnSearch: false,
           fieldNames: { label: 'name', value: 'id' },
         }}
         request={async () => {

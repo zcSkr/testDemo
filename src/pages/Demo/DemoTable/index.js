@@ -40,6 +40,7 @@ const DemoTable = () => {
       valueType: 'select',
       fieldProps: (form) => ({
         showSearch: true,
+        fetchDataOnSearch: false,
         fieldNames: { label: 'name', value: 'id' },
       }),
       request:  async () => {
