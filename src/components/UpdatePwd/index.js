@@ -26,6 +26,7 @@ const UpdatePsd = ({
       <ProFormText.Password 
         name="againPwd"
         label="确认密码"
+        dependencies={['password']}
         rules={[
           (form) => ({
             validator(rule, value) {
