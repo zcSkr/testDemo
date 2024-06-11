@@ -13,7 +13,6 @@ export default defineConfig({
     theme: {},
     appConfig: {},
   },
-  dva: {},
   layout: {},
   locale: {
     // default zh-CN
@@ -24,17 +23,14 @@ export default defineConfig({
   },
   // umi routes: https://umijs.org/docs/routing
   routes: pageRoutes,
-  // Theme for antd: https://ant.design/docs/react/customize-theme-cn
-  theme: {},
   scripts: [ //需要body引入的三方script配置
     'https://map.qq.com/api/js?v=2.exp&key=TUJBZ-GMTR4-FE7UG-XIRYO-IQM2F-TCF4X', //腾讯地图script
     'http://api.map.baidu.com/api?v=2.0&ak=GC2tQ11of0Kr8WLpYws4ySC3aPT7t4ly',//百度地图script
     'https://webapi.amap.com/maps?v=1.4.15&key=c070243f603d1206459ee7e2f8cbb191',//高德地图script
   ],
-  externals: {},
   proxy: {
     '/api': {
-      target: 'http://localhost:8000',
+      target: 'http://localhost:8001',
       // target: 'https://mock.apifox.com/m1/888457-0-default',
       changeOrigin: true,
       pathRewrite: {
