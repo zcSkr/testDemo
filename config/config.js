@@ -30,7 +30,7 @@ export default defineConfig({
   ],
   proxy: {
     '/api': {
-      target: 'http://localhost:8001',
+      target: 'http://localhost:8000',
       // target: 'https://mock.apifox.com/m1/888457-0-default',
       changeOrigin: true,
       pathRewrite: {
