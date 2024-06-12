@@ -41,7 +41,6 @@ const UpdateForm = ({
         label="上级区域"
         fieldProps={{
           showSearch: true,
-          fetchDataOnSearch: false,
           expandTrigger: "hover",
           fieldNames: { label: 'name', value: 'id' },
           changeOnSelect: true
