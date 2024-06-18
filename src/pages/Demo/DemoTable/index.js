@@ -27,6 +27,7 @@ const DemoTable = () => {
     {
       title: '排序权重',
       dataIndex: 'sort',
+      sorter: true,
     },
     {
       title: '价格',
@@ -203,9 +204,9 @@ const DemoTable = () => {
             <PlusOutlined /> 新增
           </Button>,
         ]}
-        request={({ current, ...params }) => {
+        request={({ current, ...params }, sort) => {
           // console.log(params)//查询参数，pageNum用current特殊处理
-          return services_demoTable.query({ ...params, pageNum: current })
+          return services_demoTable.query({ ...params, pageNum: current, orderByStr: sort })
         }}
         postData={data => data.list}
         columns={columns}

@@ -137,7 +137,12 @@ const StandardTable = ({ columns, handleSave, request, ...props }) => {
       {...props}
       rowClassName={() => [editableRowClassName, typeof props.rowClassName == 'function' ? props.rowClassName() : props.rowClassName]}
       request={request ? async (params, sort, filter) => {
-        const res = await request(params, sort, filter)
+        let transSortStr
+        for (let key in sort) {
+          transSortStr = `${key} ${sort[key]}`
+        }
+        // console.log(transSortStr)
+        const res = await request(params, transSortStr, filter)
         if (res.code == 200) {
           setPagination({ current: res.data.pageNum, pageSize: res.data.pageSize, total: res.data.total })
         } else {
